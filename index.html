@@ -30,8 +30,8 @@
     <div id="videos" class="video-container"></div>
 
     <script>
-        const canalID = "SEU_CANAL_ID";  // Substitua pelo seu ID de canal
-        const apiKey = "SUA_API_KEY";    // Pegue sua chave da API do YouTube
+        const canalID = "UCpZ886pfK3UWIK4ywgHEV6g";  // Substitua pelo seu ID de canal
+        const apiKey = "AIzaSyCgLTr6nD9fco6AVjsiHcQelv46FCf9lXs";    // Pegue sua chave da API do YouTube
 
         async function carregarVideos() {
             const res = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${canalID}&part=snippet&order=date&maxResults=3`);
