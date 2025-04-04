@@ -4,25 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FAQ - Fyori</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:wght@400;700&display=swap');
-        
         :root {
             --cor-destaque: #e83a9f;
             --cor-destaque-escuro: #9d2bff;
             --cor-fundo: #0f0a1a;
+            --cor-link: #e83a9f;
         }
         
         body { 
             background-color: var(--cor-fundo); 
             color: #fff; 
-            font-family: 'IBM Plex Sans', sans-serif;
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
             line-height: 1.6;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 30px 0 25px 0;
+            background-color: #1a1030;
+            border-bottom: 3px solid var(--cor-destaque);
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            background: linear-gradient(45deg, var(--cor-destaque), var(--cor-destaque-escuro));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 0;
+            text-decoration: none;
+            display: inline-block;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+        
+        nav {
+            margin: 20px 0 15px 0;
+        }
+        
+        nav a {
+            margin: 0 20px;
+            color: var(--cor-destaque);
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+        
+        nav a.current {
+            color: #fff;
+            text-shadow: 0 0 10px var(--cor-destaque);
+        }
+        
+        nav a:hover {
+            color: #fff;
+            text-shadow: 0 0 10px var(--cor-destaque);
         }
         
         .faq-container {
@@ -40,19 +87,45 @@
         
         .faq-question {
             color: var(--cor-destaque);
+            font-family: 'Playfair Display', serif;
             font-size: 1.8rem;
-            font-weight: bold;
+            font-weight: 700;
             margin-bottom: 15px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-family: 'Bebas Neue', cursive;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
         
         .faq-answer {
             color: #ddd;
             font-size: 1.1rem;
             margin-bottom: 15px;
+            line-height: 1.7;
+        }
+        
+        .faq-divider {
+            border: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--cor-destaque), transparent);
+            margin: 30px 0;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 0.8rem;
+            margin-top: auto;
+        }
+
+        a.external-link {
+            color: var(--cor-link);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        a.external-link:hover {
+            text-decoration: underline;
+            text-shadow: 0 0 5px var(--cor-link);
         }
     </style>
 </head>
@@ -60,7 +133,7 @@
     <div class="header">
         <a href="https://fyori.cc" class="logo">FYORI</a>
         <nav>
-            <a href="https://apoia.se/fyori" target="_blank">APOIA.SE</a>
+            <a href="https://apoia.se/fyori" target="_blank">APOIE O CANAL</a>
             <a href="faq.html" class="current">FAQ</a>
         </nav>
     </div>
@@ -69,7 +142,43 @@
         <div class="faq-item">
             <div class="faq-question">SUGESTÕES DE VÍDEO</div>
             <div class="faq-answer">
-                Você pode sugerir vídeos nos comentários ou pelo Discord dos membros no Apoia.se.
+                Você pode me sugerir um vídeo no comentário dos vídeos, ao qual leio todos. Ou caso queira mais proximidade e rapidez nas respostas, garanta acesso ao servidor do Discord para membros, no apoia.se.
+            </div>
+        </div>
+        
+        <hr class="faq-divider">
+        
+        <div class="faq-item">
+            <div class="faq-question">REDES SOCIAIS</div>
+            <div class="faq-answer">
+                Para me encontrar fora do youtube, você pode me seguir no <a href="https://www.instagram.com/fyori.ytb/" class="external-link" target="_blank">Instagram</a> e <a href="https://x.com/fyoriytb" class="external-link" target="_blank">X/Twitter</a> do canal, ou entrar no servidor do Discord. Afora do canal, você pode me seguir no meu <a href="https://www.instagram.com/fyoritss/" class="external-link" target="_blank">Instagram pessoal</a>.
+            </div>
+        </div>
+        
+        <hr class="faq-divider">
+        
+        <div class="faq-item">
+            <div class="faq-question">SOFTWARE</div>
+            <div class="faq-answer">
+                Roteiro: <a href="https://www.notion.com/" class="external-link" target="_blank">Notion</a><br>
+                Thumbnail: <a href="https://www.adobe.com/br/products/photoshop.html" class="external-link" target="_blank">Adobe Photoshop</a><br>
+                Gravação: <a href="https://obsproject.com/pt-br" class="external-link" target="_blank">OBS Studio</a><br>
+                Edição: <a href="https://www.adobe.com/br/products/premiere.html" class="external-link" target="_blank">Adobe Premiere Pro</a>
+            </div>
+        </div>
+        
+        <hr class="faq-divider">
+        
+        <div class="faq-item">
+            <div class="faq-question">HARDWARE</div>
+            <div class="faq-answer">
+                Microfone: Rode NT1<br>
+                Fone: Audio Technica ATH-M50x<br>
+                Interface de Áudio: Focusrite Scarlett Solo<br>
+                Teclado: Akko Steam Engine Cream Black<br>
+                Mouse: Logitech MX Master 3S Branco<br>
+                Monitor: Samsung Viewfinity S5<br>
+                Câmera: Blackmagic Pocket Cinema 4K
             </div>
         </div>
     </div>

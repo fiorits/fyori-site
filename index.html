@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fyori</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:wght@400;700&display=swap');
-        
         :root {
             --cor-destaque: #e83a9f;
             --cor-destaque-escuro: #9d2bff;
             --cor-fundo: #0f0a1a;
+            --cor-link: #e83a9f;
         }
         
         body { 
             background-color: var(--cor-fundo); 
             color: #fff; 
-            font-family: 'IBM Plex Sans', sans-serif;
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
             min-height: 100vh;
@@ -26,13 +26,13 @@
         
         .header {
             text-align: center;
-            padding: 30px 0;
+            padding: 30px 0 25px 0;
             background-color: #1a1030;
             border-bottom: 3px solid var(--cor-destaque);
         }
         
         .logo {
-            font-family: 'Bebas Neue', cursive;
+            font-family: 'Playfair Display', serif;
             font-size: 4rem;
             background: linear-gradient(45deg, var(--cor-destaque), var(--cor-destaque-escuro));
             -webkit-background-clip: text;
@@ -41,21 +41,24 @@
             margin: 0;
             text-decoration: none;
             display: inline-block;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
+            font-weight: 700;
         }
         
         nav {
-            margin: 20px 0;
+            margin: 20px 0 15px 0;
         }
         
         nav a {
-            margin: 0 25px;
+            margin: 0 20px;
             color: var(--cor-destaque);
             text-decoration: none;
-            font-size: 1.3rem;
-            font-weight: bold;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
             letter-spacing: 1px;
             transition: all 0.3s;
+            text-transform: uppercase;
         }
         
         nav a:hover {
@@ -76,11 +79,12 @@
         }
         
         .video-title {
-            color: var(--cor-destaque);
-            font-size: 1.8rem;
+            color: #fff;
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
             margin: 20px 0;
-            font-weight: bold;
-            letter-spacing: 1px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
         
         .video-wrapper {
@@ -108,6 +112,19 @@
             color: #666;
             font-size: 0.8rem;
             margin-top: auto;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        a.external-link {
+            color: var(--cor-link);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        a.external-link:hover {
+            text-decoration: underline;
+            text-shadow: 0 0 5px var(--cor-link);
         }
     </style>
 </head>
@@ -115,7 +132,7 @@
     <div class="header">
         <a href="https://fyori.cc" class="logo">FYORI</a>
         <nav>
-            <a href="https://apoia.se/fyori" target="_blank">APOIA.SE</a>
+            <a href="https://apoia.se/fyori" target="_blank">APOIE O CANAL</a>
             <a href="faq.html">FAQ</a>
         </nav>
     </div>
@@ -146,5 +163,18 @@
     <footer>
         Copyright © 2025 Fyori
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const iframes = document.querySelectorAll('iframe');
+            
+            iframes.forEach(iframe => {
+                iframe.addEventListener('error', function() {
+                    console.error('Erro ao carregar o vídeo:', this.src);
+                    this.parentElement.innerHTML = '<p style="color:var(--cor-destaque);padding:20px;">Erro ao carregar o vídeo. Por favor, tente novamente mais tarde.</p>';
+                });
+            });
+        });
+    </script>
 </body>
 </html>
