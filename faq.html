@@ -3,82 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fyori</title>
+    <title>FAQ - Fyori</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&display=swap');
+        
         body { 
-            background-color: black; 
-            color: white; 
-            font-family: Arial, sans-serif; 
+            background-color: #000; 
+            color: #fff; 
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        
+        .header {
             text-align: center;
-            padding: 20px;
+            padding: 30px 0;
+            background-color: #111;
+            border-bottom: 3px solid #ff0000;
         }
-        h1 { color: red; }
-        .video-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            margin: 30px 0;
+        
+        .logo {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 4rem;
+            color: #ff0000;
+            margin: 0;
+            text-decoration: none;
+            display: inline-block;
         }
-        iframe {
-            width: 360px;
-            height: 200px;
-            border: 2px solid red;
-            border-radius: 8px;
-        }
+        
         nav {
             margin: 20px 0;
         }
+        
         nav a {
-            margin: 0 15px;
-            color: red;
+            margin: 0 25px;
+            color: #ff0000;
             text-decoration: none;
+            font-size: 1.3rem;
             font-weight: bold;
+            letter-spacing: 1px;
+            transition: all 0.3s;
         }
+        
         nav a:hover {
-            text-decoration: underline;
+            color: #fff;
+            text-shadow: 0 0 10px #ff0000;
+        }
+        
+        .faq-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .faq-title {
+            font-family: 'Bebas Neue', cursive;
+            color: #ff0000;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+        }
+        
+        .faq-item {
+            margin-bottom: 30px;
+            border-left: 3px solid #ff0000;
+            padding-left: 20px;
+        }
+        
+        .faq-question {
+            color: #ff0000;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .faq-question:hover {
+            text-shadow: 0 0 5px #ff0000;
+        }
+        
+        .faq-answer {
+            color: #ccc;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+        
+        .faq-divider {
+            border: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #ff0000, transparent);
+            margin: 30px 0;
+        }
+        
+        .support-links {
+            text-align: center;
+            margin-top: 50px;
+        }
+        
+        .support-links a {
+            color: #ff0000;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .support-links a:hover {
+            color: #fff;
         }
     </style>
 </head>
 <body>
-    <h1>Fyori</h1>
-    <nav>
-        <a href="https://apoia.se/fyori" target="_blank">Apoia.se</a>
-        <a href="faq.html">FAQ</a>
-    </nav>
+    <div class="header">
+        <a href="https://fyori.cc" class="logo">FYORI</a>
+        <nav>
+            <a href="https://apoia.se/fyori" target="_blank">APOIA.SE</a>
+            <a href="index.html">INÍCIO</a>
+        </nav>
+    </div>
 
-    <h2>Últimos Vídeos</h2>
-    <div id="videos" class="video-container"></div>
-
-    <script>
-        // SUBSTITUA pelas suas informações!
-        const canalID = "UCpZ886pfK3UWIK4ywgHEV6g"; // Ex: UCxXyRtMvHkZ-fX6YTGN4LmA
-        const apiKey = "AIzaSyCgLTr6nD9fco6AVjsiHcQelv46FCf9lXs"; // Veja como pegar no passo 2 abaixo
-
-        async function carregarVideos() {
-            try {
-                const resposta = await fetch(
-                    `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${canalID}&part=snippet&order=date&maxResults=3`
-                );
-                const dados = await resposta.json();
-                
-                if (dados.items && dados.items.length > 0) {
-                    document.getElementById("videos").innerHTML = dados.items.map(video => `
-                        <iframe 
-                            src="https://www.youtube.com/embed/${video.id.videoId}" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen>
-                        </iframe>
-                    `).join("");
-                } else {
-                    document.getElementById("videos").innerHTML = "<p>Nenhum vídeo encontrado.</p>";
-                }
-            } catch (erro) {
-                console.error("Erro ao carregar vídeos:", erro);
-                document.getElementById("videos").innerHTML = "<p>Erro ao carregar vídeos. Atualize a página.</p>";
-            }
-        }
-        carregarVideos();
-    </script>
+    <div class="faq-container">
+        <h1 class="faq-title">FAQ</h1>
+        
+        <div class="faq-item">
+            <div class="faq-question">MERCHANDISE</div>
+            <div class="faq-answer">
+                I do not sell any merch but if you're merely looking for a way to support the channel, you can join my Patreon or become a YouTube member.
+            </div>
+        </div>
+        
+        <hr class="faq-divider">
+        
+        <div class="faq-item">
+            <div class="faq-question">VIDEO SUGGESTIONS</div>
+            <div class="faq-answer">
+                If you have an idea for a video, leave a comment in the suggestions megathread stickled at top of the subreddit. I sift through the comments at least once a month.
+            </div>
+        </div>
+        
+        <hr class="faq-divider">
+        
+        <div class="faq-item">
+            <div class="faq-question">BACKGROUND MUSIC</div>
+            <div class="faq-answer">
+                All the music used in a given video is listed in the end credits and on the video's associated page on this website. Music that I've made myself can be found on my YouTube music channel and on SoundCloud. More information about my music can be found here.
+            </div>
+        </div>
+        
+        <hr class="faq-divider">
+        
+        <div class="faq-item">
+            <div class="faq-question">SOCIAL MEDIA</div>
+            <div class="faq-answer">
+                The only social media platforms I use on a regular basis are Blusky and Reddit. There's also a fan-operated Discord server but I'm rarely online. I also have a few largely inactive accounts like Instagram and Twitch that I might find a use for at some point.
+            </div>
+        </div>
+        
+        <hr class="faq-divider">
+        
+        <div class="faq-item">
+            <div class="faq-question">WEBSITE</div>
+            <div class="faq-answer">
+                I made this website. Expect bugs. It was made using regular ol' HTML, CSS, and JavaScript. The pages are served using a bare-bones Node server running Express and EJS. No CMS. No framework.
+            </div>
+        </div>
+        
+        <div class="support-links">
+            <a href="https://apoia.se/fyori" target="_blank">APOIAR O CANAL</a>
+            <a href="index.html">VOLTAR AO INÍCIO</a>
+        </div>
+    </div>
 </body>
 </html>
