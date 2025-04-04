@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAQ - Fyori</title>
+    <title>Fyori</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@400;700&display=swap');
         
         :root {
             --cor-destaque: #e83a9f;
@@ -16,10 +16,9 @@
         body { 
             background-color: var(--cor-fundo); 
             color: #fff; 
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Oxanium', sans-serif;
             margin: 0;
             padding: 0;
-            line-height: 1.6;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -33,7 +32,6 @@
         }
         
         .logo {
-            font-family: 'Bebas Neue', cursive;
             font-size: 4rem;
             background: linear-gradient(45deg, var(--cor-destaque), var(--cor-destaque-escuro));
             -webkit-background-clip: text;
@@ -59,55 +57,29 @@
             transition: all 0.3s;
         }
         
-        nav a.current {
-            color: #fff;
-            text-shadow: 0 0 10px var(--cor-destaque);
-        }
-        
         nav a:hover {
             color: #fff;
             text-shadow: 0 0 10px var(--cor-destaque);
         }
         
-        .faq-container {
-            max-width: 800px;
+        .video-section {
+            max-width: 1000px;
             margin: 40px auto;
             padding: 0 20px;
             flex: 1;
         }
         
-        .faq-item {
-            margin-bottom: 40px;
-            border-left: 3px solid var(--cor-destaque);
-            padding-left: 20px;
-        }
-        
-        .faq-question {
+        .video-title {
             color: var(--cor-destaque);
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: bold;
-            margin-bottom: 15px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-family: 'Bebas Neue', cursive;
-            letter-spacing: 1px;
+            margin: 20px 0;
         }
         
-        .faq-question:hover {
-            text-shadow: 0 0 5px var(--cor-destaque);
-        }
-        
-        .faq-answer {
-            color: #ddd;
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-        }
-        
-        .faq-divider {
-            border: 0;
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--cor-destaque), transparent);
-            margin: 30px 0;
+        .faq-answer a {
+            color: var(--cor-destaque);
+            text-decoration: underline;
+            font-weight: bold;
         }
         
         footer {
@@ -123,54 +95,32 @@
     <div class="header">
         <a href="https://fyori.cc" class="logo">FYORI</a>
         <nav>
-            <a href="https://apoia.se/fyori" target="_blank">APOIA.SE</a>
-            <a href="faq.html" class="current">FAQ</a>
+            <a href="https://apoia.se/fyori" target="_blank">APOIE O CANAL</a>
+            <a href="faq.html">FAQ</a>
         </nav>
     </div>
 
-    <div class="faq-container">
-        <div class="faq-item">
-            <div class="faq-question">SUGESTÕES DE VÍDEO</div>
-            <div class="faq-answer">
-                Você pode me sugerir um vídeo no comentário dos vídeos, ao qual leio todos. Ou caso queira mais proximidade e rapidez nas respostas, garanta acesso ao servidor do Discord para membros, no apoia.se.
+    <div class="video-section">
+        <div class="video-container">
+            <h3 class="video-title">O Terror que me Destrói por Dentro</h3>
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/CKiGck6PH7I" frameborder="0" allowfullscreen></iframe>
             </div>
         </div>
-        
-        <hr class="faq-divider">
-        
-        <div class="faq-item">
-            <div class="faq-question">REDES SOCIAIS</div>
-            <div class="faq-answer">
-                Para me encontrar fora do youtube, você pode me seguir no Instagram e X/Twitter do canal, ou entrar no servidor do Discord. Afora do canal, você pode me seguir no meu Instagram pessoal.
-            </div>
-        </div>
-        
-        <hr class="faq-divider">
-        
-        <div class="faq-item">
-            <div class="faq-question">SOFTWARE</div>
-            <div class="faq-answer">
-                Roteiro: Notion<br>
-                Thumbnail: Adobe Photoshop<br>
-                Gravação: OBS Studio<br>
-                Edição: Adobe Premiere Pro
-            </div>
-        </div>
-        
-        <hr class="faq-divider">
-        
-        <div class="faq-item">
-            <div class="faq-question">HARDWARE</div>
-            <div class="faq-answer">
-                Microfone: Rode NT1<br>
-                Fone: Audio Technica ATH-M50x<br>
-                Interface de Áudio: Focusrite Scarlett Solo<br>
-                Teclado: Akko Steam Engine Cream Black<br>
-                Mouse: Logitech MX Master 3S Branco<br>
-                Monitor: Samsung Viewfinity S5<br>
-                Câmera: Blackmagic Pocket Cinema 4K
-            </div>
-        </div>
+    </div>
+
+    <div class="faq-answer">
+        Quer me encontrar além do YouTube? Me segue no <a href="https://www.instagram.com/fyori.ytb/" target="_blank">Instagram</a>, no <a href="https://x.com/fyoriytb" target="_blank">X/Twitter</a> ou entra no servidor do Discord. No lado pessoal, tô no <a href="https://www.instagram.com/fyoritss/" target="_blank">Instagram</a>.
+    </div>
+    <div class="faq-answer">
+        Softwares que uso: <a href="https://www.notion.com/" target="_blank">Notion</a>, <a href="https://www.adobe.com/br/products/photoshop.html" target="_blank">Photoshop</a>, <a href="https://obsproject.com/pt-br" target="_blank">OBS Studio</a>, <a href="https://www.adobe.com/br/products/premiere.html" target="_blank">Premiere Pro</a>.
+    </div>
+    <div class="faq-answer">
+        Equipamentos principais: <br>
+        🎥 Câmera: Sony A6400<br>
+        🎙️ Microfone: Shure SM7B<br>
+        🎧 Headset: Beyerdynamic DT 770 Pro<br>
+        📷 Captura de vídeo: Elgato Cam Link 4K
     </div>
 
     <footer>
