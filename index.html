@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Canal Fyori - Conteúdo sobre terror, mistério e histórias arrepiantes">
+    <meta property="og:title" content="Fyori - Histórias para perder o sono">
+    <meta property="og:image" content="https://fyori.cc/thumbnail.jpg">
     <title>Fyori</title>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap" as="style">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap">
     <style>
         :root {
@@ -11,17 +15,28 @@
             --cor-destaque-escuro: #9d2bff;
             --cor-fundo: #0f0a1a;
             --cor-link: #e83a9f;
+            --cor-texto: #fff;
+            --cor-texto-secundario: #ddd;
         }
         
         body { 
             background-color: var(--cor-fundo); 
-            color: #fff; 
+            color: var(--cor-texto); 
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            transition: background 0.5s ease;
+        }
+
+        body.light-mode {
+            --cor-fundo: #f5f5f7;
+            --cor-texto: #333;
+            --cor-texto-secundario: #555;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
         }
         
         .header {
@@ -29,6 +44,12 @@
             padding: 30px 0 25px 0;
             background-color: #1a1030;
             border-bottom: 3px solid var(--cor-destaque);
+            transition: all 0.5s ease;
+        }
+
+        body.light-mode .header {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         
         .logo {
@@ -43,10 +64,18 @@
             display: inline-block;
             letter-spacing: 2px;
             font-weight: 700;
+            animation: pulse 6s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
         }
         
         nav {
             margin: 20px 0 15px 0;
+            position: relative;
         }
         
         nav a {
@@ -61,8 +90,13 @@
             text-transform: uppercase;
         }
         
+        nav a.current {
+            color: var(--cor-texto);
+            text-shadow: 0 0 10px var(--cor-destaque);
+        }
+        
         nav a:hover {
-            color: #fff;
+            color: var(--cor-texto);
             text-shadow: 0 0 10px var(--cor-destaque);
         }
         
@@ -79,7 +113,7 @@
         }
         
         .video-title {
-            color: #fff;
+            color: var(--cor-texto);
             font-family: 'Playfair Display', serif;
             font-size: 2rem;
             margin: 20px 0;
@@ -96,6 +130,11 @@
             border: 2px solid var(--cor-destaque);
             border-radius: 8px;
             box-shadow: 0 0 20px rgba(232, 58, 159, 0.3);
+            transition: transform 0.3s;
+        }
+
+        .video-wrapper:hover {
+            transform: scale(1.02);
         }
         
         .video-wrapper iframe {
@@ -104,15 +143,15 @@
             left: 0;
             width: 100%;
             height: 100%;
+            loading: lazy;
         }
         
         footer {
             text-align: center;
             padding: 20px;
-            color: #666;
+            color: var(--cor-texto-secundario);
             font-size: 0.8rem;
             margin-top: auto;
-            font-family: 'Poppins', sans-serif;
         }
 
         a.external-link {
@@ -126,6 +165,49 @@
             text-decoration: underline;
             text-shadow: 0 0 5px var(--cor-link);
         }
+
+        a.external-link::after {
+            content: " ↗";
+            font-size: 0.8em;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--cor-destaque);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.5rem;
+            opacity: 0.7;
+            transition: all 0.3s;
+            z-index: 100;
+        }
+
+        .back-to-top:hover {
+            opacity: 1;
+            transform: translateY(-5px);
+        }
+
+        .theme-toggle {
+            background: transparent;
+            border: none;
+            color: var(--cor-destaque);
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin-left: 15px;
+            transition: transform 0.3s;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(30deg);
+        }
     </style>
 </head>
 <body>
@@ -134,6 +216,7 @@
         <nav>
             <a href="https://apoia.se/fyori" target="_blank">APOIE O CANAL</a>
             <a href="faq.html">FAQ</a>
+            <button class="theme-toggle" aria-label="Alternar tema">🌓</button>
         </nav>
     </div>
 
@@ -141,21 +224,21 @@
         <div class="video-container">
             <h3 class="video-title">O Terror que me Destrói por Dentro</h3>
             <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/CKiGck6PH7I" frameborder="0" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/CKiGck6PH7I" frameborder="0" allowfullscreen loading="lazy"></iframe>
             </div>
         </div>
         
         <div class="video-container">
-            <h3 class="video-title">O Oceano Pré-Histórico era ASSUSTADOR</h3>
+            <h3 class="video-title">O Oceano Pré-Histórico era Aterrorizante</h3>
             <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/CiK4G3-l05k" frameborder="0" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/CiK4G3-l05k" frameborder="0" allowfullscreen loading="lazy"></iframe>
             </div>
         </div>
         
         <div class="video-container">
             <h3 class="video-title">Medo de Florestas</h3>
             <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/OYEeDM0fodQ" frameborder="0" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/OYEeDM0fodQ" frameborder="0" allowfullscreen loading="lazy"></iframe>
             </div>
         </div>
     </div>
@@ -164,7 +247,34 @@
         Copyright © 2025 Fyori
     </footer>
 
+    <a href="#" class="back-to-top" title="Voltar ao topo">↑</a>
+
     <script>
+        // Toggle de Tema
+        const themeToggle = document.querySelector('.theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+        });
+
+        // Verificar preferência salva
+        if (localStorage.getItem('theme') === 'light') {
+            document.body.classList.add('light-mode');
+        }
+
+        // Botão Voltar ao Topo
+        const backToTop = document.querySelector('.back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTop.style.opacity = '1';
+                backToTop.style.visibility = 'visible';
+            } else {
+                backToTop.style.opacity = '0';
+                backToTop.style.visibility = 'hidden';
+            }
+        });
+
+        // Tratamento de erro para vídeos
         document.addEventListener('DOMContentLoaded', function() {
             const iframes = document.querySelectorAll('iframe');
             
