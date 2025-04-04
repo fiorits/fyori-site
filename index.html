@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fyori</title>
+    <style>
+        body { 
+            background-color: black; 
+            color: white; 
+            font-family: Arial, sans-serif; 
+            text-align: center; 
+        }
+        .video-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        iframe { width: 300px; height: 180px; border: none; }
+        nav a { margin: 10px; color: red; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <h1>Fyori</h1>
+    <nav>
+        <a href="https://apoia.se/seu-link" target="_blank">Apoia.se</a>
+        <a href="faq.html">FAQ</a>
+    </nav>
+    <div id="videos" class="video-container"></div>
+
+    <script>
+        const canalID = "SEU_CANAL_ID";  // Substitua pelo seu ID de canal
+        const apiKey = "SUA_API_KEY";    // Pegue sua chave da API do YouTube
+
+        async function carregarVideos() {
+            const res = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${canalID}&part=snippet&order=date&maxResults=3`);
+            const data = await res.json();
+            document.getElementById("videos").innerHTML = data.items.map(video =>
+                `<iframe src="https://www.youtube.com/embed/${video.id.videoId}" allowfullscreen></iframe>`
+            ).join("");
+        }
+        carregarVideos();
+    </script>
+</body>
+</html>
