@@ -81,22 +81,23 @@
             text-shadow: 0 0 10px var(--cor-destaque);
         }
 
-        /* 🌓 Dark/Light Mode Toggle */
+        /* 🌓 Dark/Light Mode Toggle (ROTAÇÃO DE 45 GRAUS) */
         .theme-toggle {
             background: none;
             border: none;
             color: var(--cor-destaque);
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             cursor: pointer;
             margin-left: 5px;
-            transition: transform 0.3s ease;
-            transform: translateX(0);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: inline-block;
+            padding: 0;
+            line-height: 1;
         }
 
         .theme-toggle:hover {
-            transform: translateX(3px);
+            transform: rotate(45deg);
             color: var(--cor-texto);
-            text-shadow: 0 0 8px var(--cor-destaque);
         }
 
         /* Light Mode Styles */
