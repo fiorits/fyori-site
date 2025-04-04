@@ -27,6 +27,7 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            transition: background 0.3s ease, color 0.3s ease;
         }
         
         .header {
@@ -34,6 +35,7 @@
             padding: 30px 0 25px 0;
             background: linear-gradient(135deg, #1a1030 0%, #2a1a50 100%);
             border-bottom: 3px solid var(--cor-destaque);
+            transition: background 0.3s ease;
         }
         
         .logo {
@@ -71,6 +73,40 @@
         nav a:hover {
             color: var(--cor-texto);
             text-shadow: 0 0 10px var(--cor-destaque);
+        }
+
+        /* 🌓 Dark/Light Mode Toggle */
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--cor-destaque);
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+            transform: translateX(0);
+        }
+
+        .theme-toggle:hover {
+            transform: translateX(3px);
+            color: var(--cor-texto);
+            text-shadow: 0 0 8px var(--cor-destaque);
+        }
+
+        /* Light Mode Styles */
+        body.light-mode {
+            --cor-fundo: #f5f0ff;
+            --cor-texto: #222;
+            --cor-texto-secundario: #555;
+        }
+
+        body.light-mode .header {
+            background: linear-gradient(135deg, #e0d6ff 0%, #c9b8ff 100%);
+        }
+
+        body.light-mode .video-wrapper {
+            border: 2px solid var(--cor-destaque-escuro);
+            box-shadow: 0 0 20px rgba(157, 43, 255, 0.2);
         }
         
         .video-section {
@@ -145,6 +181,7 @@
         <nav>
             <a href="https://apoia.se/fyori" target="_blank">APOIE O CANAL</a>
             <a href="faq.html">FAQ</a>
+            <button class="theme-toggle" aria-label="Alternar tema">🌓</button>
         </nav>
     </div>
 
@@ -176,6 +213,23 @@
     </footer>
 
     <script>
+        // Dark/Light Mode Toggle
+        const themeToggle = document.querySelector('.theme-toggle');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+        // Verifica tema salvo ou preferência do sistema
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'light' || (!currentTheme && !prefersDark.matches)) {
+            document.body.classList.add('light-mode');
+        }
+
+        // Alterna tema
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+        });
+
+        // Verifica erros nos iframes
         document.addEventListener('DOMContentLoaded', function() {
             const iframes = document.querySelectorAll('iframe');
             
