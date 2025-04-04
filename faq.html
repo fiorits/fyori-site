@@ -3,18 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAQ - Fyori</title>
+    <title>Fyori</title>
     <style>
-        body { background-color: black; color: white; font-family: Arial, sans-serif; text-align: center; }
-        nav a { margin: 10px; color: red; text-decoration: none; }
+        body { 
+            background-color: black; 
+            color: white; 
+            font-family: Arial, sans-serif; 
+            text-align: center;
+            padding: 20px;
+        }
+        h1 { color: red; }
+        .video-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        iframe {
+            width: 360px;
+            height: 200px;
+            border: 2px solid red;
+            border-radius: 8px;
+        }
+        nav {
+            margin: 20px 0;
+        }
+        nav a {
+            margin: 0 15px;
+            color: red;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
-    <h1>FAQ</h1>
+    <h1>Fyori</h1>
     <nav>
-        <a href="index.html">Início</a>
-        <a href="https://apoia.se/seu-link" target="_blank">Apoia.se</a>
+        <a href="https://apoia.se/SEU_LINK_AQUI" target="_blank">Apoia.se</a>
+        <a href="faq.html">FAQ</a>
     </nav>
-    <p>Aqui você pode colocar perguntas e respostas frequentes.</p>
+
+    <h2>Últimos Vídeos</h2>
+    <div id="videos" class="video-container"></div>
+
+    <script>
+        // SUBSTITUA pelas suas informações!
+        const canalID = "UCpZ886pfK3UWIK4ywgHEV6g"; // Ex: UCxXyRtMvHkZ-fX6YTGN4LmA
+        const apiKey = "AIzaSyCgLTr6nD9fco6AVjsiHcQelv46FCf9lXs"; // Veja como pegar no passo 2 abaixo
+
+        async function carregarVideos() {
+            try {
+                const resposta = await fetch(
+                    `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${canalID}&part=snippet&order=date&maxResults=3`
+                );
+                const dados = await resposta.json();
+                
+                if (dados.items && dados.items.length > 0) {
+                    document.getElementById("videos").innerHTML = dados.items.map(video => `
+                        <iframe 
+                            src="https://www.youtube.com/embed/${video.id.videoId}" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    `).join("");
+                } else {
+                    document.getElementById("videos").innerHTML = "<p>Nenhum vídeo encontrado.</p>";
+                }
+            } catch (erro) {
+                console.error("Erro ao carregar vídeos:", erro);
+                document.getElementById("videos").innerHTML = "<p>Erro ao carregar vídeos. Atualize a página.</p>";
+            }
+        }
+        carregarVideos();
+    </script>
 </body>
 </html>
