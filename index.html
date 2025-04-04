@@ -5,42 +5,150 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fyori</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&display=swap');
+        
         body { 
-            background-color: black; 
-            color: white; 
-            font-family: Arial, sans-serif; 
-            text-align: center; 
+            background-color: #000; 
+            color: #fff; 
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
         }
+        
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            background-color: #111;
+            border-bottom: 3px solid #ff0000;
+        }
+        
+        .logo {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 4rem;
+            color: #ff0000;
+            margin: 0;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        nav {
+            margin: 20px 0;
+        }
+        
+        nav a {
+            margin: 0 25px;
+            color: #ff0000;
+            text-decoration: none;
+            font-size: 1.3rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+        
+        nav a:hover {
+            color: #fff;
+            text-shadow: 0 0 10px #ff0000;
+        }
+        
+        .video-section {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
         .video-container {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
+            margin-bottom: 40px;
         }
-        iframe { width: 300px; height: 180px; border: none; }
-        nav a { margin: 10px; color: red; text-decoration: none; }
+        
+        .video-title {
+            color: #ff0000;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            background: #000;
+            border: 2px solid #ff0000;
+            border-radius: 5px;
+        }
+        
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
     </style>
 </head>
 <body>
-    <h1>Fyori</h1>
-    <nav>
-        <a href="https://apoia.se/fyori" target="_blank">Apoia.se</a>
-        <a href="faq.html">FAQ</a>
-    </nav>
-    <div id="videos" class="video-container"></div>
+    <div class="header">
+        <a href="https://fyori.cc" class="logo">FYORI</a>
+        <nav>
+            <a href="https://apoia.se/fyori" target="_blank">APOIA.SE</a>
+            <a href="faq.html">FAQ</a>
+        </nav>
+    </div>
+
+    <div class="video-section">
+        <h2 class="section-title">ÚLTIMOS VÍDEOS</h2>
+        
+        <div class="video-container">
+            <h3 class="video-title">O Terror que me Des...</h3>
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/VIDEO_ID_1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+        
+        <div class="video-container">
+            <h3 class="video-title">O Oceano Pré-Histór...</h3>
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/VIDEO_ID_2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+        
+        <div class="video-container">
+            <h3 class="video-title">Medo de Florestas</h3>
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/VIDEO_ID_3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
 
     <script>
-        const canalID = "UCpZ886pfK3UWIK4ywgHEV6g";  // Substitua pelo seu ID de canal
-        const apiKey = "AIzaSyCgLTr6nD9fco6AVjsiHcQelv46FCf9lXs";    // Pegue sua chave da API do YouTube
+        // Mantive o script da API caso queira voltar a usar depois
+        const canalID = "UCpZ886pfK3UWIK4ywgHEV6g";
+        const apiKey = "SUA_NOVA_CHAVE_API_RESTRITA"; // Use a nova chave com restrições
 
         async function carregarVideos() {
-            const res = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${canalID}&part=snippet&order=date&maxResults=3`);
-            const data = await res.json();
-            document.getElementById("videos").innerHTML = data.items.map(video =>
-                `<iframe src="https://www.youtube.com/embed/${video.id.videoId}" allowfullscreen></iframe>`
-            ).join("");
+            try {
+                const resposta = await fetch(
+                    `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${canalID}&part=snippet&order=date&maxResults=3`
+                );
+                const dados = await resposta.json();
+                
+                if (dados.items && dados.items.length > 0) {
+                    const containers = document.querySelectorAll('.video-container');
+                    
+                    dados.items.forEach((video, index) => {
+                        if (containers[index]) {
+                            containers[index].querySelector('.video-title').textContent = video.snippet.title;
+                            containers[index].querySelector('iframe').src = `https://www.youtube.com/embed/${video.id.videoId}`;
+                        }
+                    });
+                }
+            } catch (erro) {
+                console.error("Erro ao carregar vídeos:", erro);
+            }
         }
-        carregarVideos();
+        
+        // Descomente a linha abaixo quando sua API Key estiver configurada corretamente
+        // carregarVideos();
     </script>
 </body>
 </html>
