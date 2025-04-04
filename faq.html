@@ -31,7 +31,7 @@
         .header {
             text-align: center;
             padding: 30px 0 25px 0;
-            background-color: #1a1030;
+            background: linear-gradient(135deg, #1a1030 0%, #2a1a50 100%);
             border-bottom: 3px solid var(--cor-destaque);
         }
         
@@ -49,38 +49,6 @@
             font-weight: 700;
             position: relative;
             text-shadow: 0 0 10px rgba(232, 58, 159, 0.5);
-            animation: glitch 5s infinite alternate;
-        }
-        
-        @keyframes glitch {
-            0%, 100% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
-        }
-
-        .logo::before {
-            content: "FYORI";
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, var(--cor-destaque), var(--cor-destaque-escuro));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            opacity: 0.8;
-            z-index: -1;
-            animation: glitch-before 4s infinite alternate;
-        }
-
-        @keyframes glitch-before {
-            0%, 100% { transform: translate(0); clip-path: inset(0 0 0 0); }
-            10% { clip-path: inset(10% 0 25% 0); }
-            20% { clip-path: inset(40% 0 15% 0); }
-            30% { clip-path: inset(25% 0 30% 0); }
         }
         
         nav {
@@ -169,7 +137,7 @@
             font-family: 'Montserrat', sans-serif;
             color: var(--cor-texto-secundario);
             font-size: 1.1rem;
-            margin-top: 40px;
+            margin: 60px 0 30px 0;
             text-align: center;
             letter-spacing: 0.5px;
         }
@@ -214,14 +182,14 @@
         <hr class="faq-divider">
         
         <div class="faq-item">
-            <div class="faq-question">SOFTWARE E AFINS</div>
+            <div class="faq-question">SOFTWARE</div>
             <div class="faq-answer">
                 Roteiro: <a href="https://www.notion.com/" class="external-link" target="_blank">Notion</a><br>
                 Thumbnail: <a href="https://www.adobe.com/br/products/photoshop.html" class="external-link" target="_blank">Adobe Photoshop</a><br>
                 Gravação: <a href="https://obsproject.com/pt-br" class="external-link" target="_blank">OBS Studio</a><br>
                 Edição: <a href="https://www.adobe.com/br/products/premiere.html" class="external-link" target="_blank">Adobe Premiere Pro</a><br>
                 Música: <a href="https://www.epidemicsound.com/music/featured/" class="external-link" target="_blank">Epidemic Sound</a><br>
-                Stock Footage e outros: <a href="https://artlist.io/referral/e5af6656-b550-4408-b10f-4145a7a22b57" class="external-link" target="_blank">Artlist</a> e <a href="https://elements.envato.com/stock-video" class="external-link" target="_blank">Envato</a>
+                Imagens adicionais: <a href="https://artlist.io/referral/e5af6656-b550-4408-b10f-4145a7a22b57" class="external-link" target="_blank">Artlist</a> e <a href="https://elements.envato.com/stock-video" class="external-link" target="_blank">Envato</a>
             </div>
         </div>
         
