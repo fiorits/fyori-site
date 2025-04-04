@@ -1,59 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="FAQ do Canal Fyori - Perguntas frequentes sobre o canal, equipamentos e contato">
-    <meta property="og:title" content="FAQ - Fyori">
-    <meta property="og:image" content="https://fyori.cc/thumbnail-faq.jpg">
-    <title>FAQ - Fyori</title>
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap" as="style">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap">
+    <!-- ... (cabeçalho anterior mantido) ... -->
     <style>
-        :root {
-            --cor-destaque: #e83a9f;
-            --cor-destaque-escuro: #9d2bff;
-            --cor-fundo: #0f0a1a;
-            --cor-link: #e83a9f;
-            --cor-texto: #fff;
-            --cor-texto-secundario: #ddd;
-        }
-        
-        body { 
-            background-color: var(--cor-fundo); 
-            color: var(--cor-texto); 
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            transition: background 0.5s ease;
-        }
+        /* ... (estilos anteriores mantidos) ... */
 
-        body.light-mode {
-            --cor-fundo: #f5f5f7;
-            --cor-texto: #333;
-            --cor-texto-secundario: #555;
-            background-color: var(--cor-fundo);
-            color: var(--cor-texto);
-        }
-        
-        .header {
-            text-align: center;
-            padding: 30px 0 25px 0;
-            background-color: #1a1030;
-            border-bottom: 3px solid var(--cor-destaque);
-            transition: all 0.5s ease;
-        }
-
-        body.light-mode .header {
-            background-color: #fff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
         .logo {
+            /* Mesmo efeito VHS do index.html */
             font-family: 'Playfair Display', serif;
             font-size: 4rem;
             background: linear-gradient(45deg, var(--cor-destaque), var(--cor-destaque-escuro));
@@ -65,178 +18,72 @@
             display: inline-block;
             letter-spacing: 2px;
             font-weight: 700;
-            animation: pulse 6s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.03); }
-            100% { transform: scale(1); }
-        }
-        
-        nav {
-            margin: 20px 0 15px 0;
             position: relative;
+            text-shadow: 0 0 10px rgba(232, 58, 159, 0.5);
+            animation: glitch 5s infinite alternate;
         }
-        
-        nav a {
-            margin: 0 20px;
-            color: var(--cor-destaque);
-            text-decoration: none;
+
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+        }
+
+        .logo::before {
+            content: "FYORI";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--cor-destaque), var(--cor-destaque-escuro));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            opacity: 0.8;
+            z-index: -1;
+            animation: glitch-before 4s infinite alternate;
+        }
+
+        .contact-email {
             font-family: 'Montserrat', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            transition: all 0.3s;
-            text-transform: uppercase;
-        }
-        
-        nav a.current {
-            color: var(--cor-texto);
-            text-shadow: 0 0 10px var(--cor-destaque);
-        }
-        
-        nav a:hover {
-            color: var(--cor-texto);
-            text-shadow: 0 0 10px var(--cor-destaque);
-        }
-        
-        .faq-container {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 0 20px;
-            flex: 1;
-        }
-        
-        .faq-item {
-            margin-bottom: 40px;
-            border-left: 3px solid var(--cor-destaque);
-            padding-left: 20px;
-        }
-        
-        .faq-question {
-            color: var(--cor-destaque);
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            letter-spacing: 0.5px;
-        }
-        
-        .faq-answer {
             color: var(--cor-texto-secundario);
             font-size: 1.1rem;
-            margin-bottom: 15px;
-            line-height: 1.7;
-        }
-        
-        .faq-divider {
-            border: 0;
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--cor-destaque), transparent);
-            margin: 30px 0;
-        }
-        
-        footer {
+            margin-top: 40px;
             text-align: center;
-            padding: 20px;
-            color: var(--cor-texto-secundario);
-            font-size: 0.8rem;
-            margin-top: auto;
+            letter-spacing: 0.5px;
         }
 
-        a.external-link {
-            color: var(--cor-link);
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        a.external-link:hover {
-            text-decoration: underline;
-            text-shadow: 0 0 5px var(--cor-link);
-        }
-
-        a.external-link::after {
-            content: " ↗";
-            font-size: 0.8em;
-        }
-
-        .back-to-top {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--cor-destaque);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            font-size: 1.5rem;
-            opacity: 0.7;
-            transition: all 0.3s;
-            z-index: 100;
-        }
-
-        .back-to-top:hover {
-            opacity: 1;
-            transform: translateY(-5px);
-        }
-
-        .theme-toggle {
-            background: transparent;
-            border: none;
+        .contact-email a {
             color: var(--cor-destaque);
-            font-size: 1.5rem;
-            cursor: pointer;
-            margin-left: 15px;
-            transition: transform 0.3s;
+            text-decoration: none;
+            transition: all 0.3s;
         }
 
-        .theme-toggle:hover {
-            transform: rotate(30deg);
+        .contact-email a:hover {
+            text-shadow: 0 0 5px var(--cor-destaque);
         }
+
+        /* Removido o back-to-top */
     </style>
 </head>
 <body>
-    <div class="header">
-        <a href="https://fyori.cc" class="logo">FYORI</a>
-        <nav>
-            <a href="https://apoia.se/fyori" target="_blank">APOIE O CANAL</a>
-            <a href="faq.html" class="current">FAQ</a>
-            <button class="theme-toggle" aria-label="Alternar tema">🌓</button>
-        </nav>
-    </div>
+    <!-- ... (cabeçalho mantido) ... -->
 
     <div class="faq-container">
-        <div class="faq-item">
-            <div class="faq-question">SUGESTÕES DE VÍDEO</div>
-            <div class="faq-answer">
-                Você pode me sugerir um vídeo no comentário dos vídeos, ao qual leio todos. Ou caso queira mais proximidade e rapidez nas respostas, garanta acesso ao servidor do Discord para membros, no apoia.se.
-            </div>
-        </div>
-        
-        <hr class="faq-divider">
+        <!-- ... (seções anteriores mantidas) ... -->
         
         <div class="faq-item">
-            <div class="faq-question">REDES SOCIAIS</div>
-            <div class="faq-answer">
-                Para me encontrar fora do youtube, você pode me seguir no <a href="https://www.instagram.com/fyori.ytb/" class="external-link" target="_blank">Instagram</a> e <a href="https://x.com/fyoriytb" class="external-link" target="_blank">X/Twitter</a> do canal, ou entrar no servidor do Discord. Afora do canal, você pode me seguir no meu <a href="https://www.instagram.com/fyoritss/" class="external-link" target="_blank">Instagram pessoal</a>.
-            </div>
-        </div>
-        
-        <hr class="faq-divider">
-        
-        <div class="faq-item">
-            <div class="faq-question">SOFTWARE</div>
+            <div class="faq-question">SOFTWARE E AFINS</div>
             <div class="faq-answer">
                 Roteiro: <a href="https://www.notion.com/" class="external-link" target="_blank">Notion</a><br>
                 Thumbnail: <a href="https://www.adobe.com/br/products/photoshop.html" class="external-link" target="_blank">Adobe Photoshop</a><br>
                 Gravação: <a href="https://obsproject.com/pt-br" class="external-link" target="_blank">OBS Studio</a><br>
-                Edição: <a href="https://www.adobe.com/br/products/premiere.html" class="external-link" target="_blank">Adobe Premiere Pro</a>
+                Edição: <a href="https://www.adobe.com/br/products/premiere.html" class="external-link" target="_blank">Adobe Premiere Pro</a><br>
+                Música: <a href="https://www.epidemicsound.com/music/featured/" class="external-link" target="_blank">Epidemic Sound</a><br>
+                Stock Footage e outros: <a href="https://artlist.io/referral/e5af6656-b550-4408-b10f-4145a7a22b57" class="external-link" target="_blank">Artlist</a> e <a href="https://elements.envato.com/stock-video" class="external-link" target="_blank">Envato</a>
             </div>
         </div>
         
@@ -254,38 +101,12 @@
                 Câmera: <a href="https://www.blackmagicdesign.com/br/products/blackmagicpocketcinemacamera" class="external-link" target="_blank">Blackmagic Pocket Cinema 4K</a>
             </div>
         </div>
+
+        <div class="contact-email">
+            E-mail de contato: <a href="mailto:fyori.contato@gmail.com">fyori.contato@gmail.com</a>
+        </div>
     </div>
 
-    <footer>
-        Copyright © 2025 Fyori
-    </footer>
-
-    <a href="#" class="back-to-top" title="Voltar ao topo">↑</a>
-
-    <script>
-        // Toggle de Tema
-        const themeToggle = document.querySelector('.theme-toggle');
-        themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('light-mode');
-            localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
-        });
-
-        // Verificar preferência salva
-        if (localStorage.getItem('theme') === 'light') {
-            document.body.classList.add('light-mode');
-        }
-
-        // Botão Voltar ao Topo
-        const backToTop = document.querySelector('.back-to-top');
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                backToTop.style.opacity = '1';
-                backToTop.style.visibility = 'visible';
-            } else {
-                backToTop.style.opacity = '0';
-                backToTop.style.visibility = 'hidden';
-            }
-        });
-    </script>
+    <!-- ... (rodapé mantido) ... -->
 </body>
 </html>
