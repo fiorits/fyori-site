@@ -7,8 +7,14 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&display=swap');
         
+        :root {
+            --cor-destaque: #e83a9f;
+            --cor-destaque-escuro: #9d2bff;
+            --cor-fundo: #0f0a1a;
+        }
+        
         body { 
-            background-color: #000; 
+            background-color: var(--cor-fundo); 
             color: #fff; 
             font-family: 'Roboto', sans-serif;
             margin: 0;
@@ -18,17 +24,21 @@
         .header {
             text-align: center;
             padding: 30px 0;
-            background-color: #111;
-            border-bottom: 3px solid #ff0000;
+            background-color: #1a1030;
+            border-bottom: 3px solid var(--cor-destaque);
         }
         
         .logo {
             font-family: 'Bebas Neue', cursive;
             font-size: 4rem;
-            color: #ff0000;
+            background: linear-gradient(45deg, var(--cor-destaque), var(--cor-destaque-escuro));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             margin: 0;
             text-decoration: none;
             display: inline-block;
+            letter-spacing: 3px;
         }
         
         nav {
@@ -37,7 +47,7 @@
         
         nav a {
             margin: 0 25px;
-            color: #ff0000;
+            color: var(--cor-destaque);
             text-decoration: none;
             font-size: 1.3rem;
             font-weight: bold;
@@ -47,7 +57,7 @@
         
         nav a:hover {
             color: #fff;
-            text-shadow: 0 0 10px #ff0000;
+            text-shadow: 0 0 10px var(--cor-destaque);
         }
         
         .video-section {
@@ -57,24 +67,30 @@
         }
         
         .video-container {
-            margin-bottom: 40px;
+            margin-bottom: 60px;
+            text-align: center;
         }
         
         .video-title {
-            color: #ff0000;
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            text-align: left;
+            color: #fff;
+            font-size: 1.8rem;
+            margin: 20px 0;
+            background: linear-gradient(45deg, var(--cor-destaque), var(--cor-destaque-escuro));
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+            max-width: 90%;
         }
         
         .video-wrapper {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
             background: #000;
-            border: 2px solid #ff0000;
-            border-radius: 5px;
+            border: 2px solid var(--cor-destaque);
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(232, 58, 159, 0.3);
         }
         
         .video-wrapper iframe {
@@ -96,59 +112,26 @@
     </div>
 
     <div class="video-section">
-        <h2 class="section-title">ÚLTIMOS VÍDEOS</h2>
-        
         <div class="video-container">
-            <h3 class="video-title">O Terror que me Des...</h3>
+            <h3 class="video-title">O Terror que me Destrói por Dentro</h3>
             <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/VIDEO_ID_1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/VIDEO_ID_1" frameborder="0" allowfullscreen></iframe>
             </div>
         </div>
         
         <div class="video-container">
-            <h3 class="video-title">O Oceano Pré-Histór...</h3>
+            <h3 class="video-title">O Oceano Pré-Histórico era Aterrorizante</h3>
             <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/VIDEO_ID_2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/VIDEO_ID_2" frameborder="0" allowfullscreen></iframe>
             </div>
         </div>
         
         <div class="video-container">
-            <h3 class="video-title">Medo de Florestas</h3>
+            <h3 class="video-title">Medo de Florestas - O Que Se Esconde Entre as Árvores</h3>
             <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/VIDEO_ID_3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/VIDEO_ID_3" frameborder="0" allowfullscreen></iframe>
             </div>
         </div>
     </div>
-
-    <script>
-        // Mantive o script da API caso queira voltar a usar depois
-        const canalID = "UCpZ886pfK3UWIK4ywgHEV6g";
-        const apiKey = "SUA_NOVA_CHAVE_API_RESTRITA"; // Use a nova chave com restrições
-
-        async function carregarVideos() {
-            try {
-                const resposta = await fetch(
-                    `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${canalID}&part=snippet&order=date&maxResults=3`
-                );
-                const dados = await resposta.json();
-                
-                if (dados.items && dados.items.length > 0) {
-                    const containers = document.querySelectorAll('.video-container');
-                    
-                    dados.items.forEach((video, index) => {
-                        if (containers[index]) {
-                            containers[index].querySelector('.video-title').textContent = video.snippet.title;
-                            containers[index].querySelector('iframe').src = `https://www.youtube.com/embed/${video.id.videoId}`;
-                        }
-                    });
-                }
-            } catch (erro) {
-                console.error("Erro ao carregar vídeos:", erro);
-            }
-        }
-        
-        // Descomente a linha abaixo quando sua API Key estiver configurada corretamente
-        // carregarVideos();
-    </script>
 </body>
 </html>

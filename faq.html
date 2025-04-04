@@ -3,12 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAQ - Fyori</title>
+    <title>Fyori</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&display=swap');
         
+        :root {
+            --cor-destaque: #e83a9f;
+            --cor-destaque-escuro: #9d2bff;
+            --cor-fundo: #0f0a1a;
+        }
+        
         body { 
-            background-color: #000; 
+            background-color: var(--cor-fundo); 
             color: #fff; 
             font-family: 'Roboto', sans-serif;
             margin: 0;
@@ -19,17 +25,21 @@
         .header {
             text-align: center;
             padding: 30px 0;
-            background-color: #111;
-            border-bottom: 3px solid #ff0000;
+            background-color: #1a1030;
+            border-bottom: 3px solid var(--cor-destaque);
         }
         
         .logo {
             font-family: 'Bebas Neue', cursive;
             font-size: 4rem;
-            color: #ff0000;
+            background: linear-gradient(45deg, var(--cor-destaque), var(--cor-destaque-escuro));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             margin: 0;
             text-decoration: none;
             display: inline-block;
+            letter-spacing: 3px;
         }
         
         nav {
@@ -38,7 +48,7 @@
         
         nav a {
             margin: 0 25px;
-            color: #ff0000;
+            color: var(--cor-destaque);
             text-decoration: none;
             font-size: 1.3rem;
             font-weight: bold;
@@ -48,7 +58,7 @@
         
         nav a:hover {
             color: #fff;
-            text-shadow: 0 0 10px #ff0000;
+            text-shadow: 0 0 10px var(--cor-destaque);
         }
         
         .faq-container {
@@ -57,36 +67,29 @@
             padding: 0 20px;
         }
         
-        .faq-title {
-            font-family: 'Bebas Neue', cursive;
-            color: #ff0000;
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 40px;
-            letter-spacing: 2px;
-        }
-        
         .faq-item {
-            margin-bottom: 30px;
-            border-left: 3px solid #ff0000;
+            margin-bottom: 40px;
+            border-left: 3px solid var(--cor-destaque);
             padding-left: 20px;
         }
         
         .faq-question {
-            color: #ff0000;
-            font-size: 1.5rem;
+            color: var(--cor-destaque);
+            font-size: 1.8rem;
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             cursor: pointer;
             transition: all 0.3s;
+            font-family: 'Bebas Neue', cursive;
+            letter-spacing: 1px;
         }
         
         .faq-question:hover {
-            text-shadow: 0 0 5px #ff0000;
+            text-shadow: 0 0 5px var(--cor-destaque);
         }
         
         .faq-answer {
-            color: #ccc;
+            color: #ddd;
             font-size: 1.1rem;
             margin-bottom: 15px;
         }
@@ -94,7 +97,7 @@
         .faq-divider {
             border: 0;
             height: 1px;
-            background: linear-gradient(to right, transparent, #ff0000, transparent);
+            background: linear-gradient(to right, transparent, var(--cor-destaque), transparent);
             margin: 30px 0;
         }
         
@@ -104,11 +107,12 @@
         }
         
         .support-links a {
-            color: #ff0000;
+            color: var(--cor-destaque);
             text-decoration: none;
             margin: 0 15px;
             font-weight: bold;
             transition: all 0.3s;
+            font-size: 1.2rem;
         }
         
         .support-links a:hover {
@@ -121,13 +125,10 @@
         <a href="https://fyori.cc" class="logo">FYORI</a>
         <nav>
             <a href="https://apoia.se/fyori" target="_blank">APOIA.SE</a>
-            <a href="index.html">INÍCIO</a>
         </nav>
     </div>
 
     <div class="faq-container">
-        <h1 class="faq-title">FAQ</h1>
-        
         <div class="faq-item">
             <div class="faq-question">MERCHANDISE</div>
             <div class="faq-answer">
@@ -173,7 +174,6 @@
         
         <div class="support-links">
             <a href="https://apoia.se/fyori" target="_blank">APOIAR O CANAL</a>
-            <a href="index.html">VOLTAR AO INÍCIO</a>
         </div>
     </div>
 </body>
