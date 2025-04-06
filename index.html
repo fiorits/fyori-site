@@ -75,7 +75,7 @@
             text-shadow: 0 0 10px var(--cor-destaque);
         }
 
-        /* 🌓 Dark/Light Mode Toggle (ROTAÇÃO DE 45 GRAUS) */
+        /* 🌓 Dark/Light Mode Toggle */
         .theme-toggle {
             background: none;
             border: none;
@@ -105,64 +105,75 @@
             background: linear-gradient(135deg, #e0d6ff 0%, #c9b8ff 100%);
         }
 
-        /* Estilos para a seção de vídeos automáticos */
+        /* Seção de Vídeos Automáticos (ATUALIZADA) */
         .auto-videos-container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 40px auto;
             padding: 0 20px;
         }
 
         #last-videos {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
             margin-bottom: 60px;
         }
 
         .video-card {
             background: #000;
-            border: 2px solid var(--cor-destaque);
-            border-radius: 8px;
+            border: 3px solid var(--cor-destaque);
+            border-radius: 12px;
             overflow: hidden;
-            transition: transform 0.3s;
+            transition: all 0.3s;
         }
 
         .video-card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 20px rgba(232, 58, 159, 0.4);
+            transform: scale(1.03);
+            box-shadow: 0 0 30px rgba(232, 58, 159, 0.6);
         }
 
         .video-card iframe {
             width: 100%;
-            aspect-ratio: 16/9;
+            height: 250px;
+            border: none;
         }
 
+        /* Títulos dos Vídeos (ESTILO NOVO) */
         .video-card h3 {
-            padding: 15px;
+            padding: 20px;
             margin: 0;
-            font-family: 'Playfair Display';
-            color: var(--cor-texto);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--cor-destaque);
             text-align: center;
+            background: rgba(15, 10, 26, 0.7);
+            border-top: 2px solid var(--cor-destaque);
+            transition: all 0.3s;
         }
-        
+
+        .video-card:hover h3 {
+            background: rgba(15, 10, 26, 0.9);
+            color: #fff;
+        }
+
+        /* Ajustes para Modo Claro */
+        body.light-mode .video-card h3 {
+            color: var(--cor-destaque-escuro);
+            background: rgba(245, 240, 255, 0.9);
+        }
+
+        body.light-mode .video-card:hover h3 {
+            color: #fff;
+            background: var(--cor-destaque-escuro);
+        }
+
         footer {
             text-align: center;
             padding: 20px;
             color: var(--cor-texto-secundario);
             font-size: 0.8rem;
             margin-top: auto;
-        }
-
-        a.external-link {
-            color: var(--cor-destaque);
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        a.external-link:hover {
-            text-decoration: underline;
-            text-shadow: 0 0 5px var(--cor-destaque);
         }
 
         .loading-videos {
@@ -211,8 +222,8 @@
         });
 
         // API do YouTube - Últimos 3 vídeos
-        const API_KEY = 'AIzaSyCgLTr6nD9fco6AVjsiHcQelv46FCf9lXs'; // Substitua pela sua chave
-        const CHANNEL_ID = 'UCpZ886pfK3UWIK4ywgHEV6g'; // Substitua pelo ID do seu canal
+        const API_KEY = 'SUA_CHAVE_API'; // Substitua pela sua chave
+        const CHANNEL_ID = 'SEU_CHANNEL_ID'; // Substitua pelo ID do seu canal
         const container = document.getElementById('last-videos');
 
         // Primeiro, pega a playlist "Uploads" do canal
