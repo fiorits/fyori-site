@@ -105,54 +105,44 @@
             background: linear-gradient(135deg, #e0d6ff 0%, #c9b8ff 100%);
         }
 
-        body.light-mode .video-wrapper {
-            border: 2px solid var(--cor-destaque-escuro);
-            box-shadow: 0 0 20px rgba(157, 43, 255, 0.2);
-        }
-        
-        .video-section {
+        /* Estilos para a seção de vídeos automáticos */
+        .auto-videos-container {
             max-width: 1000px;
             margin: 40px auto;
             padding: 0 20px;
-            flex: 1;
         }
-        
-        .video-container {
+
+        #last-videos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
             margin-bottom: 60px;
-            text-align: center;
         }
-        
-        .video-title {
-            color: var(--cor-texto);
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            margin: 20px 0;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-        
-        .video-wrapper {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
+
+        .video-card {
             background: #000;
             border: 2px solid var(--cor-destaque);
             border-radius: 8px;
-            box-shadow: 0 0 20px rgba(232, 58, 159, 0.3);
+            overflow: hidden;
             transition: transform 0.3s;
         }
 
-        .video-wrapper:hover {
+        .video-card:hover {
             transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(232, 58, 159, 0.4);
         }
-        
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
+
+        .video-card iframe {
             width: 100%;
-            height: 100%;
+            aspect-ratio: 16/9;
+        }
+
+        .video-card h3 {
+            padding: 15px;
+            margin: 0;
+            font-family: 'Playfair Display';
+            color: var(--cor-texto);
+            text-align: center;
         }
         
         footer {
@@ -174,6 +164,13 @@
             text-decoration: underline;
             text-shadow: 0 0 5px var(--cor-destaque);
         }
+
+        .loading-videos {
+            text-align: center;
+            color: var(--cor-destaque);
+            font-size: 1.2rem;
+            padding: 40px 0;
+        }
     </style>
 </head>
 <body>
@@ -186,26 +183,9 @@
         </nav>
     </div>
 
-    <div class="video-section">
-        <div class="video-container">
-            <h3 class="video-title">O Terror que me Destrói por Dentro</h3>
-            <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/CKiGck6PH7I" frameborder="0" allowfullscreen></iframe>
-            </div>
-        </div>
-        
-        <div class="video-container">
-            <h3 class="video-title">O Oceano Pré-Histórico era Aterrorizante</h3>
-            <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/CiK4G3-l05k" frameborder="0" allowfullscreen></iframe>
-            </div>
-        </div>
-        
-        <div class="video-container">
-            <h3 class="video-title">Medo de Florestas</h3>
-            <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/OYEeDM0fodQ" frameborder="0" allowfullscreen></iframe>
-            </div>
+    <div class="auto-videos-container">
+        <div id="last-videos">
+            <div class="loading-videos">Carregando vídeos...</div>
         </div>
     </div>
 
@@ -229,6 +209,45 @@
             document.body.classList.toggle('light-mode');
             localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
         });
+
+        // API do YouTube - Últimos 3 vídeos
+        const API_KEY = 'AIzaSyCgLTr6nD9fco6AVjsiHcQelv46FCf9lXs'; // Substitua pela sua chave
+        const CHANNEL_ID = 'UCpZ886pfK3UWIK4ywgHEV6g'; // Substitua pelo ID do seu canal
+        const container = document.getElementById('last-videos');
+
+        // Primeiro, pega a playlist "Uploads" do canal
+        fetch(`https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${CHANNEL_ID}&key=${API_KEY}`)
+            .then(response => response.json())
+            .then(data => {
+                const uploadsPlaylistId = data.items[0].contentDetails.relatedPlaylists.uploads;
+                
+                // Agora pega os vídeos da playlist
+                fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=3&playlistId=${uploadsPlaylistId}&key=${API_KEY}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        container.innerHTML = ''; // Limpa o "Carregando..."
+                        
+                        data.items.forEach(item => {
+                            const videoId = item.snippet.resourceId.videoId;
+                            const title = item.snippet.title;
+                            
+                            container.innerHTML += `
+                                <div class="video-card">
+                                    <iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
+                                    <h3>${title}</h3>
+                                </div>
+                            `;
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Erro ao carregar vídeos:', error);
+                        container.innerHTML = '<p style="color:var(--cor-destaque);text-align:center;">Erro ao carregar vídeos. Tente recarregar a página.</p>';
+                    });
+            })
+            .catch(error => {
+                console.error('Erro ao buscar canal:', error);
+                container.innerHTML = '<p style="color:var(--cor-destaque);text-align:center;">Erro ao conectar ao YouTube.</p>';
+            });
 
         // Verifica erros nos iframes
         document.addEventListener('DOMContentLoaded', function() {
