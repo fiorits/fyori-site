@@ -75,7 +75,6 @@
             text-shadow: 0 0 10px var(--cor-destaque);
         }
 
-        /* 🌓 Dark/Light Mode Toggle */
         .theme-toggle {
             background: none;
             border: none;
@@ -94,7 +93,6 @@
             color: var(--cor-texto);
         }
 
-        /* Light Mode Styles */
         body.light-mode {
             --cor-fundo: #f5f0ff;
             --cor-texto: #222;
@@ -105,67 +103,56 @@
             background: linear-gradient(135deg, #e0d6ff 0%, #c9b8ff 100%);
         }
 
-        /* Seção de Vídeos Automáticos (ATUALIZADA) */
+        /* SEÇÃO DE VÍDEOS (TAMANHO MÉDIO-GRANDE) */
         .auto-videos-container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 40px auto;
             padding: 0 20px;
         }
 
         #last-videos {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-            gap: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+            gap: 35px;
             margin-bottom: 60px;
         }
 
         .video-card {
-            background: #000;
+            background: transparent;
             border: 3px solid var(--cor-destaque);
-            border-radius: 12px;
+            border-radius: 10px;
             overflow: hidden;
             transition: all 0.3s;
         }
 
         .video-card:hover {
-            transform: scale(1.03);
-            box-shadow: 0 0 30px rgba(232, 58, 159, 0.6);
+            transform: scale(1.02);
+            box-shadow: 0 0 25px rgba(232, 58, 159, 0.5);
         }
 
+        /* PROPORÇÃO PERFEITA 16:9 SEM BORDAS PRETAS */
         .video-card iframe {
             width: 100%;
-            height: 400px;
+            aspect-ratio: 16/9;
             border: none;
+            display: block;
         }
 
-        /* Títulos dos Vídeos (ESTILO NOVO) */
         .video-card h3 {
-            padding: 20px;
+            padding: 18px;
             margin: 0;
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             color: var(--cor-destaque);
             text-align: center;
-            background: rgba(15, 10, 26, 0.7);
+            background: rgba(15, 10, 26, 0.85);
             border-top: 2px solid var(--cor-destaque);
-            transition: all 0.3s;
         }
 
-        .video-card:hover h3 {
-            background: rgba(15, 10, 26, 0.9);
-            color: #fff;
-        }
-
-        /* Ajustes para Modo Claro */
         body.light-mode .video-card h3 {
             color: var(--cor-destaque-escuro);
-            background: rgba(245, 240, 255, 0.9);
-        }
-
-        body.light-mode .video-card:hover h3 {
-            color: #fff;
-            background: var(--cor-destaque-escuro);
+            background: rgba(245, 240, 255, 0.85);
         }
 
         footer {
@@ -205,38 +192,32 @@
     </footer>
 
     <script>
-        // Dark/Light Mode Toggle
         const themeToggle = document.querySelector('.theme-toggle');
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
-        // Verifica tema salvo ou preferência do sistema
         const currentTheme = localStorage.getItem('theme');
         if (currentTheme === 'light' || (!currentTheme && !prefersDark.matches)) {
             document.body.classList.add('light-mode');
         }
 
-        // Alterna tema
         themeToggle.addEventListener('click', () => {
             document.body.classList.toggle('light-mode');
             localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
         });
 
-        // API do YouTube - Últimos 3 vídeos
-        const API_KEY = 'AIzaSyCgLTr6nD9fco6AVjsiHcQelv46FCf9lXs'; // Substitua pela sua chave
-        const CHANNEL_ID = 'UCpZ886pfK3UWIK4ywgHEV6g'; // Substitua pelo ID do seu canal
+        const API_KEY = 'SUA_CHAVE_API';
+        const CHANNEL_ID = 'SEU_CHANNEL_ID';
         const container = document.getElementById('last-videos');
 
-        // Primeiro, pega a playlist "Uploads" do canal
         fetch(`https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${CHANNEL_ID}&key=${API_KEY}`)
             .then(response => response.json())
             .then(data => {
                 const uploadsPlaylistId = data.items[0].contentDetails.relatedPlaylists.uploads;
                 
-                // Agora pega os vídeos da playlist
                 fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=3&playlistId=${uploadsPlaylistId}&key=${API_KEY}`)
                     .then(response => response.json())
                     .then(data => {
-                        container.innerHTML = ''; // Limpa o "Carregando..."
+                        container.innerHTML = '';
                         
                         data.items.forEach(item => {
                             const videoId = item.snippet.resourceId.videoId;
@@ -260,7 +241,6 @@
                 container.innerHTML = '<p style="color:var(--cor-destaque);text-align:center;">Erro ao conectar ao YouTube.</p>';
             });
 
-        // Verifica erros nos iframes
         document.addEventListener('DOMContentLoaded', function() {
             const iframes = document.querySelectorAll('iframe');
             
