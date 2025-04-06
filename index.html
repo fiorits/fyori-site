@@ -103,56 +103,57 @@
             background: linear-gradient(135deg, #e0d6ff 0%, #c9b8ff 100%);
         }
 
-        /* SEÇÃO DE VÍDEOS (TAMANHO MÉDIO-GRANDE) */
+        /* SEÇÃO DE VÍDEOS - VERSÃO AMPLIADA */
         .auto-videos-container {
-            max-width: 1100px;
+            max-width: 1400px; /* Container mais largo */
             margin: 40px auto;
             padding: 0 20px;
         }
 
         #last-videos {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
-            gap: 35px;
+            grid-template-columns: repeat(auto-fit, minmax(650px, 1fr)); /* Cards 2x mais largos */
+            gap: 50px; /* Espaçamento aumentado */
             margin-bottom: 60px;
         }
 
         .video-card {
             background: transparent;
             border: 3px solid var(--cor-destaque);
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
             transition: all 0.3s;
         }
 
         .video-card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 25px rgba(232, 58, 159, 0.5);
+            transform: scale(1.03);
+            box-shadow: 0 0 30px rgba(232, 58, 159, 0.6);
         }
 
-        /* PROPORÇÃO PERFEITA 16:9 SEM BORDAS PRETAS */
+        /* Miniaturas 2x maiores com proporção 16:9 */
         .video-card iframe {
             width: 100%;
-            aspect-ratio: 16/9;
+            height: 366px; /* 2x a altura anterior (183px) mantendo 16:9 */
             border: none;
             display: block;
         }
 
+        /* Títulos ajustados */
         .video-card h3 {
-            padding: 18px;
+            padding: 22px;
             margin: 0;
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
-            font-size: 1.25rem;
+            font-size: 1.5rem; /* Texto maior */
             color: var(--cor-destaque);
             text-align: center;
-            background: rgba(15, 10, 26, 0.85);
+            background: rgba(15, 10, 26, 0.9);
             border-top: 2px solid var(--cor-destaque);
         }
 
         body.light-mode .video-card h3 {
             color: var(--cor-destaque-escuro);
-            background: rgba(245, 240, 255, 0.85);
+            background: rgba(245, 240, 255, 0.9);
         }
 
         footer {
@@ -205,8 +206,8 @@
             localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
         });
 
-        const API_KEY = 'AIzaSyCgLTr6nD9fco6AVjsiHcQelv46FCf9lXs';
-        const CHANNEL_ID = 'UCpZ886pfK3UWIK4ywgHEV6g';
+        const API_KEY = 'SUA_CHAVE_API';
+        const CHANNEL_ID = 'SEU_CHANNEL_ID';
         const container = document.getElementById('last-videos');
 
         fetch(`https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${CHANNEL_ID}&key=${API_KEY}`)
