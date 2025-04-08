@@ -59,7 +59,7 @@
         }
         
         nav a {
-            margin: 0 20px;
+            margin: 0 15px;
             color: var(--cor-destaque);
             text-decoration: none;
             font-family: 'Montserrat', sans-serif;
@@ -105,15 +105,17 @@
 
         /* SEÇÃO DE VÍDEOS - VERSÃO AMPLIADA */
         .auto-videos-container {
-            max-width: 1400px; /* Container mais largo */
+            max-width: 1400px;
             margin: 40px auto;
             padding: 0 20px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         #last-videos {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(650px, 1fr)); /* Cards 2x mais largos */
-            gap: 50px; /* Espaçamento aumentado */
+            grid-template-columns: repeat(auto-fit, minmax(650px, 1fr));
+            gap: 30px;
             margin-bottom: 60px;
         }
 
@@ -123,6 +125,7 @@
             border-radius: 12px;
             overflow: hidden;
             transition: all 0.3s;
+            width: 100%;
         }
 
         .video-card:hover {
@@ -130,10 +133,10 @@
             box-shadow: 0 0 30px rgba(232, 58, 159, 0.6);
         }
 
-        /* Miniaturas 2x maiores com proporção 16:9 */
+        /* Miniaturas responsivas */
         .video-card iframe {
             width: 100%;
-            height: 366px; /* 2x a altura anterior (183px) mantendo 16:9 */
+            height: 366px;
             border: none;
             display: block;
         }
@@ -144,7 +147,7 @@
             margin: 0;
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
-            font-size: 1.5rem; /* Texto maior */
+            font-size: 1.5rem;
             color: var(--cor-destaque);
             text-align: center;
             background: rgba(15, 10, 26, 0.9);
@@ -169,6 +172,69 @@
             color: var(--cor-destaque);
             font-size: 1.2rem;
             padding: 40px 0;
+        }
+
+        /* MEDIA QUERIES PARA DISPOSITIVOS MÓVEIS */
+        @media (max-width: 1200px) {
+            #last-videos {
+                grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            }
+            
+            .video-card iframe {
+                height: 281px; /* 16:9 para 500px de largura */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 20px 0 15px 0;
+            }
+            
+            .logo {
+                font-size: 3rem;
+            }
+            
+            nav a {
+                margin: 0 10px;
+                font-size: 1rem;
+            }
+            
+            #last-videos {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .video-card iframe {
+                height: calc(56.25vw - 40px); /* 16:9 proporção baseada na largura da viewport */
+                min-height: 200px;
+                max-height: 350px;
+            }
+            
+            .video-card h3 {
+                padding: 15px;
+                font-size: 1.2rem;
+            }
+            
+            .auto-videos-container {
+                margin: 20px auto;
+                padding: 0 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            nav a {
+                margin: 0 8px;
+                font-size: 0.9rem;
+            }
+            
+            .video-card h3 {
+                font-size: 1.1rem;
+                padding: 12px;
+            }
         }
     </style>
 </head>
