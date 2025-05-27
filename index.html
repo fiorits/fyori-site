@@ -135,6 +135,10 @@
             align-items: center;
             background-color: rgba(15, 10, 26, 0.7);
         }
+        
+        body.light-mode .avatar-container {
+            background-color: transparent;
+        }
 
         .avatar-container img {
             width: 200px;
@@ -143,9 +147,11 @@
             border-radius: 50%;
         }
 
+        /* EFEITO REMOVIDO
         .avatar-container:hover {
             transform: scale(1.05);
         }
+        */
 
         .bio-text {
             max-width: 700px;
@@ -243,7 +249,7 @@
             transform: translateY(-3px);
         }
 
-        /* Efeito de pulso para "Visite meu canal" */
+        /* EFEITO DE SUBLINHADO REMOVIDO
         .section-title::after {
             content: '';
             position: absolute;
@@ -261,6 +267,7 @@
             transform: scaleX(1);
             transform-origin: left;
         }
+        */
 
         /* SEÇÃO DE VÍDEOS */
         .auto-videos-container {
@@ -369,7 +376,7 @@
 </head>
 <body>
     <div class="header">
-        <a href="https://fyori.cc" class="logo">FYORI</a>
+        <a href="https://www.fyori.com.br" class="logo">FYORI</a>
         <nav>
             <a href="https://apoia.se/fyori" target="_blank">APOIE O CANAL</a>
             <a href="faq.html">FAQ</a>
@@ -391,7 +398,7 @@
             
             <div class="social-links">
                 <div class="social-icon-container" data-tooltip="YouTube">
-                    <a href="https://youtube.com/@fyori" target="_blank" aria-label="YouTube">
+                    <a href="https://www.youtube.com/channel/UCpZ886pfK3UWIK4ywgHEV6g" target="_blank" aria-label="YouTube">
                         <img src="Imagens/youtube-icon.png" alt="YouTube" class="social-icon">
                     </a>
                 </div>
@@ -414,7 +421,7 @@
             
             <hr class="divider">
             
-            <a href="https://youtube.com/@fyori" class="section-title" target="_blank">VISITE MEU CANAL</a>
+            <a href="https://www.youtube.com/channel/UCpZ886pfK3UWIK4ywgHEV6g" class="section-title" target="_blank">VISITE MEU CANAL</a>
         </div>
         
         <div class="auto-videos-container">
@@ -442,6 +449,9 @@
             localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
         });
 
+        // NOTA DE SEGURANÇA IMPORTANTE: Sua chave de API está visível no código.
+        // É altamente recomendável mover a lógica de busca para um backend
+        // para proteger sua chave contra uso indevido.
         const API_KEY = 'AIzaSyCgLTr6nD9fco6AVjsiHcQelv46FCf9lXs';
         const CHANNEL_ID = 'UCpZ886pfK3UWIK4ywgHEV6g';
         const container = document.getElementById('last-videos');
@@ -464,7 +474,7 @@
                                 <div class="video-card">
                                     <iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
                                     <h3>${title}</h3>
-                                </div>
+                                 </div>
                             `;
                         });
                     })
