@@ -122,13 +122,18 @@
         }
 
         .avatar-container {
-            width: 200px;
-            height: 200px;
+            width: 240px; /* Aumentado de 200px para 240px */
+            height: 240px; /* Aumentado de 200px para 240px */
             border-radius: 50%;
             overflow: hidden;
             border: 3px solid var(--cor-destaque);
             box-shadow: 0 0 30px rgba(232, 58, 159, 0.5);
             margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .avatar-container:hover {
+            transform: scale(1.05);
         }
 
         .avatar-container img {
@@ -154,17 +159,46 @@
             display: flex;
             gap: 20px;
             margin-bottom: 30px;
+            position: relative;
         }
 
         .social-link {
             color: var(--cor-texto);
             font-size: 2rem;
             transition: all 0.3s;
+            position: relative;
+            display: inline-block;
         }
 
         .social-link:hover {
             color: var(--cor-destaque);
             transform: translateY(-3px);
+        }
+
+        /* Tooltip para redes sociais */
+        .social-link::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background-color: var(--cor-destaque);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-family: 'Montserrat', sans-serif;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .social-link:hover::after {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
         }
 
         .divider {
@@ -192,7 +226,7 @@
             text-shadow: 0 0 15px rgba(232, 58, 159, 0.5);
         }
 
-        /* SEÇÃO DE VÍDEOS (mantida mas ajustada) */
+        /* SEÇÃO DE VÍDEOS */
         .auto-videos-container {
             max-width: 1000px;
             margin: 0 auto 60px auto;
@@ -283,6 +317,11 @@
             .section-title {
                 font-size: 2rem;
             }
+            
+            .avatar-container {
+                width: 200px;
+                height: 200px;
+            }
         }
     </style>
 </head>
@@ -309,10 +348,10 @@
             </p>
             
             <div class="social-links">
-                <a href="https://youtube.com/@fyori" class="social-link" target="_blank" aria-label="YouTube">▶️</a>
-                <a href="https://instagram.com/fyoritss" class="social-link" target="_blank" aria-label="Instagram Pessoal">📸</a>
-                <a href="https://instagram.com/fyori.ytb" class="social-link" target="_blank" aria-label="Instagram do Canal">🎥</a>
-                <a href="https://x.com/fyoriytb" class="social-link" target="_blank" aria-label="Twitter/X">𝕏</a>
+                <a href="https://youtube.com/@fyori" class="social-link" target="_blank" aria-label="YouTube" data-tooltip="YouTube">▶️</a>
+                <a href="https://instagram.com/fyoritss" class="social-link" target="_blank" aria-label="Instagram Pessoal" data-tooltip="Meu Instagram">📸</a>
+                <a href="https://instagram.com/fyori.ytb" class="social-link" target="_blank" aria-label="Instagram do Canal" data-tooltip="Instagram do Canal">🎥</a>
+                <a href="https://x.com/fyoriytb" class="social-link" target="_blank" aria-label="Twitter/X" data-tooltip="X/Twitter">𝕏</a>
             </div>
             
             <hr class="divider">
