@@ -122,14 +122,25 @@
         }
 
         .avatar-container {
-            width: 200px; /* Aabaixado de 240px para 200px */
-            height: 200px; /* Abaixado de 240px para 200px */
-            border-radius: 65%;
-            overflow: hidden;
-            border: 3px solid var(--cor-destaque);
-            box-shadow: 0 0 30px rgba(232, 58, 159, 0.5);
-            margin-bottom: 20px;
-            transition: transform 0.3s ease;
+        width: 240px; /* Círculo maior */
+        height: 240px; /* Círculo maior */
+        border-radius: 50%;
+        overflow: hidden;
+        border: 3px solid var(--cor-destaque);
+        box-shadow: 0 0 30px rgba(232, 58, 159, 0.5);
+        margin-bottom: 20px;
+        transition: transform 0.3s ease;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(15, 10, 26, 0.7); /* Fundo caso a imagem seja pequena */
+        }
+
+        .avatar-container img {
+        width: 200px; /* Mantém o tamanho original da imagem */
+        height: 200px; /* Mantém o tamanho original da imagem */
+        object-fit: cover;
+        border-radius: 50%;
         }
 
         .avatar-container:hover {
