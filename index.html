@@ -200,7 +200,7 @@
             position: absolute;
             top: 100%;
             left: 50%;
-            transform: translateX(-50%) translateY(5px);
+            transform: translateX(-50%) translateY(0px); /* Ajustado para diminuir a distância */
             background-color: var(--cor-destaque);
             color: white;
             padding: 5px 15px;
@@ -221,7 +221,7 @@
         .social-icon-container:hover::after {
             opacity: 1;
             visibility: visible;
-            transform: translateX(-50%) translateY(10px);
+            transform: translateX(-50%) translateY(5px); /* Ajustado para diminuir a distância */
         }
 
         .divider {
@@ -232,6 +232,13 @@
             border: none;
         }
 
+        .vertical-divider {
+            width: 1px;
+            height: 34px; /* Mesma altura dos ícones */
+            background: linear-gradient(to bottom, transparent, var(--cor-destaque), transparent);
+            margin: 0 10px; /* Espaçamento ao redor do divider vertical */
+        }
+
         .section-title {
             font-family: 'Playfair Display', serif;
             font-size: 2.5rem;
@@ -239,7 +246,7 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin: 0 0 30px 0;
+            margin: 0 0 20px 0; /* Ajustado para diminuir o espaço */
             text-shadow: 0 0 10px rgba(232, 58, 159, 0.3);
             text-decoration: none;
             transition: all 0.3s;
@@ -375,8 +382,8 @@
             
             <p class="bio-text">
                 Opa, eu sou o <span class="highlight">Fyori</span>.<br><br>
-                Sou criador de conteúdo e contador de histórias.Meu trabalho é transportar as pessoas para outros mundos com o poder do storytelling.<br><br>
-                No YouTube, compartilho vídeos de terror, mistério e muito mais, com vídeos que já foram vistos por milhões de pessoas.
+                Criador de conteúdo, contador de histórias e explorador do misterioso. Meu trabalho navega entre o terror e as narrativas que nos fazem questionar a realidade.<br><br>
+                No YouTube, compartilho minhas investigações e análises sobre esses temas, com vídeos que já foram vistos por milhões de pessoas.
             </p>
             
             <div class="social-links">
@@ -395,9 +402,29 @@
                         <img src="Imagens/instagram2-icon.png" alt="Instagram do Canal" class="social-icon">
                     </a>
                 </div>
+                <div class="social-icon-container" data-tooltip="Discord">
+                    <a href="https://discord.com/invite/TTEVwfVpnB" target="_blank" aria-label="Discord">
+                        <img src="Imagens/discord-icon.png" alt="Discord" class="social-icon">
+                    </a>
+                </div>
                 <div class="social-icon-container" data-tooltip="X/Twitter">
                     <a href="https://x.com/fyoriytb" target="_blank" aria-label="Twitter/X">
                         <img src="Imagens/x-icon.png" alt="X/Twitter" class="social-icon">
+                    </a>
+                </div>
+                <div class="vertical-divider"></div> <div class="social-icon-container" data-tooltip="Podcast (em breve)">
+                    <a href="#" target="_blank" aria-label="Podcast">
+                        <img src="Imagens/podcast-icon.png" alt="Podcast" class="social-icon">
+                    </a>
+                </div>
+                <div class="social-icon-container" data-tooltip="Loja (em breve)">
+                    <a href="#" target="_blank" aria-label="Loja">
+                        <img src="Imagens/loja-icon.png" alt="Loja" class="social-icon">
+                    </a>
+                </div>
+                <div class="social-icon-container" data-tooltip="Curso de edição e storytelling (em breve)">
+                    <a href="#" target="_blank" aria-label="Curso">
+                        <img src="Imagens/curso-icon.png" alt="Curso" class="social-icon">
                     </a>
                 </div>
             </div>
