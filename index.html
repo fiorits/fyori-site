@@ -170,20 +170,70 @@
             font-size: 1.2rem;
             padding: 40px 0;
         }
+        .fyori-card {
+    max-width: 720px;
+    margin: 40px auto 60px;
+    background: linear-gradient(145deg, var(--cor-destaque), var(--cor-destaque-escuro));
+    border-radius: 18px;
+    padding: 30px 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 0 20px rgba(232, 58, 159, 0.4);
+    text-align: center;
+}
+
+.fyori-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    object-fit: cover;
+    box-shadow: 0 0 10px rgba(255,255,255,0.2);
+    margin-bottom: 20px;
+}
+
+.fyori-frase {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 18px;
+    text-shadow: 0 0 8px rgba(0,0,0,0.3);
+}
+
+.fyori-socials a {
+    font-size: 1.6rem;
+    margin: 0 12px;
+    color: #fff;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+}
+
+.fyori-socials a:hover {
+    transform: scale(1.2);
+    text-shadow: 0 0 10px #fff;
+}
+
+.fyori-email {
+    margin-top: 16px;
+    font-size: 1rem;
+    color: #fff;
+}
+
+.fyori-email a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.fyori-email a:hover {
+    text-shadow: 0 0 5px #fff;
+}
+
     </style>
 </head>
 <body>
-    <section class="fyori-intro">
-    <img src="avatar-fyori.png" alt="Avatar Fyori" class="fyori-avatar">
-    <h1 class="fyori-frase">Narrando histórias que merecem ser contadas</h1>
-    <div class="fyori-socials">
-        <a href="https://www.youtube.com/@Fyori" target="_blank" title="YouTube">🎥</a>
-        <a href="https://www.instagram.com/fyori.ytb/" target="_blank" title="Instagram">📸</a>
-        <a href="https://x.com/fyoriytb" target="_blank" title="X / Twitter">🐦</a>
-    </div>
-    <p class="fyori-email">💌 <a href="mailto:fyori.contato@gmail.com">fyori.contato@gmail.com</a></p>
-</section>
-
     <div class="header">
         <a href="https://fyori.cc" class="logo">FYORI</a>
         <nav>
@@ -192,7 +242,18 @@
             <button class="theme-toggle" aria-label="Alternar tema">🌓</button>
         </nav>
     </div>
-
+    <section class="fyori-card">
+        <img src="avatar-fyori.png" alt="Avatar Fyori" class="fyori-avatar">
+        <div class="fyori-info">
+            <h2 class="fyori-frase">Narrando histórias que merecem ser contadas</h2>
+            <div class="fyori-socials">
+                <a href="https://www.youtube.com/@Fyori" target="_blank" title="YouTube">🎥</a>
+                <a href="https://www.instagram.com/fyori.ytb/" target="_blank" title="Instagram">📸</a>
+                <a href="https://x.com/fyoriytb" target="_blank" title="X / Twitter">🐦</a>
+            </div>
+            <p class="fyori-email">💌 <a href="mailto:fyori.contato@gmail.com">fyori.contato@gmail.com</a></p>
+        </div>
+    </section>    
     <div class="auto-videos-container">
         <div id="last-videos">
             <div class="loading-videos">Carregando vídeos...</div>
