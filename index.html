@@ -33,8 +33,8 @@
             display: flex;
             flex-direction: column;
             transition: background 0.3s ease, color 0.3s ease;
-            overflow-x: hidden; /* Garante que não haja rolagem horizontal */
             width: 100vw; /* Garante que o body ocupe 100% da largura da viewport */
+            overflow-x: hidden; /* Garante que não haja rolagem horizontal */
         }
         
         .header {
@@ -64,6 +64,9 @@
         
         nav {
             margin: 20px 0 15px 0;
+            display: flex; /* Adicionado para flexbox */
+            justify-content: center; /* Centraliza itens de navegação */
+            flex-wrap: wrap; /* Permite que os links quebrem para a próxima linha */
         }
         
         nav a {
@@ -76,6 +79,7 @@
             letter-spacing: 1px;
             transition: all 0.3s;
             text-transform: uppercase;
+            white-space: nowrap; /* Impede quebras de linha nos links de navegação */
         }
         
         nav a:hover {
@@ -165,6 +169,7 @@
             margin-bottom: 30px;
             color: var(--cor-texto-secundario);
             width: 100%; /* Garante que o texto se ajuste */
+            padding: 0 10px; /* Adicionado padding para evitar que o texto encoste nas bordas em telas pequenas */
         }
 
         .highlight {
@@ -181,6 +186,7 @@
             position: relative;
             /* Removendo max-width aqui para deixar o flexbox gerenciar o wrap */
             /* Isso pode ter sido um problema anterior que causava o overflow */
+            padding: 0 5px; /* Pequeno padding para o container de links sociais */
         }
 
         .social-icon {
@@ -210,6 +216,7 @@
             position: relative;
             display: inline-block;
             /* Removendo overflow: hidden se houver, para evitar cortar tooltips */
+            min-width: 0; /* Permite que o flex item encolha abaixo do seu conteúdo intrínseco */
         }
 
         .social-icon-container::after {
@@ -270,6 +277,7 @@
             transition: all 0.3s;
             position: relative;
             display: inline-block;
+            white-space: nowrap; /* Evita quebra de linha no título da seção */
         }
 
         .section-title:hover {
@@ -296,6 +304,7 @@
             border-radius: 12px;
             overflow: hidden;
             transition: all 0.3s;
+            min-width: 0; /* Permite que o item de grid encolha */
         }
 
         .video-card:hover {
@@ -351,7 +360,7 @@
             
             nav a {
                 font-size: 1rem;
-                margin: 0 10px;
+                margin: 0 8px; /* Reduz margem para links de navegação */
             }
             
             .bio-text {
@@ -360,8 +369,7 @@
             }
             
             .social-links {
-                /* Reduz o gap para evitar overflow em telas muito pequenas */
-                gap: 10px; 
+                gap: 10px; /* Reduz o gap para evitar overflow em telas muito pequenas */
             }
             
             .social-icon {
@@ -384,25 +392,31 @@
             }
         }
 
-        /* Adicionando media query para telas ainda menores, se necessário */
+        /* Adicionando media query para telas ainda menores */
         @media (max-width: 480px) {
-            .social-links {
-                gap: 8px; /* Mais redução do gap para telas ultra-pequenas */
-            }
-            .social-icon {
-                width: 28px;
-                height: 28px;
-            }
-            .vertical-divider {
-                height: 28px; /* Ajusta a altura do divider com os ícones menores */
-                margin: 0 5px;
-            }
             .logo {
                 font-size: 2.5rem;
             }
             nav a {
                 font-size: 0.9rem;
+                margin: 0 5px; /* Reduz ainda mais a margem para links de navegação */
+            }
+            .social-links {
+                gap: 5px; /* Mais redução do gap para telas ultra-pequenas */
+            }
+            .social-icon {
+                width: 26px; /* Ícones um pouco menores */
+                height: 26px;
+            }
+            .vertical-divider {
+                height: 26px; /* Ajusta a altura do divider com os ícones menores */
                 margin: 0 5px;
+            }
+            .bio-text {
+                padding: 0 5px; /* Reduz padding para textos em telas muito pequenas */
+            }
+            .main-content {
+                padding: 0 10px; /* Reduz padding do conteúdo principal */
             }
         }
     </style>
@@ -425,8 +439,8 @@
             
             <p class="bio-text">
                 Opa, eu sou o <span class="highlight">Fyori</span>.<br><br>
-                Criador de conteúdo, contador de histórias e explorador do misterioso. Meu trabalho navega entre o terror e as narrativas que nos fazem questionar a realidade.<br><br>
-                No YouTube, compartilho minhas investigações e análises sobre esses temas, com vídeos que já foram vistos por milhões de pessoas.
+                Sou criador de conteúdo e contador de histórias. Meu trabalho é transportar as pessoas para mundos com o poder do storytelling.<br><br>
+                No YouTube, compartilho vídeos sobre terror, mistério e muito mais, que já foram vistos por milhões de pessoas.
             </p>
             
             <div class="social-links">
@@ -435,14 +449,14 @@
                         <img src="Imagens/youtube-icon.png" alt="YouTube" class="social-icon">
                     </a>
                 </div>
-                <div class="social-icon-container" data-tooltip="Meu Instagram">
-                    <a href="https://instagram.com/fyoritss" target="_blank" aria-label="Instagram Pessoal">
-                        <img src="Imagens/instagram-icon.png" alt="Instagram Pessoal" class="social-icon">
+                <div class="social-icon-container" data-tooltip="Instagram">
+                    <a href="https://instagram.com/fyoritss" target="_blank" aria-label="Instagram">
+                        <img src="Imagens/instagram-icon.png" alt="Instagram" class="social-icon">
                     </a>
                 </div>
-                <div class="social-icon-container" data-tooltip="Instagram do Canal">
-                    <a href="https://instagram.com/fyori.ytb" target="_blank" aria-label="Instagram do Canal">
-                        <img src="Imagens/instagram2-icon.png" alt="Instagram do Canal" class="social-icon">
+                <div class="social-icon-container" data-tooltip="Instagram (Canal)">
+                    <a href="https://instagram.com/fyori.ytb" target="_blank" aria-label="Instagram (Canal)">
+                        <img src="Imagens/instagram2-icon.png" alt="Instagram (Canal)" class="social-icon">
                     </a>
                 </div>
                 <div class="social-icon-container" data-tooltip="Discord">
@@ -455,7 +469,7 @@
                         <img src="Imagens/x-icon.png" alt="X/Twitter" class="social-icon">
                     </a>
                 </div>
-                <div class="vertical-divider"></div> <div class="social-icon-container" data-tooltip="Podcast (em breve)">
+                <div class="vertical-divider"></div><div class="social-icon-container" data-tooltip="Podcast (em breve)">
                     <span aria-label="Podcast">
                         <img src="Imagens/podcast-icon.png" alt="Podcast" class="social-icon">
                     </span>
