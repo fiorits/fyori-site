@@ -242,7 +242,8 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin: 0 0 20px 0;
+            /* Diminuindo o margin-bottom para aproximar dos vídeos */
+            margin: 0 0 15px 0; 
             text-shadow: 0 0 10px rgba(232, 58, 159, 0.3);
             text-decoration: none;
             transition: all 0.3s;
@@ -263,8 +264,10 @@
 
         #last-videos {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            /* Alterado para permitir 3 colunas se houver espaço, caso contrário, 1 coluna */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
             gap: 30px;
+            justify-content: center; /* Centraliza o grid dentro do container */
         }
 
         .video-card {
@@ -336,6 +339,9 @@
             
             .social-links {
                 gap: 15px;
+                /* Adicionado flex-wrap para garantir que os ícones quebrem linha em telas menores */
+                flex-wrap: wrap; 
+                justify-content: center;
             }
             
             .social-icon {
@@ -355,6 +361,31 @@
             .avatar-container img {
                 width: 170px;
                 height: 170px;
+            }
+
+            /* Em telas menores que 768px, os vídeos podem ir para uma única coluna */
+            #last-videos {
+                grid-template-columns: 1fr; /* Força uma coluna em telas menores */
+                gap: 20px; /* Ajusta o gap para uma única coluna */
+            }
+        }
+
+        /* Nova media query para telas muito pequenas, se necessário, para garantir que não haja overflow */
+        @media (max-width: 480px) {
+            nav a {
+                margin: 0 5px; /* Reduz ainda mais o espaçamento dos links de navegação */
+                font-size: 0.9rem;
+            }
+            .social-links {
+                gap: 10px; /* Reduz o gap dos ícones sociais em telas ultra-pequenas */
+            }
+            .social-icon {
+                width: 28px;
+                height: 28px;
+            }
+            .vertical-divider {
+                height: 28px; /* Ajusta a altura do divider com os ícones menores */
+                margin: 0 5px;
             }
         }
     </style>
@@ -427,7 +458,7 @@
             
             <hr class="divider">
             
-            <a href="https://www.youtube.com/channel/UCpZ886pfK3UWIK4ywgHEV6g" class="section-title" target="_blank">VISITE MEU CANAL</a>
+            <a href="https://www.youtube.com/channel/UCpZ886pfK3UWIK4ywgHEV6g" class="section-title" target="_blank">ÚLTIMOS VÍDEOS</a>
         </div>
         
         <div class="auto-videos-container">
