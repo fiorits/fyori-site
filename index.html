@@ -10,6 +10,11 @@
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap" as="style">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap">
     <style>
+        /* Adicionado para garantir que padding e border sejam incluídos na largura/altura */
+        * {
+            box-sizing: border-box;
+        }
+
         :root {
             --cor-destaque: #e83a9f;
             --cor-destaque-escuro: #9d2bff;
@@ -29,6 +34,7 @@
             flex-direction: column;
             transition: background 0.3s ease, color 0.3s ease;
             overflow-x: hidden; /* Garante que não haja rolagem horizontal */
+            width: 100vw; /* Garante que o body ocupe 100% da largura da viewport */
         }
         
         .header {
@@ -37,6 +43,7 @@
             background: linear-gradient(135deg, #1a1030 0%, #2a1a50 100%);
             border-bottom: 3px solid var(--cor-destaque);
             transition: background 0.3s ease;
+            width: 100%; /* Garante que o header ocupe 100% da largura */
         }
         
         .logo {
@@ -112,6 +119,7 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
+            width: 100%; /* Garante que o main-content ocupe 100% da largura disponível menos padding */
         }
 
         .profile-section {
@@ -119,6 +127,7 @@
             flex-direction: column;
             align-items: center;
             margin-bottom: 50px;
+            width: 100%; /* Garante que o profile-section se ajuste */
         }
 
         .avatar-container {
@@ -155,6 +164,7 @@
             line-height: 1.7;
             margin-bottom: 30px;
             color: var(--cor-texto-secundario);
+            width: 100%; /* Garante que o texto se ajuste */
         }
 
         .highlight {
@@ -169,7 +179,8 @@
             gap: 20px;
             margin-bottom: 30px;
             position: relative;
-            max-width: 100%; /* Garante que o contêiner não exceda a largura */
+            /* Removendo max-width aqui para deixar o flexbox gerenciar o wrap */
+            /* Isso pode ter sido um problema anterior que causava o overflow */
         }
 
         .social-icon {
@@ -177,6 +188,7 @@
             height: 34px;
             transition: all 0.3s ease;
             position: relative;
+            display: block; /* Garante que o display block para img ajude no max-width */
             max-width: 100%; /* Garante que a imagem não transborde */
             height: auto; /* Mantém a proporção */
         }
@@ -197,6 +209,7 @@
         .social-icon-container {
             position: relative;
             display: inline-block;
+            /* Removendo overflow: hidden se houver, para evitar cortar tooltips */
         }
 
         .social-icon-container::after {
@@ -220,6 +233,7 @@
             letter-spacing: 1px;
             font-weight: 700;
             box-shadow: 0 0 10px rgba(232, 58, 159, 0.5);
+            z-index: 10; /* Garante que o tooltip apareça sobre outros elementos */
         }
 
         .social-icon-container:hover::after {
@@ -267,6 +281,7 @@
             max-width: 1000px;
             margin: 0 auto 60px auto;
             padding: 0 20px;
+            width: 100%; /* Garante que o contêiner de vídeos se ajuste */
         }
 
         #last-videos {
@@ -319,6 +334,7 @@
             color: var(--cor-texto-secundario);
             font-size: 0.8rem;
             margin-top: auto;
+            width: 100%; /* Garante que o footer se ajuste */
         }
 
         .loading-videos {
