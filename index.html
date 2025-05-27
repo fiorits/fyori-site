@@ -122,35 +122,29 @@
         }
 
         .avatar-container {
-        width: 240px; /* Círculo maior */
-        height: 240px; /* Círculo maior */
-        border-radius: 50%;
-        overflow: hidden;
-        border: 3px solid var(--cor-destaque);
-        box-shadow: 0 0 30px rgba(232, 58, 159, 0.5);
-        margin-bottom: 20px;
-        transition: transform 0.3s ease;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: rgba(15, 10, 26, 0.7); /* Fundo caso a imagem seja pequena */
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid var(--cor-destaque);
+            box-shadow: 0 0 30px rgba(232, 58, 159, 0.5);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(15, 10, 26, 0.7);
         }
 
         .avatar-container img {
-        width: 200px; /* Mantém o tamanho original da imagem */
-        height: 200px; /* Mantém o tamanho original da imagem */
-        object-fit: cover;
-        border-radius: 50%;
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 50%;
         }
 
         .avatar-container:hover {
             transform: scale(1.05);
-        }
-
-        .avatar-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
         }
 
         .bio-text {
@@ -173,26 +167,31 @@
             position: relative;
         }
 
-        .social-link {
-            color: var(--cor-texto);
-            font-size: 2rem;
-            transition: all 0.3s;
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 0 5px rgba(232, 58, 159, 0.5));
+            position: relative;
+        }
+
+        .social-icon:hover {
+            transform: scale(1.15) translateY(-3px);
+            filter: drop-shadow(0 0 10px var(--cor-destaque));
+        }
+
+        /* Tooltip para redes sociais */
+        .social-icon-container {
             position: relative;
             display: inline-block;
         }
 
-        .social-link:hover {
-            color: var(--cor-destaque);
-            transform: translateY(-3px);
-        }
-
-        /* Tooltip para redes sociais */
-        .social-link::after {
+        .social-icon-container::after {
             content: attr(data-tooltip);
             position: absolute;
             top: 100%;
             left: 50%;
-            transform: translateX(-50%) translateY(-10px);
+            transform: translateX(-50%) translateY(5px);
             background-color: var(--cor-destaque);
             color: white;
             padding: 5px 15px;
@@ -210,10 +209,10 @@
             box-shadow: 0 0 10px rgba(232, 58, 159, 0.5);
         }
 
-        .social-link:hover::after {
+        .social-icon-container:hover::after {
             opacity: 1;
             visibility: visible;
-            transform: translateX(-50%) translateY(5px);
+            transform: translateX(-50%) translateY(10px);
         }
 
         .divider {
@@ -235,10 +234,32 @@
             text-shadow: 0 0 10px rgba(232, 58, 159, 0.3);
             text-decoration: none;
             transition: all 0.3s;
+            position: relative;
+            display: inline-block;
         }
 
         .section-title:hover {
             text-shadow: 0 0 15px rgba(232, 58, 159, 0.5);
+            transform: translateY(-3px);
+        }
+
+        /* Efeito de pulso para "Visite meu canal" */
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--cor-destaque), var(--cor-destaque-escuro));
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+
+        .section-title:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
         }
 
         /* SEÇÃO DE VÍDEOS */
@@ -325,8 +346,9 @@
                 gap: 15px;
             }
             
-            .social-link {
-                font-size: 1.8rem;
+            .social-icon {
+                width: 35px;
+                height: 35px;
             }
             
             .section-title {
@@ -343,7 +365,6 @@
                 height: 170px;
             }
         }
-
     </style>
 </head>
 <body>
@@ -369,10 +390,26 @@
             </p>
             
             <div class="social-links">
-                <a href="https://youtube.com/@fyori" class="social-link" target="_blank" aria-label="YouTube" data-tooltip="YouTube">▶️</a>
-                <a href="https://instagram.com/fyoritss" class="social-link" target="_blank" aria-label="Instagram Pessoal" data-tooltip="Meu Instagram">📸</a>
-                <a href="https://instagram.com/fyori.ytb" class="social-link" target="_blank" aria-label="Instagram do Canal" data-tooltip="Instagram do Canal">🎥</a>
-                <a href="https://x.com/fyoriytb" class="social-link" target="_blank" aria-label="Twitter/X" data-tooltip="X/Twitter">𝕏</a>
+                <div class="social-icon-container" data-tooltip="YouTube">
+                    <a href="https://youtube.com/@fyori" target="_blank" aria-label="YouTube">
+                        <img src="Imagens/youtube-icon.png" alt="YouTube" class="social-icon">
+                    </a>
+                </div>
+                <div class="social-icon-container" data-tooltip="Meu Instagram">
+                    <a href="https://instagram.com/fyoritss" target="_blank" aria-label="Instagram Pessoal">
+                        <img src="Imagens/instagram-icon.png" alt="Instagram Pessoal" class="social-icon">
+                    </a>
+                </div>
+                <div class="social-icon-container" data-tooltip="Instagram do Canal">
+                    <a href="https://instagram.com/fyori.ytb" target="_blank" aria-label="Instagram do Canal">
+                        <img src="Imagens/instagram2-icon.png" alt="Instagram do Canal" class="social-icon">
+                    </a>
+                </div>
+                <div class="social-icon-container" data-tooltip="X/Twitter">
+                    <a href="https://x.com/fyoriytb" target="_blank" aria-label="Twitter/X">
+                        <img src="Imagens/x-icon.png" alt="X/Twitter" class="social-icon">
+                    </a>
+                </div>
             </div>
             
             <hr class="divider">
