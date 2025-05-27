@@ -171,7 +171,7 @@
             width: 34px;
             height: 34px;
             transition: all 0.3s ease;
-            filter: drop-shadow(0 0 5px rgba(232, 58, 159, 0.5));
+            /* REMOVIDO: filter: drop-shadow(0 0 5px rgba(232, 58, 159, 0.5)); */ 
             position: relative;
         }
 
@@ -182,7 +182,7 @@
 
         /* ALTERAÇÃO: Inverte a cor dos ícones no modo claro */
         body.light-mode .social-icon {
-            filter: invert(1) drop-shadow(0 0 5px rgba(0, 0, 0, 0.2));
+            filter: invert(1); /* REMOVIDO: drop-shadow(0 0 5px rgba(0, 0, 0, 0.2)); */
         }
 
         /* ALTERAÇÃO: Ajusta o efeito hover do ícone para o modo claro */
