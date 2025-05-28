@@ -150,6 +150,7 @@
             display: flex;
             gap: 15px;
             margin-bottom: 20px;
+            position: relative;
         }
 
         .social-icon {
@@ -231,6 +232,47 @@
             margin-top: auto;
         }
 
+        .social-icon-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .social-icon-container::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(0px);
+            background-color: var(--cor-destaque);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-family: 'Playfair Display', serif;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            box-shadow: 0 0 10px rgba(232, 58, 159, 0.5);
+        }
+
+        .social-icon-container:hover::after {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(5px);
+        }
+
+        .vertical-divider {
+            width: 2px;
+            height: 30px;
+            background: linear-gradient(to bottom, transparent, var(--cor-destaque), transparent);
+            margin: 0 10px;
+        }
+
         @media (max-width: 768px) {
             .logo {
                 font-size: 3rem;
@@ -266,12 +308,17 @@
             .video-card iframe {
                 height: 200px;
             }
+            
+            .social-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <a href="https://www.fyori.com.br" class="logo">FYORI</a>
+        <a href="/" class="logo">FYORI</a>
         <nav>
             <a href="https://apoia.se/fyori" target="_blank">APOIE O CANAL</a>
             <a href="/faq">FAQ</a>
@@ -292,21 +339,47 @@
             </p>
             
             <div class="social-links">
-                <a href="https://www.youtube.com/channel/UCpZ886pfK3UWIK4ywgHEV6g" target="_blank" aria-label="YouTube">
-                    <img src="Imagens/youtube-icon.png" alt="YouTube" class="social-icon">
-                </a>
-                <a href="https://instagram.com/fyoritss" target="_blank" aria-label="Instagram Pessoal">
-                    <img src="Imagens/instagram-icon.png" alt="Instagram Pessoal" class="social-icon">
-                </a>
-                <a href="https://instagram.com/fyori.ytb" target="_blank" aria-label="Instagram do Canal">
-                    <img src="Imagens/instagram2-icon.png" alt="Instagram do Canal" class="social-icon">
-                </a>
-                <a href="https://discord.com/invite/TTEVwfVpnB" target="_blank" aria-label="Discord">
-                    <img src="Imagens/discord-icon.png" alt="Discord" class="social-icon">
-                </a>
-                <a href="https://x.com/fyoriytb" target="_blank" aria-label="Twitter/X">
-                    <img src="Imagens/x-icon.png" alt="X/Twitter" class="social-icon">
-                </a>
+                <div class="social-icon-container" data-tooltip="YouTube">
+                    <a href="https://www.youtube.com/channel/UCpZ886pfK3UWIK4ywgHEV6g" target="_blank" aria-label="YouTube">
+                        <img src="Imagens/youtube-icon.png" alt="YouTube" class="social-icon">
+                    </a>
+                </div>
+                <div class="social-icon-container" data-tooltip="Instagram">
+                    <a href="https://instagram.com/fyoritss" target="_blank" aria-label="Instagram Pessoal">
+                        <img src="Imagens/instagram-icon.png" alt="Instagram Pessoal" class="social-icon">
+                    </a>
+                </div>
+                <div class="social-icon-container" data-tooltip="Instagram do Canal">
+                    <a href="https://instagram.com/fyori.ytb" target="_blank" aria-label="Instagram do Canal">
+                        <img src="Imagens/instagram2-icon.png" alt="Instagram do Canal" class="social-icon">
+                    </a>
+                </div>
+                <div class="social-icon-container" data-tooltip="Discord">
+                    <a href="https://discord.com/invite/TTEVwfVpnB" target="_blank" aria-label="Discord">
+                        <img src="Imagens/discord-icon.png" alt="Discord" class="social-icon">
+                    </a>
+                </div>
+                <div class="social-icon-container" data-tooltip="Twitter/X">
+                    <a href="https://x.com/fyoriytb" target="_blank" aria-label="Twitter/X">
+                        <img src="Imagens/x-icon.png" alt="X/Twitter" class="social-icon">
+                    </a>
+                </div>
+                <div class="vertical-divider"></div>
+                <div class="social-icon-container" data-tooltip="EM BREVE">
+                    <span aria-label="Podcast">
+                        <img src="Imagens/podcast-icon.png" alt="Podcast" class="social-icon">
+                    </span>
+                </div>
+                <div class="social-icon-container" data-tooltip="EM BREVE">
+                    <span aria-label="Loja">
+                        <img src="Imagens/loja-icon.png" alt="Loja" class="social-icon">
+                    </span>
+                </div>
+                <div class="social-icon-container" data-tooltip="EM BREVE">
+                    <span aria-label="Curso">
+                        <img src="Imagens/curso-icon.png" alt="Curso" class="social-icon">
+                    </span>
+                </div>
             </div>
             
             <hr class="divider">

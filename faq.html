@@ -2,12 +2,10 @@
 <html lang="pt-BR">
 <head>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="FAQ do Canal Fyori - Perguntas frequentes sobre o canal, equipamentos e contato">
     <title>FAQ - Fyori</title>
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap" as="style">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap">
     <style>
         :root {
@@ -28,7 +26,6 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            transition: background 0.3s ease, color 0.3s ease;
         }
         
         .header {
@@ -36,7 +33,6 @@
             padding: 30px 0 25px 0;
             background: linear-gradient(135deg, #1a1030 0%, #2a1a50 100%);
             border-bottom: 3px solid var(--cor-destaque);
-            transition: background 0.3s ease;
         }
         
         .logo {
@@ -51,7 +47,6 @@
             display: inline-block;
             letter-spacing: 2px;
             font-weight: 700;
-            position: relative;
             text-shadow: 0 0 10px rgba(232, 58, 159, 0.5);
         }
         
@@ -81,7 +76,6 @@
             text-shadow: 0 0 10px var(--cor-destaque);
         }
 
-        /* 🌓 Dark/Light Mode Toggle (ROTAÇÃO DE 45 GRAUS) */
         .theme-toggle {
             background: none;
             border: none;
@@ -89,10 +83,7 @@
             font-size: 1.3rem;
             cursor: pointer;
             margin-left: 5px;
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            display: inline-block;
-            padding: 0;
-            line-height: 1;
+            transition: transform 0.4s;
         }
 
         .theme-toggle:hover {
@@ -100,7 +91,6 @@
             color: var(--cor-texto);
         }
 
-        /* Light Mode Styles */
         body.light-mode {
             --cor-fundo: #f5f0ff;
             --cor-texto: #222;
@@ -196,7 +186,7 @@
         <a href="/" class="logo">FYORI</a>
         <nav>
             <a href="https://apoia.se/fyori" target="_blank">APOIE O CANAL</a>
-            <a href="faq.html" class="current">FAQ</a>
+            <a href="/faq" class="current">FAQ</a>
             <button class="theme-toggle" aria-label="Alternar tema">🌓</button>
         </nav>
     </div>
@@ -206,6 +196,19 @@
             <div class="faq-question">SUGESTÕES DE VÍDEO</div>
             <div class="faq-answer">
                 Você pode me sugerir um vídeo no comentário dos vídeos, ao qual leio todos. Ou caso queira mais proximidade e rapidez nas respostas, garanta acesso ao servidor do Discord para membros, no apoia.se.
+            </div>
+        </div>
+        
+        <hr class="faq-divider">
+        
+        <div class="faq-item">
+            <div class="faq-question">QUEM FEZ O FYORI?</div>
+            <div class="faq-answer">
+                O canal nasceu e ainda é, na maior parte, uma produção solo. Por mais de três anos, cuidei da pesquisa, roteiro, gravação e edição de todos os vídeos. Mas o trabalho nunca foi completamente sozinho, e hoje conto com a ajuda de algumas pessoas.<br><br>
+                Porém, com o crescimento do canal, comecei a contar com a ajuda de algumas pessoas incríveis:<br><br>
+                🎞 Edição: (em breve)<br>
+                ✍️ Roteiro: (em breve)<br>
+                🎨 Avatar do canal: feito por @Fawkoes
             </div>
         </div>
         
@@ -248,17 +251,14 @@
     </footer>
 
     <script>
-        // Dark/Light Mode Toggle
         const themeToggle = document.querySelector('.theme-toggle');
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
-        // Verifica tema salvo ou preferência do sistema
         const currentTheme = localStorage.getItem('theme');
         if (currentTheme === 'light' || (!currentTheme && !prefersDark.matches)) {
             document.body.classList.add('light-mode');
         }
 
-        // Alterna tema
         themeToggle.addEventListener('click', () => {
             document.body.classList.toggle('light-mode');
             localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
