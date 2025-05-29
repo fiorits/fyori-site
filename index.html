@@ -96,6 +96,10 @@
             background: linear-gradient(135deg, #e0d6ff 0%, #c9b8ff 100%);
         }
 
+        body.light-mode .divider {
+            background: linear-gradient(to right, transparent, var(--cor-destaque-escuro), transparent);
+        }
+
         .main-content {
             max-width: 1200px;
             margin: 40px auto;
@@ -166,10 +170,11 @@
         }
 
         .divider {
-            width: 80%;
+            border: 0;
             height: 1px;
             background: linear-gradient(to right, transparent, var(--cor-destaque), transparent);
-            margin: 15px 0;
+            width: 80%;
+            margin: 30px 0;
         }
 
         .section-title {
@@ -179,7 +184,7 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin: 0 0 5px 0;
+            margin: 10px 0 0 0;
             text-shadow: 0 0 10px rgba(232, 58, 159, 0.3);
             font-weight: 700;
         }
