@@ -109,13 +109,11 @@
         });
 
         // Script para carregar vídeos do YouTube
-        const API_KEY = 'SUA_CHAVE_DE_API_AQUI'; // IMPORTANTE: Substitua pela sua chave da API do YouTube
+        const API_KEY = 'AIzaSyCgLTr6nD9fco6AVjsiHcQelv46FCf9lXs';
         const CHANNEL_ID = 'UCpZ886pfK3UWIK4ywgHEV6g';
         const container = document.getElementById('last-videos');
 
-        // A chave de API que estava no seu código original foi removida por segurança.
-        // Você precisa gerar uma nova chave no Google Cloud Console e substituí-la em 'SUA_CHAVE_DE_API_AQUI'.
-        if (API_KEY === 'SUA_CHAVE_DE_API_AQUI') {
+        if (API_KEY === 'AIzaSyCgLTr6nD9fco6AVjsiHcQelv46FCf9lXs') {
              container.innerHTML = '<p style="color:var(--cor-destaque);text-align:center;">Por favor, configure a chave da API do YouTube para carregar os vídeos.</p>';
         } else {
             fetch(`https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${CHANNEL_ID}&key=${API_KEY}`)
