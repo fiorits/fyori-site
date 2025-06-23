@@ -6,326 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Fyori - Sou criador de conteúdo e contador de histórias. Meu trabalho é transportar as pessoas para mundos com o poder do storytelling.">
     <title>Fyori</title>
+    <!-- Fontes do Google -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap">
-    <style>
-        :root {
-            --cor-destaque: #e83a9f;
-            --cor-destaque-escuro: #9d2bff;
-            --cor-fundo: #0f0a1a;
-            --cor-texto: #fff;
-            --cor-texto-secundario: #ddd;
-        }
-        
-        body { 
-            background-color: var(--cor-fundo); 
-            color: var(--cor-texto); 
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .header {
-            text-align: center;
-            padding: 30px 0 25px 0;
-            background: linear-gradient(135deg, #1a1030 0%, #2a1a50 100%);
-            border-bottom: 3px solid var(--cor-destaque);
-        }
-        
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 4rem;
-            background: linear-gradient(45deg, var(--cor-destaque), var(--cor-destaque-escuro));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin: 0;
-            text-decoration: none;
-            display: inline-block;
-            letter-spacing: 2px;
-            font-weight: 700;
-            text-shadow: 0 0 10px rgba(232, 58, 159, 0.5);
-        }
-        
-        nav {
-            margin: 20px 0 15px 0;
-        }
-        
-        nav a {
-            margin: 0 20px;
-            color: var(--cor-destaque);
-            text-decoration: none;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            transition: all 0.3s;
-            text-transform: uppercase;
-        }
-        
-        nav a:hover {
-            color: var(--cor-texto);
-            text-shadow: 0 0 10px var(--cor-destaque);
-        }
-
-        .theme-toggle {
-            background: none;
-            border: none;
-            color: var(--cor-destaque);
-            font-size: 1.3rem;
-            cursor: pointer;
-            margin-left: 5px;
-            transition: transform 0.4s;
-        }
-
-        .theme-toggle:hover {
-            transform: rotate(45deg);
-            color: var(--cor-texto);
-        }
-
-        body.light-mode {
-            --cor-fundo: #f5f0ff;
-            --cor-texto: #222;
-            --cor-texto-secundario: #555;
-        }
-
-        body.light-mode .header {
-            background: linear-gradient(135deg, #e0d6ff 0%, #c9b8ff 100%);
-        }
-
-        body.light-mode .divider {
-            background: linear-gradient(to right, transparent, var(--cor-destaque-escuro), transparent);
-        }
-
-        body.light-mode .social-icon {
-            filter: invert(1);
-        }
-
-        .main-content {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        .profile-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .avatar-container {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 3px solid var(--cor-destaque);
-            box-shadow: 0 0 30px rgba(232, 58, 159, 0.5);
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: transparent;
-        }
-        
-        .avatar-container img {
-            width: 170px;
-            height: 170px;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-
-        .bio-text {
-            max-width: 700px;
-            font-size: 1.1rem;
-            line-height: 1.7;
-            margin-bottom: 20px;
-            color: var(--cor-texto-secundario);
-        }
-
-        .highlight {
-            color: var(--cor-destaque);
-            font-weight: 600;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-        .social-icon {
-            width: 30px;
-            height: 30px;
-            transition: all 0.3s;
-        }
-
-        .social-icon:hover {
-            transform: scale(1.15) translateY(-3px);
-            filter: drop-shadow(0 0 10px var(--cor-destaque));
-        }
-
-        .divider {
-            border: 0;
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--cor-destaque), transparent);
-            width: 80%;
-            margin: 30px 0;
-        }
-
-        .section-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            background: linear-gradient(45deg, var(--cor-destaque), var(--cor-destaque-escuro));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin: 10px 0 0 0;
-            text-shadow: 0 0 10px rgba(232, 58, 159, 0.3);
-            font-weight: 700;
-        }
-
-        .videos-container {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin: 0 auto 20px auto;
-            max-width: 1000px;
-        }
-
-        .video-card {
-            background: transparent;
-            border: 3px solid var(--cor-destaque);
-            border-radius: 12px;
-            overflow: hidden;
-            transition: all 0.3s;
-            width: 300px;
-        }
-
-        .video-card:hover {
-            transform: scale(1.03);
-            box-shadow: 0 0 30px rgba(232, 58, 159, 0.6);
-        }
-
-        .video-card iframe {
-            width: 100%;
-            height: 169px;
-            border: none;
-            display: block;
-        }
-
-        .video-card h3 {
-            padding: 12px;
-            margin: 0;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 1rem;
-            color: var(--cor-destaque);
-            text-align: center;
-            background: transparent;
-            border-top: 2px solid var(--cor-destaque);
-        }
-
-        footer {
-            text-align: center;
-            padding: 15px;
-            color: var(--cor-texto-secundario);
-            font-size: 0.8rem;
-            margin-top: auto;
-        }
-
-        .social-icon-container {
-            position: relative;
-            display: inline-block;
-        }
-
-        .social-icon-container::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%) translateY(0px);
-            background-color: var(--cor-destaque);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-family: 'Playfair Display', serif;
-            white-space: nowrap;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            pointer-events: none;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 700;
-            box-shadow: 0 0 10px rgba(232, 58, 159, 0.5);
-        }
-
-        .social-icon-container:hover::after {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) translateY(5px);
-        }
-
-        .vertical-divider {
-            width: 2px;
-            height: 30px;
-            background: linear-gradient(to bottom, transparent, var(--cor-destaque), transparent);
-            margin: 0 10px;
-        }
-
-        @media (max-width: 768px) {
-            .logo {
-                font-size: 3rem;
-            }
-            
-            nav a {
-                font-size: 1rem;
-                margin: 0 10px;
-            }
-            
-            .bio-text {
-                font-size: 1rem;
-                padding: 0 15px;
-            }
-            
-            .videos-container {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .video-card {
-                width: 100%;
-                max-width: 400px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            nav a {
-                margin: 0 5px;
-                font-size: 0.9rem;
-            }
-            
-            .video-card iframe {
-                height: 200px;
-            }
-            
-            .social-links {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-        }
-    </style>
+    <!-- Link para o arquivo de estilo externo -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="header">
@@ -340,7 +24,8 @@
     <div class="main-content">
         <div class="profile-section">
             <div class="avatar-container">
-                <img src="avatar-fyori.png" alt="Fyori Avatar">
+                <!-- Certifique-se que o caminho para a imagem está correto -->
+                <img src="avatar-fyori.png" alt="Fyori Avatar" onerror="this.style.display='none'">
             </div>
             
             <p class="bio-text">
@@ -350,6 +35,7 @@
             </p>
             
             <div class="social-links">
+                <!-- Certifique-se que o caminho para os ícones está correto -->
                 <div class="social-icon-container" data-tooltip="YouTube">
                     <a href="https://www.youtube.com/channel/UCpZ886pfK3UWIK4ywgHEV6g" target="_blank" aria-label="YouTube">
                         <img src="Imagens/youtube-icon.png" alt="YouTube" class="social-icon">
@@ -408,6 +94,7 @@
     </footer>
 
     <script>
+        // Script para o botão de tema (claro/escuro)
         const themeToggle = document.querySelector('.theme-toggle');
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
@@ -421,41 +108,48 @@
             localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
         });
 
-        const API_KEY = 'AIzaSyCgLTr6nD9fco6AVjsiHcQelv46FCf9lXs';
+        // Script para carregar vídeos do YouTube
+        const API_KEY = 'SUA_CHAVE_DE_API_AQUI'; // IMPORTANTE: Substitua pela sua chave da API do YouTube
         const CHANNEL_ID = 'UCpZ886pfK3UWIK4ywgHEV6g';
         const container = document.getElementById('last-videos');
 
-        fetch(`https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${CHANNEL_ID}&key=${API_KEY}`)
-            .then(response => response.json())
-            .then(data => {
-                const uploadsPlaylistId = data.items[0].contentDetails.relatedPlaylists.uploads;
-                
-                fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=3&playlistId=${uploadsPlaylistId}&key=${API_KEY}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        container.innerHTML = '';
-                        
-                        data.items.forEach(item => {
-                            const videoId = item.snippet.resourceId.videoId;
-                            const title = item.snippet.title;
+        // A chave de API que estava no seu código original foi removida por segurança.
+        // Você precisa gerar uma nova chave no Google Cloud Console e substituí-la em 'SUA_CHAVE_DE_API_AQUI'.
+        if (API_KEY === 'SUA_CHAVE_DE_API_AQUI') {
+             container.innerHTML = '<p style="color:var(--cor-destaque);text-align:center;">Por favor, configure a chave da API do YouTube para carregar os vídeos.</p>';
+        } else {
+            fetch(`https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${CHANNEL_ID}&key=${API_KEY}`)
+                .then(response => response.json())
+                .then(data => {
+                    const uploadsPlaylistId = data.items[0].contentDetails.relatedPlaylists.uploads;
+                    
+                    fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=3&playlistId=${uploadsPlaylistId}&key=${API_KEY}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            container.innerHTML = '';
                             
-                            container.innerHTML += `
-                                <div class="video-card">
-                                    <iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
-                                    <h3>${title}</h3>
-                                </div>
-                            `;
+                            data.items.forEach(item => {
+                                const videoId = item.snippet.resourceId.videoId;
+                                const title = item.snippet.title;
+                                
+                                container.innerHTML += `
+                                    <div class="video-card">
+                                        <iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
+                                        <h3>${title}</h3>
+                                    </div>
+                                `;
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Erro ao carregar vídeos:', error);
+                            container.innerHTML = '<p style="color:var(--cor-destaque);text-align:center;">Erro ao carregar vídeos. Tente recarregar a página.</p>';
                         });
-                    })
-                    .catch(error => {
-                        console.error('Erro ao carregar vídeos:', error);
-                        container.innerHTML = '<p style="color:var(--cor-destaque);text-align:center;">Erro ao carregar vídeos. Tente recarregar a página.</p>';
-                    });
-            })
-            .catch(error => {
-                console.error('Erro ao buscar canal:', error);
-                container.innerHTML = '<p style="color:var(--cor-destaque);text-align:center;">Erro ao conectar ao YouTube.</p>';
-            });
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar canal:', error);
+                    container.innerHTML = '<p style="color:var(--cor-destaque);text-align:center;">Erro ao conectar ao YouTube.</p>';
+                });
+        }
     </script>
 </body>
 </html>
