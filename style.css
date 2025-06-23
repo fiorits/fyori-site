@@ -31,7 +31,7 @@ body.light-mode .social-icon {
 
 
 /* =================================================================
-   ESTILOS GERAIS (CORPO, FONTES, ETC)
+   ESTILOS GERAIS
    ================================================================= */
 body { 
     background-color: var(--cor-fundo); 
@@ -120,7 +120,7 @@ nav a.current {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    flex: 1; /* Garante que o conteúdo ocupe o espaço disponível */
+    flex: 1;
 }
 
 .profile-section {
@@ -169,7 +169,7 @@ nav a.current {
     gap: 15px;
     margin-bottom: 20px;
     position: relative;
-    align-items: center; /* Alinha os ícones e o divisor verticalmente */
+    align-items: center;
 }
 
 .social-icon {
@@ -188,7 +188,6 @@ nav a.current {
     display: inline-block;
 }
 
-/* Tooltip para os ícones sociais */
 .social-icon-container::after {
     content: attr(data-tooltip);
     position: absolute;
@@ -246,6 +245,8 @@ nav a.current {
     overflow: hidden;
     transition: all 0.3s;
     width: 300px;
+    display: flex;
+    flex-direction: column;
 }
 
 .video-card:hover {
@@ -260,6 +261,7 @@ nav a.current {
     display: block;
 }
 
+/* --- AJUSTE DO TÍTULO DO VÍDEO --- */
 .video-card h3 {
     padding: 12px;
     margin: 0;
@@ -267,9 +269,15 @@ nav a.current {
     font-weight: 700;
     font-size: 1rem;
     color: var(--cor-destaque);
-    text-align: center;
     background: transparent;
     border-top: 2px solid var(--cor-destaque);
+    flex-grow: 1; /* Faz a área do título expandir */
+
+    /* Alinhamento vertical e horizontal do texto */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 70px; /* Garante altura uniforme para todos os títulos */
 }
 
 
@@ -280,7 +288,7 @@ nav a.current {
     max-width: 800px;
     margin: 40px auto;
     padding: 0 20px;
-    flex: 1; /* Garante que o conteúdo ocupe o espaço disponível */
+    flex: 1;
 }
 
 .faq-item {
@@ -324,7 +332,6 @@ nav a.current {
     text-shadow: 0 0 5px var(--cor-destaque);
 }
 
-/* Links externos na página FAQ */
 a.external-link {
     color: var(--cor-destaque);
     text-decoration: none;
@@ -339,24 +346,21 @@ a.external-link:hover {
 
 
 /* =================================================================
-   ELEMENTOS COMUNS (DIVISORES, ETC)
+   ELEMENTOS COMUNS
    ================================================================= */
-.divider { /* Divisor da página principal */
+.divider,
+.faq-divider {
     border: 0;
     height: 1px;
     background: linear-gradient(to right, transparent, var(--cor-destaque), transparent);
+    margin: 30px 0;
+}
+
+.divider {
     width: 80%;
-    margin: 30px 0;
 }
 
-.faq-divider { /* Divisor da página FAQ */
-    border: 0;
-    height: 1px;
-    background: linear-gradient(to right, transparent, var(--cor-destaque), transparent);
-    margin: 30px 0;
-}
-
-.vertical-divider { /* Divisor vertical nos ícones sociais */
+.vertical-divider {
     width: 2px;
     height: 30px;
     background: linear-gradient(to bottom, transparent, var(--cor-destaque), transparent);
@@ -371,12 +375,12 @@ footer {
     padding: 20px;
     color: var(--cor-texto-secundario);
     font-size: 0.8rem;
-    margin-top: auto; /* Empurra o rodapé para o final da página */
+    margin-top: auto;
 }
 
 
 /* =================================================================
-   DESIGN RESPONSIVO (PARA CELULARES E TABLETS)
+   DESIGN RESPONSIVO
    ================================================================= */
 @media (max-width: 768px) {
     .logo {
@@ -426,6 +430,6 @@ footer {
     }
 
     .vertical-divider {
-        display: none; /* Esconde o divisor em telas muito pequenas */
+        display: none;
     }
 }
