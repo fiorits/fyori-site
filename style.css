@@ -277,7 +277,7 @@ nav a.current {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 70px; /* Garante altura uniforme para todos os títulos */
+    min-height: 5px; /* Garante altura uniforme para todos os títulos */
 }
 
 
