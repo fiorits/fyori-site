@@ -7,6 +7,7 @@
     --cor-fundo: #0f0a1a;
     --cor-texto: #fff;
     --cor-texto-secundario: #ddd;
+    --gradiente-premium: linear-gradient(45deg, var(--cor-destaque), var(--cor-destaque-escuro));
 }
 
 /* Estilos para o tema claro (light-mode) */
@@ -59,7 +60,7 @@ body {
 .logo {
     font-family: 'Playfair Display', serif;
     font-size: 4rem;
-    background: linear-gradient(45deg, var(--cor-destaque), var(--cor-destaque-escuro));
+    background: var(--gradiente-premium);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -220,7 +221,7 @@ nav a.current {
 .section-title {
     font-family: 'Playfair Display', serif;
     font-size: 2rem;
-    background: linear-gradient(45deg, var(--cor-destaque), var(--cor-destaque-escuro));
+    background: var(--gradiente-premium);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -234,50 +235,98 @@ nav a.current {
     gap: 20px;
     justify-content: center;
     flex-wrap: wrap;
-    margin: 0 auto 20px auto;
+    margin: 20px auto;
     max-width: 1000px;
 }
 
+/* --- ESTILO "PREMIUM" DOS VÍDEOS --- */
 .video-card {
-    background: transparent;
-    border: 3px solid var(--cor-destaque);
-    border-radius: 12px;
-    overflow: hidden;
-    transition: all 0.3s;
     width: 300px;
+    border-radius: 12px;
+    text-decoration: none;
     display: flex;
     flex-direction: column;
+    background-color: #000;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    
+    /* Borda em Degradê */
+    border: 3px solid transparent;
+    background-clip: padding-box;
+    border-image: var(--gradiente-premium) 1;
 }
 
 .video-card:hover {
     transform: scale(1.03);
     box-shadow: 0 0 30px rgba(232, 58, 159, 0.6);
+    border-image: linear-gradient(45deg, #ff5ebc, #c05aff) 1;
 }
 
+.video-thumbnail {
+    width: 100%;
+    height: 169px;
+    position: relative;
+    cursor: pointer;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Sobreposição escura para dar contraste */
+.video-thumbnail::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: background-color 0.3s ease;
+}
+
+.video-card:hover .video-thumbnail::before {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Ícone de Play personalizado */
+.play-icon {
+    width: 60px;
+    height: 60px;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.3s ease;
+}
+
+.video-card:hover .play-icon {
+    transform: scale(1.1);
+}
+
+.video-card h3 {
+    padding: 15px;
+    margin: 0;
+    font-family: 'Playfair Display', serif; /* Fonte premium */
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--cor-texto);
+    background-color: #1a1030;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 5px; /* Altura que você definiu */
+    line-height: 1.3;
+}
+
+/* Iframe que substitui a thumbnail */
 .video-card iframe {
     width: 100%;
     height: 169px;
     border: none;
     display: block;
-}
-
-/* --- AJUSTE DO TÍTULO DO VÍDEO --- */
-.video-card h3 {
-    padding: 12px;
-    margin: 0;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    color: var(--cor-destaque);
-    background: transparent;
-    border-top: 2px solid var(--cor-destaque);
-    flex-grow: 1; /* Faz a área do título expandir */
-
-    /* Alinhamento vertical e horizontal do texto */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 5px; /* Garante altura uniforme para todos os títulos */
 }
 
 
