@@ -108,23 +108,30 @@
             localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
         });
 
-        // --- SCRIPT PARA CARREGAR VÍDEOS DO YOUTUBE (CORRIGIDO) ---
+        // --- SCRIPT PARA CARREGAR VÍDEOS DO YOUTUBE (CORREÇÃO FINAL) ---
         
         // 1. IMPORTANTE: Cole sua chave da API do YouTube aqui.
         const API_KEY = 'AIzaSyCgLTr6nD9fco6AVjsiHcQelv46FCf9lXs'; 
         const CHANNEL_ID = 'UCpZ886pfK3UWIK4ywgHEV6g'; // ID do seu canal
         const container = document.getElementById('last-videos');
 
-        // 2. Verifica se a chave da API foi inserida.
+        // 2. Verifica se a chave da API ainda é o texto padrão ou se está vazia.
         if (API_KEY === 'AIzaSyCgLTr6nD9fco6AVjsiHcQelv46FCf9lXs' || !API_KEY) {
              container.innerHTML = '<p style="color:var(--cor-destaque);text-align:center;">Por favor, configure a chave da API do YouTube para carregar os vídeos.</p>';
         } else {
-            // 3. Se a chave existe, o script tenta carregar os vídeos.
+            // 3. Se a chave foi inserida, o script tenta carregar os vídeos.
             fetch(`https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${CHANNEL_ID}&key=${API_KEY}`)
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        // Se a resposta da API não for bem-sucedida (ex: erro 400, 403, 404)
+                        console.error('A API do YouTube retornou um erro.', response);
+                        return Promise.reject(response);
+                    }
+                    return response.json();
+                })
                 .then(data => {
                     if (!data.items || data.items.length === 0) {
-                        console.error('Erro: Não foi possível encontrar o canal ou a playlist.', data);
+                        console.error('Erro: Não foi possível encontrar o canal. Verifique o ID do Canal.', data);
                         container.innerHTML = '<p style="color:var(--cor-destaque);text-align:center;">Não foi possível encontrar a playlist de uploads. Verifique o ID do Canal.</p>';
                         return;
                     }
@@ -133,10 +140,17 @@
                     fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=3&playlistId=${uploadsPlaylistId}&key=${API_KEY}`)
                         .then(response => response.json())
                         .then(data => {
+                            if (data.error) {
+                                console.error('Erro ao buscar vídeos:', data.error);
+                                container.innerHTML = `<p style="color:var(--cor-destaque);text-align:center;">Erro ao carregar vídeos: ${data.error.message}</p>`;
+                                return;
+                            }
+
                             if (!data.items || data.items.length === 0) {
                                 container.innerHTML = '<p style="color:var(--cor-destaque);text-align:center;">Nenhum vídeo encontrado para exibir.</p>';
                                 return;
                             }
+                            
                             container.innerHTML = '';
                             
                             data.items.forEach(item => {
@@ -152,13 +166,13 @@
                             });
                         })
                         .catch(error => {
-                            console.error('Erro ao carregar os vídeos:', error);
-                            container.innerHTML = '<p style="color:var(--cor-destaque);text-align:center;">Erro ao carregar os vídeos. Verifique se a chave de API está correta e habilitada.</p>';
+                            console.error('Erro na requisição dos vídeos:', error);
+                            container.innerHTML = '<p style="color:var(--cor-destaque);text-align:center;">Erro na requisição dos vídeos. Verifique se a chave de API está correta e habilitada.</p>';
                         });
                 })
                 .catch(error => {
-                    console.error('Erro ao buscar o canal:', error);
-                    container.innerHTML = '<p style="color:var(--cor-destaque);text-align:center;">Erro ao conectar ao YouTube. Verifique a chave de API e o ID do canal.</p>';
+                    console.error('Erro na requisição do canal:', error);
+                    container.innerHTML = '<p style="color:var(--cor-destaque);text-align:center;">Erro ao conectar ao YouTube. Verifique as restrições da chave de API (ex: HTTP referrers).</p>';
                 });
         }
     </script>
