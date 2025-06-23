@@ -12,17 +12,17 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="header">
+    <header class="header">
         <a href="/" class="logo">FYORI</a>
         <nav>
             <a href="https://apoia.se/fyori" target="_blank">APOIE O CANAL</a>
             <a href="/faq.html">FAQ</a>
             <button class="theme-toggle" aria-label="Alternar tema">🌓</button>
         </nav>
-    </div>
+    </header>
 
-    <div class="main-content">
-        <div class="profile-section">
+    <main class="main-content">
+        <section class="profile-section">
             <div class="avatar-container">
                 <!-- Certifique-se que o caminho para a imagem está correto -->
                 <img src="avatar-fyori.png" alt="Fyori Avatar" onerror="this.style.display='none'">
@@ -82,99 +82,99 @@
             <hr class="divider">
             
             <span class="section-title">ÚLTIMOS VÍDEOS</span>
-        </div>
+        </section>
         
-        <div class="videos-container" id="last-videos">
-            <div class="loading-videos">Carregando vídeos...</div>
-        </div>
-    </div>
+        <section class="videos-container" id="last-videos">
+            <!-- Os vídeos do YouTube serão inseridos aqui pelo script -->
+        </section>
+    </main>
 
     <footer>
         Copyright © 2025 Fyori
     </footer>
 
     <script>
-        // Script para o botão de tema (claro/escuro)
-        const themeToggle = document.querySelector('.theme-toggle');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+        // --- SCRIPT PARA ALTERNAR TEMA (CLARO/ESCURO) ---
+        function setupTheme() {
+            const themeToggle = document.querySelector('.theme-toggle');
+            if (!themeToggle) return;
 
-        const currentTheme = localStorage.getItem('theme');
-        if (currentTheme === 'light' || (!currentTheme && !prefersDark.matches)) {
-            document.body.classList.add('light-mode');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+            const currentTheme = localStorage.getItem('theme');
+
+            if (currentTheme === 'light' || (!currentTheme && !prefersDark.matches)) {
+                document.body.classList.add('light-mode');
+            }
+
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('light-mode');
+                localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+            });
         }
 
-        themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('light-mode');
-            localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
-        });
+        // --- SCRIPT PARA CARREGAR VÍDEOS DO YOUTUBE ---
+        async function fetchYouTubeVideos() {
+            // Cole sua chave da API do YouTube aqui.
+            const API_KEY = 'AIzaSyCgLTr6nD9fco6AVjsiHcQelv46FCf9lXs'; 
+            const CHANNEL_ID = 'UCpZ886pfK3UWIK4ywgHEV6g'; // ID do seu canal
+            const container = document.getElementById('last-videos');
 
-        // --- SCRIPT PARA CARREGAR VÍDEOS DO YOUTUBE (CORREÇÃO FINAL) ---
-        
-        // 1. IMPORTANTE: Cole sua chave da API do YouTube aqui.
-        const API_KEY = 'AIzaSyCgLTr6nD9fco6AVjsiHcQelv46FCf9lXs'; 
-        const CHANNEL_ID = 'UCpZ886pfK3UWIK4ywgHEV6g'; // ID do seu canal
-        const container = document.getElementById('last-videos');
+            if (!container) return; // Se o contêiner de vídeo não existir, pare.
 
-        // 2. Verifica se a chave da API ainda é o texto padrão ou se está vazia.
-        if (API_KEY === 'SUA_CHAVE_DE_API_AQUI' || !API_KEY) {
-             container.innerHTML = '<p style="color:var(--cor-destaque);text-align:center;">Por favor, configure a chave da API do YouTube para carregar os vídeos.</p>';
-        } else {
-            // 3. Se a chave foi inserida, o script tenta carregar os vídeos.
-            fetch(`https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${CHANNEL_ID}&key=${API_KEY}`)
-                .then(response => {
-                    if (!response.ok) {
-                        // Se a resposta da API não for bem-sucedida (ex: erro 400, 403, 404)
-                        console.error('A API do YouTube retornou um erro.', response);
-                        return Promise.reject(response);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    if (!data.items || data.items.length === 0) {
-                        console.error('Erro: Não foi possível encontrar o canal. Verifique o ID do Canal.', data);
-                        container.innerHTML = '<p style="color:var(--cor-destaque);text-align:center;">Não foi possível encontrar a playlist de uploads. Verifique o ID do Canal.</p>';
-                        return;
-                    }
-                    const uploadsPlaylistId = data.items[0].contentDetails.relatedPlaylists.uploads;
+            // Mostra uma mensagem se a API_KEY não for alterada.
+            if (API_KEY === 'SUA_CHAVE_DE_API_AQUI' || !API_KEY) {
+                container.innerHTML = '<p style="color:var(--cor-destaque);text-align:center;">Por favor, configure a chave da API do YouTube para carregar os vídeos.</p>';
+                return;
+            }
+
+            // Exibe mensagem de carregamento inicial.
+            container.innerHTML = '<p>Carregando vídeos...</p>';
+
+            try {
+                // Etapa 1: Buscar o ID da playlist de "uploads" do canal.
+                const channelResponse = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${CHANNEL_ID}&key=${API_KEY}`);
+                if (!channelResponse.ok) throw new Error('Falha ao buscar o canal. Verifique a chave de API e o ID do canal.');
+                
+                const channelData = await channelResponse.json();
+                const uploadsPlaylistId = channelData.items[0]?.contentDetails?.relatedPlaylists?.uploads;
+                if (!uploadsPlaylistId) throw new Error('Não foi possível encontrar a playlist de uploads do canal.');
+
+                // Etapa 2: Buscar os 3 vídeos mais recentes da playlist de "uploads".
+                const videosResponse = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=3&playlistId=${uploadsPlaylistId}&key=${API_KEY}`);
+                if (!videosResponse.ok) throw new Error('Falha ao buscar os vídeos.');
+
+                const videosData = await videosResponse.json();
+                if (!videosData.items || videosData.items.length === 0) {
+                    container.innerHTML = '<p>Nenhum vídeo encontrado.</p>';
+                    return;
+                }
+                
+                // Etapa 3: Limpar a mensagem de "carregando" e montar os cards dos vídeos.
+                container.innerHTML = ''; 
+                videosData.items.forEach(item => {
+                    const videoId = item.snippet.resourceId.videoId;
+                    const title = item.snippet.title;
                     
-                    fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=3&playlistId=${uploadsPlaylistId}&key=${API_KEY}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.error) {
-                                console.error('Erro ao buscar vídeos:', data.error);
-                                container.innerHTML = `<p style="color:var(--cor-destaque);text-align:center;">Erro ao carregar vídeos: ${data.error.message}</p>`;
-                                return;
-                            }
-
-                            if (!data.items || data.items.length === 0) {
-                                container.innerHTML = '<p style="color:var(--cor-destaque);text-align:center;">Nenhum vídeo encontrado para exibir.</p>';
-                                return;
-                            }
-                            
-                            container.innerHTML = '';
-                            
-                            data.items.forEach(item => {
-                                const videoId = item.snippet.resourceId.videoId;
-                                const title = item.snippet.title;
-                                
-                                container.innerHTML += `
-                                    <div class="video-card">
-                                        <iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                        <h3>${title}</h3>
-                                    </div>
-                                `;
-                            });
-                        })
-                        .catch(error => {
-                            console.error('Erro na requisição dos vídeos:', error);
-                            container.innerHTML = '<p style="color:var(--cor-destaque);text-align:center;">Erro na requisição dos vídeos. Verifique se a chave de API está correta e habilitada.</p>';
-                        });
-                })
-                .catch(error => {
-                    console.error('Erro na requisição do canal:', error);
-                    container.innerHTML = '<p style="color:var(--cor-destaque);text-align:center;">Erro ao conectar ao YouTube. Verifique as restrições da chave de API (ex: HTTP referrers).</p>';
+                    const videoCard = `
+                        <div class="video-card">
+                            <iframe src="https://www.youtube.com/embed/${videoId}" title="${title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <h3>${title}</h3>
+                        </div>
+                    `;
+                    container.innerHTML += videoCard;
                 });
+
+            } catch (error) {
+                console.error('Erro ao carregar vídeos do YouTube:', error);
+                container.innerHTML = `<p style="color:var(--cor-destaque);text-align:center;">${error.message}</p>`;
+            }
         }
+
+        // --- INICIALIZAÇÃO DOS SCRIPTS QUANDO A PÁGINA CARREGAR ---
+        document.addEventListener('DOMContentLoaded', () => {
+            setupTheme();
+            fetchYouTubeVideos();
+        });
     </script>
 </body>
 </html>
