@@ -6,17 +6,187 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="FAQ do Canal Fyori - Perguntas frequentes sobre o canal, equipamentos e contato">
     <title>FAQ - Fyori</title>
-    <!-- Fontes do Google -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap">
-    <!-- Link para o arquivo de estilo externo -->
-    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --cor-destaque: #e83a9f;
+            --cor-destaque-escuro: #9d2bff;
+            --cor-fundo: #0f0a1a;
+            --cor-texto: #fff;
+            --cor-texto-secundario: #ddd;
+        }
+        
+        body { 
+            background-color: var(--cor-fundo); 
+            color: var(--cor-texto); 
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 30px 0 25px 0;
+            background: linear-gradient(135deg, #1a1030 0%, #2a1a50 100%);
+            border-bottom: 3px solid var(--cor-destaque);
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            background: linear-gradient(45deg, var(--cor-destaque), var(--cor-destaque-escuro));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 0;
+            text-decoration: none;
+            display: inline-block;
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(232, 58, 159, 0.5);
+        }
+        
+        nav {
+            margin: 20px 0 15px 0;
+        }
+        
+        nav a {
+            margin: 0 20px;
+            color: var(--cor-destaque);
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+        
+        nav a.current {
+            color: var(--cor-texto);
+            text-shadow: 0 0 10px var(--cor-destaque);
+        }
+        
+        nav a:hover {
+            color: var(--cor-texto);
+            text-shadow: 0 0 10px var(--cor-destaque);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--cor-destaque);
+            font-size: 1.3rem;
+            cursor: pointer;
+            margin-left: 5px;
+            transition: transform 0.4s;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(45deg);
+            color: var(--cor-texto);
+        }
+
+        body.light-mode {
+            --cor-fundo: #f5f0ff;
+            --cor-texto: #222;
+            --cor-texto-secundario: #555;
+        }
+
+        body.light-mode .header {
+            background: linear-gradient(135deg, #e0d6ff 0%, #c9b8ff 100%);
+        }
+
+        body.light-mode .faq-divider {
+            background: linear-gradient(to right, transparent, var(--cor-destaque-escuro), transparent);
+        }
+        
+        .faq-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+        
+        .faq-item {
+            margin-bottom: 40px;
+            border-left: 3px solid var(--cor-destaque);
+            padding-left: 20px;
+        }
+        
+        .faq-question {
+            color: var(--cor-destaque);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+        }
+        
+        .faq-answer {
+            color: var(--cor-texto-secundario);
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+        
+        .faq-divider {
+            border: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--cor-destaque), transparent);
+            margin: 30px 0;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--cor-texto-secundario);
+            font-size: 0.8rem;
+            margin-top: auto;
+        }
+
+        a.external-link {
+            color: var(--cor-destaque);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        a.external-link:hover {
+            text-decoration: underline;
+            text-shadow: 0 0 5px var(--cor-destaque);
+        }
+
+        .contact-email {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--cor-texto-secundario);
+            font-size: 1.1rem;
+            margin: 60px 0 30px 0;
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
+
+        .contact-email a {
+            color: var(--cor-destaque);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .contact-email a:hover {
+            text-shadow: 0 0 5px var(--cor-destaque);
+        }
+    </style>
 </head>
 <body>
     <div class="header">
         <a href="index.html" class="logo">FYORI</a>
         <nav>
             <a href="https://apoia.se/fyori" target="_blank">APOIE O CANAL</a>
-            <a href="/faq.html" class="current">FAQ</a>
+            <a href="/faq" class="current">FAQ</a>
             <button class="theme-toggle" aria-label="Alternar tema">🌓</button>
         </nav>
     </div>
@@ -80,7 +250,6 @@
     </footer>
 
     <script>
-        // Script para o botão de tema (claro/escuro)
         const themeToggle = document.querySelector('.theme-toggle');
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
