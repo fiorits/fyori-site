@@ -3,7 +3,6 @@
    ================================================================= */
 @font-face {
     font-family: 'Geometos';
-    /* Certifique-se que o nome do arquivo da fonte está correto */
     src: url('Fontes/Geometos.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
@@ -13,17 +12,17 @@
    VARIÁVEIS GLOBAIS E TEMA
    ================================================================= */
 :root {
-    --cor-fundo: #0f0a1a;
-    --cor-texto: #fff;
-    --cor-texto-secundario: #ddd;
+    --cor-fundo: #12141D; /* Cinza-Chumbo Quase Preto */
+    --cor-fundo-secundario: #1a1030; /* Roxo escuro para elementos */
+    --cor-texto: #EAE6E1; /* Branco "Sujo" */
+    --cor-texto-secundario: #a0a0a0;
     --cor-neon-vermelho: #ff073a;
-    /* Novo gradiente vermelho para os cards */
-    --gradiente-vermelho: linear-gradient(45deg, #ff073a, #e60023);
 }
 
 /* Estilos para o tema claro (light-mode) */
 body.light-mode {
-    --cor-fundo: #f5f0ff;
+    --cor-fundo: #f0eefc;
+    --cor-fundo-secundario: #e0d6ff;
     --cor-texto: #222;
     --cor-texto-secundario: #555;
 }
@@ -67,8 +66,8 @@ body {
    ================================================================= */
 .header {
     text-align: center;
-    padding: 30px 0 25px 0;
-    background: linear-gradient(135deg, #1a1030 0%, #2a1a50 100%);
+    padding: 20px 0;
+    background: var(--cor-fundo-secundario);
     border-bottom: 3px solid var(--cor-neon-vermelho);
 }
 
@@ -76,28 +75,32 @@ body {
     display: inline-block;
 }
 
-/* --- AJUSTE: Logo maior e animação mais sutil --- */
 .logo-img {
-    max-height: 45px;
+    max-height: 65px; /* Aumentado */
     width: auto;
-    transition: transform 0.3s ease;
-    animation: neon-glow 3s ease-in-out infinite;
+    transition: filter 0.3s ease;
 }
 
-@keyframes neon-glow {
+/* Animação de brilho sutil */
+@keyframes subtle-glow {
     0%, 100% {
-        filter: drop-shadow(0 0 3px var(--cor-neon-vermelho)) drop-shadow(0 0 6px var(--cor-neon-vermelho)); /* Reduzido */
+        filter: drop-shadow(0 0 2px var(--cor-neon-vermelho)) drop-shadow(0 0 4px var(--cor-neon-vermelho));
     }
     50% {
-        filter: drop-shadow(0 0 6px var(--cor-neon-vermelho)) drop-shadow(0 0 12px var(--cor-neon-vermelho)); /* Reduzido */
+        filter: drop-shadow(0 0 4px var(--cor-neon-vermelho)) drop-shadow(0 0 8px var(--cor-neon-vermelho));
     }
+}
+
+/* Classe que ativa a animação */
+.glowing .logo-img,
+nav a.glowing {
+    animation: subtle-glow 3s ease-in-out infinite;
 }
 
 nav {
     margin: 20px 0 15px 0;
 }
 
-/* --- AJUSTE: Efeito glitch estático e mais sutil --- */
 nav a {
     margin: 0 20px;
     color: var(--cor-texto);
@@ -114,25 +117,13 @@ nav a {
     filter: blur(0.4px);
 }
 
-/* Ao passar o mouse, remove o glitch para legibilidade */
+/* Ao passar o mouse, remove o glitch e adiciona glow */
 nav a:hover {
     text-shadow: none;
     filter: none;
-    color: var(--cor-neon-vermelho);
+    color: var(--cor-texto);
+    animation: subtle-glow 3s ease-in-out infinite;
 }
-
-/* O link da página atual mantém o efeito, mas sem hover */
-nav a.current {
-    cursor: default;
-}
-nav a.current:hover {
-    color: var(--cor-texto); /* Mantém a cor original */
-    text-shadow: 
-        0.5px 0.5px 0px rgba(255, 0, 58, 0.5), 
-        -0.5px -0.5px 0px rgba(0, 255, 255, 0.5);
-    filter: blur(0.4px);
-}
-
 
 .theme-toggle {
     background: none;
@@ -151,10 +142,10 @@ nav a.current:hover {
 
 
 /* =================================================================
-   CONTEÚDO PRINCIPAL (INDEX.HTML)
+   MEGA-REWORK: SEÇÃO DE PERFIL
    ================================================================= */
 .main-content {
-    max-width: 1200px;
+    max-width: 1100px; /* Ajustado para o novo layout */
     margin: 40px auto;
     padding: 0 20px;
     display: flex;
@@ -166,37 +157,51 @@ nav a.current:hover {
 
 .profile-section {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 30px;
+    align-items: center; /* Alinha verticalmente avatar e texto */
+    gap: 40px; /* Espaço entre avatar e texto */
+    width: 100%;
+}
+
+.profile-left {
+    flex-shrink: 0; /* Impede que o avatar encolha */
+    text-align: center;
 }
 
 .avatar-container {
-    width: 200px;
-    height: 200px;
+    width: 220px; /* Um pouco maior */
+    height: 220px;
     border-radius: 50%;
     overflow: hidden;
     border: 3px solid var(--cor-neon-vermelho);
     box-shadow: 0 0 30px rgba(255, 7, 58, 0.5);
-    margin-bottom: 20px;
+    margin: 0 auto 15px auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: transparent;
 }
 
 .avatar-container img {
-    width: 170px;
-    height: 170px;
+    width: 190px;
+    height: 190px;
     object-fit: cover;
     border-radius: 50%;
 }
 
+.profile-greeting {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.profile-right {
+    flex-grow: 1;
+    text-align: left; /* Alinha o texto à esquerda */
+}
+
 .bio-text {
-    max-width: 700px;
     font-size: 1.1rem;
     line-height: 1.7;
-    margin-bottom: 20px;
+    margin: 0 0 25px 0;
     color: var(--cor-texto-secundario);
 }
 
@@ -208,62 +213,25 @@ nav a.current:hover {
 .social-links {
     display: flex;
     gap: 15px;
-    margin-bottom: 20px;
-    position: relative;
+    margin-bottom: 25px;
     align-items: center;
 }
 
-.social-icon {
-    width: 30px;
-    height: 30px;
-    transition: all 0.3s;
+/* --- SEÇÃO DE VÍDEOS --- */
+.videos-section {
+    width: 100%;
+    margin-top: 30px;
 }
 
-.social-icon:hover {
-    transform: scale(1.15) translateY(-3px);
-    filter: drop-shadow(0 0 10px var(--cor-neon-vermelho));
-}
-
-.social-icon-container {
-    position: relative;
-    display: inline-block;
-}
-
-.social-icon-container::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%) translateY(0px);
-    background-color: var(--cor-neon-vermelho);
-    color: white;
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-family: 'Poppins', sans-serif;
-    white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-    pointer-events: none;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 700;
-    box-shadow: 0 0 10px rgba(255, 7, 58, 0.5);
-}
-
-.social-icon-container:hover::after {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) translateY(5px);
-}
-
-/* --- AJUSTE: Título da seção como imagem --- */
 .section-title-img {
     display: block;
-    margin: 20px auto;
+    margin: 0 auto 15px auto; /* Espaço reduzido */
     max-width: 100%;
-    max-height: 45px; /* Ajuste o tamanho conforme necessário */
+    max-height: 50px;
+    /* Efeito fantasma */
+    filter: drop-shadow(0.5px 0.5px 0px rgba(255, 0, 58, 0.5)) 
+            drop-shadow(-0.5px -0.5px 0px rgba(0, 255, 255, 0.5)) 
+            blur(0.4px);
 }
 
 .videos-container {
@@ -272,35 +240,25 @@ nav a.current:hover {
     justify-content: center;
     flex-wrap: wrap;
     margin: 20px auto;
-    max-width: 1000px;
+    max-width: 100%;
 }
 
-/* --- AJUSTE: Contorno dos vídeos com degradê vermelho --- */
+/* --- REDESIGN PREMIUM DOS VÍDEOS --- */
 .video-card {
     width: 300px;
     text-decoration: none;
     position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #1C1E29; /* Fundo escuro */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-radius: 16px;
-    background: var(--gradiente-vermelho); /* Novo degradê */
-    padding: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .video-card:hover {
     transform: scale(1.03);
-    box-shadow: 0 0 30px rgba(255, 7, 58, 0.5);
-}
-
-.video-card-inner {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    overflow: hidden;
-    border-radius: 13px;
-}
-
-body:not(.light-mode) .video-card-inner {
-    background-color: #1a1030;
+    /* Brilho interno vermelho no hover */
+    box-shadow: 0 0 25px rgba(255, 7, 58, 0.4), inset 0 0 15px rgba(255, 7, 58, 0.3);
 }
 
 .video-thumbnail {
@@ -315,27 +273,13 @@ body:not(.light-mode) .video-card-inner {
     justify-content: center;
 }
 
-.video-thumbnail::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    transition: background-color 0.3s ease;
-}
-
-.video-card:hover .video-thumbnail::before {
-    background-color: rgba(0, 0, 0, 0.3);
-}
-
 .play-icon {
     width: 60px;
     height: 60px;
     position: relative;
     z-index: 1;
     transition: transform 0.3s ease;
+    filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
 }
 
 .video-card:hover .play-icon {
@@ -346,16 +290,14 @@ body:not(.light-mode) .video-card-inner {
     padding: 15px;
     margin: 0;
     font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 1.1rem;
+    font-weight: 600;
+    font-size: 1rem;
     flex-grow: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+    text-align: left;
     min-height: 5px;
-    line-height: 1.3;
+    line-height: 1.4;
     color: var(--cor-texto-secundario);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 
@@ -376,11 +318,16 @@ body:not(.light-mode) .video-card-inner {
 }
 
 .faq-question {
-    color: var(--cor-neon-vermelho);
     font-family: 'Geometos', sans-serif;
-    font-size: 1.8rem;
+    font-size: 1.6rem; /* Reduzido */
     margin-bottom: 15px;
-    letter-spacing: 0.5px;
+    letter-spacing: 1.5px; /* Aumentado */
+    color: var(--cor-texto);
+    /* Efeito fantasma */
+    text-shadow: 
+        0.5px 0.5px 0px rgba(255, 0, 58, 0.5), 
+        -0.5px -0.5px 0px rgba(0, 255, 255, 0.5);
+    filter: blur(0.4px);
 }
 
 .faq-answer {
@@ -390,119 +337,39 @@ body:not(.light-mode) .video-card-inner {
     line-height: 1.7;
 }
 
-.contact-email {
-    font-family: 'Montserrat', sans-serif;
-    color: var(--cor-texto-secundario);
-    font-size: 1.1rem;
-    margin: 60px 0 30px 0;
-    text-align: center;
-    letter-spacing: 0.5px;
-}
-
-.contact-email a {
-    color: var(--cor-neon-vermelho);
-    text-decoration: none;
-    transition: all 0.3s;
-}
-
-.contact-email a:hover {
-    text-shadow: 0 0 5px var(--cor-neon-vermelho);
-}
-
-a.external-link {
-    color: var(--cor-neon-vermelho);
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s;
-}
-
-a.external-link:hover {
-    text-decoration: underline;
-    text-shadow: 0 0 5px var(--cor-neon-vermelho);
-}
-
-
-/* =================================================================
-   ELEMENTOS COMUNS
-   ================================================================= */
-.divider,
-.faq-divider {
-    border: 0;
-    height: 1px;
-    background: linear-gradient(to right, transparent, var(--cor-neon-vermelho), transparent);
-    margin: 30px 0;
-}
-
-.divider {
-    width: 80%;
-}
-
-.vertical-divider {
-    width: 2px;
-    height: 30px;
-    background: linear-gradient(to bottom, transparent, var(--cor-neon-vermelho), transparent);
-}
-
-
-/* =================================================================
-   RODAPÉ
-   ================================================================= */
-footer {
-    text-align: center;
-    padding: 20px;
-    color: var(--cor-texto-secundario);
-    font-size: 0.8rem;
-    margin-top: auto;
-}
-
-
 /* =================================================================
    DESIGN RESPONSIVO
    ================================================================= */
 @media (max-width: 768px) {
+    /* Desfaz o layout de duas colunas no mobile */
+    .profile-section {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .profile-right {
+        text-align: center; /* Centraliza o texto e redes sociais */
+    }
+    .social-links {
+        justify-content: center;
+    }
+
     .logo-img {
         max-height: 55px;
     }
-    
     nav a {
         font-size: 1rem;
         margin: 0 10px;
     }
-    
     .bio-text {
         font-size: 1rem;
         padding: 0 15px;
     }
-    
     .videos-container {
         flex-direction: column;
         align-items: center;
     }
-    
     .video-card {
         width: 100%;
         max-width: 400px;
-    }
-}
-
-@media (max-width: 480px) {
-    nav {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    nav a {
-        margin: 0 8px;
-        font-size: 0.9rem;
-    }
-    
-    .social-links {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
-    }
-
-    .vertical-divider {
-        display: none;
     }
 }
