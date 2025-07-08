@@ -15,7 +15,7 @@
     --cor-fundo: #12141D;
     --cor-fundo-secundario: #1a1030;
     --cor-texto: #EAE6E1;
-    --cor-texto-secundario: #a0a0a0;
+    --cor-texto-secundario: #EAE6E1; /* Alterado de cinza para branco */
     --cor-neon-vermelho: #ff073a;
 }
 
@@ -45,11 +45,6 @@ body.light-mode .video-card {
     border-color: rgba(0,0,0,0.1);
 }
 
-body.light-mode .video-card h3 {
-    border-top-color: rgba(0,0,0,0.1);
-}
-
-
 /* =================================================================
    ESTILOS GERAIS
    ================================================================= */
@@ -78,33 +73,44 @@ body {
 
 .logo-link {
     display: inline-block;
+    position: relative; /* Necessário para o pseudo-elemento de brilho */
 }
 
 .logo-img {
     max-height: 65px;
     width: auto;
+    position: relative;
+    z-index: 2;
+}
+
+/* Novo efeito de brilho por trás */
+.logo-link::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('Imagens/fyori-title.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: blur(10px) opacity(0.7);
+    z-index: 1;
     transition: filter 0.4s ease;
 }
 
-/* Animação de brilho MUITO sutil */
-@keyframes subtle-glow {
-    0%, 100% {
-        filter: drop-shadow(0 0 1px var(--cor-neon-vermelho)) drop-shadow(0 0 2px var(--cor-neon-vermelho));
-    }
-    50% {
-        filter: drop-shadow(0 0 2px var(--cor-neon-vermelho)) drop-shadow(0 0 4px var(--cor-neon-vermelho));
-    }
+.glowing.logo-link::after {
+    animation: subtle-glow-behind 3s ease-in-out infinite;
 }
 
-/* Brilho estático e ainda mais fraco para a página não ativa */
-.faded-glow .logo-img {
-    filter: drop-shadow(0 0 1px var(--cor-neon-vermelho));
-    opacity: 0.8;
+@keyframes subtle-glow-behind {
+    0%, 100% { filter: blur(10px) opacity(0.6); }
+    50% { filter: blur(15px) opacity(0.8); }
 }
 
-/* Classe que ativa a animação principal */
-.glowing {
-    animation: subtle-glow 3s ease-in-out infinite;
+.faded-glow.logo-link::after {
+    filter: blur(8px) opacity(0.5);
 }
 
 nav {
@@ -127,30 +133,15 @@ nav a {
 }
 
 nav a:hover {
-    text-shadow: none;
+    text-shadow: 0 0 8px var(--cor-neon-vermelho);
     filter: none;
     color: var(--cor-neon-vermelho);
-    animation: subtle-glow 3s ease-in-out infinite;
 }
 
 nav a.current.glowing {
     color: var(--cor-neon-vermelho);
-}
-
-/* --- FIX: Botão de tema --- */
-.theme-toggle {
-    background: none;
-    border: none;
-    color: var(--cor-texto);
-    font-size: 1.3rem;
-    cursor: pointer;
-    margin-left: 5px;
-    transition: transform 0.4s, color 0.3s;
-}
-
-.theme-toggle:hover {
-    transform: rotate(45deg);
-    color: var(--cor-neon-vermelho);
+    text-shadow: 0 0 8px var(--cor-neon-vermelho);
+    filter: none;
 }
 
 
@@ -159,7 +150,7 @@ nav a.current.glowing {
    ================================================================= */
 .main-content {
     max-width: 1100px;
-    margin: 40px auto;
+    margin: 60px auto 40px auto; /* Mais espaço no topo */
     padding: 0 20px;
     display: flex;
     flex-direction: column;
@@ -171,7 +162,7 @@ nav a.current.glowing {
 .profile-section {
     display: flex;
     align-items: center;
-    gap: 40px;
+    gap: 60px; /* Mais espaço entre colunas */
     width: 100%;
     margin-bottom: 30px;
 }
@@ -189,33 +180,24 @@ nav a.current.glowing {
     border: 3px solid var(--cor-neon-vermelho);
     box-shadow: 0 0 30px rgba(255, 7, 58, 0.5);
     margin: 0 auto 15px auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.avatar-container img {
-    width: 190px;
-    height: 190px;
-    object-fit: cover;
-    border-radius: 50%;
 }
 
 .profile-greeting {
     font-family: 'Poppins', sans-serif;
-    font-size: 1.5rem;
+    font-size: 1.3rem; /* Reduzido */
     font-weight: 600;
 }
 
 .profile-right {
     flex-grow: 1;
-    text-align: left;
+    text-align: center; /* Centraliza todo o conteúdo da direita */
 }
 
 .bio-text {
-    font-size: 1.1rem;
-    line-height: 1.7;
-    margin: 0 0 25px 0;
+    font-size: 1.15rem; /* Um pouco maior */
+    line-height: 1.8;
+    margin: 0 auto 25px auto;
+    max-width: 500px; /* Limita a largura para melhor leitura */
     color: var(--cor-texto-secundario);
 }
 
@@ -225,30 +207,29 @@ nav a.current.glowing {
 }
 
 .social-links {
-    display: flex;
+    display: inline-flex; /* Para centralizar como um bloco */
     gap: 15px;
     align-items: center;
-    flex-wrap: wrap; /* Permite que os ícones quebrem a linha se necessário */
+    flex-wrap: wrap;
 }
 
-/* --- FIX: Ícones com tamanho corrigido --- */
+.social-icon-container {
+    position: relative;
+}
+
 .social-icon {
     width: 30px;
     height: 30px;
     transition: all 0.3s;
 }
 
-.social-icon:hover {
-    transform: scale(1.15) translateY(-3px);
-    filter: drop-shadow(0 0 10px var(--cor-neon-vermelho));
-}
-
+/* Tooltip restaurado */
 .social-icon-container::after {
     content: attr(data-tooltip);
     position: absolute;
-    top: 100%;
+    bottom: 120%;
     left: 50%;
-    transform: translateX(-50%) translateY(5px);
+    transform: translateX(-50%);
     background-color: var(--cor-neon-vermelho);
     color: white;
     padding: 5px 15px;
@@ -260,10 +241,6 @@ nav a.current.glowing {
     visibility: hidden;
     transition: all 0.3s ease;
     pointer-events: none;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 700;
-    box-shadow: 0 0 10px rgba(255, 7, 58, 0.5);
 }
 
 .social-icon-container:hover::after {
@@ -280,7 +257,7 @@ nav a.current.glowing {
 
 .section-title-img {
     display: block;
-    margin: 0 auto 15px auto;
+    margin: 0 auto 30px auto; /* Mais espaço abaixo */
     max-width: 100%;
     max-height: 50px;
     filter: none;
@@ -288,15 +265,24 @@ nav a.current.glowing {
 
 .videos-container {
     display: flex;
-    gap: 30px;
+    gap: 40px; /* Espaço entre os itens de vídeo */
     justify-content: center;
     flex-wrap: wrap;
     margin: 20px auto;
     max-width: 100%;
 }
 
+/* Wrapper para o card e o título */
+.video-item-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
 .video-card {
     width: 300px;
+    height: 169px;
     text-decoration: none;
     position: relative;
     border-radius: 12px;
@@ -307,47 +293,30 @@ nav a.current.glowing {
 }
 
 .video-card:hover {
-    transform: scale(1.03);
+    transform: scale(1.05);
     box-shadow: 0 0 25px rgba(255, 7, 58, 0.4), inset 0 0 15px rgba(255, 7, 58, 0.3);
 }
 
 .video-thumbnail {
     width: 100%;
-    height: 169px;
+    height: 100%;
     position: relative;
     cursor: pointer;
     background-size: cover;
     background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
-.play-icon {
-    width: 60px;
-    height: 60px;
-    position: relative;
-    z-index: 1;
-    transition: transform 0.3s ease;
-    filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
-}
-
-.video-card:hover .play-icon {
-    transform: scale(1.1);
-}
-
-.video-card h3 {
-    padding: 15px;
-    margin: 0;
+/* Título do vídeo separado */
+.video-title {
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
     font-size: 1rem;
-    flex-grow: 1;
-    text-align: left;
-    min-height: 5px;
-    line-height: 1.4;
-    color: var(--cor-texto-secundario);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--cor-texto);
+    text-shadow: 
+        0.5px 0.5px 0px rgba(255, 0, 58, 0.5), 
+        -0.5px -0.5px 0px rgba(0, 255, 255, 0.5);
+    filter: blur(0.4px);
+    max-width: 300px;
 }
 
 
@@ -373,7 +342,6 @@ nav a.current.glowing {
     margin-bottom: 15px;
     letter-spacing: 2px;
     color: var(--cor-neon-vermelho);
-    filter: none;
     text-shadow: 0 0 8px rgba(255, 7, 58, 0.7);
 }
 
@@ -434,25 +402,5 @@ footer {
     }
     .social-links {
         justify-content: center;
-    }
-
-    .logo-img {
-        max-height: 55px;
-    }
-    nav a {
-        font-size: 1rem;
-        margin: 0 10px;
-    }
-    .bio-text {
-        font-size: 1rem;
-        padding: 0 15px;
-    }
-    .videos-container {
-        flex-direction: column;
-        align-items: center;
-    }
-    .video-card {
-        width: 100%;
-        max-width: 400px;
     }
 }

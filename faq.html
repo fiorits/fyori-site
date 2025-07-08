@@ -16,13 +16,11 @@
 </head>
 <body>
     <header class="header">
-        <!-- Logo com um brilho estático e mais fraco nesta página -->
         <a href="index.html" class="logo-link faded-glow">
             <img src="Imagens/fyori-title.png" alt="Fyori Logo" class="logo-img">
         </a>
         <nav>
             <a href="https://apoia.se/fyori" target="_blank">APOIE O CANAL</a>
-            <!-- Link da página atual com a classe 'glowing' -->
             <a href="/faq.html" class="current glowing">FAQ</a>
             <button class="theme-toggle" aria-label="Alternar tema">🌓</button>
         </nav>
@@ -87,19 +85,20 @@
     </footer>
 
     <script>
-        // Script para o botão de tema (claro/escuro)
-        const themeToggle = document.querySelector('.theme-toggle');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-
-        const currentTheme = localStorage.getItem('theme');
-        if (currentTheme === 'light' || (!currentTheme && !prefersDark.matches)) {
-            document.body.classList.add('light-mode');
+        function setupTheme() {
+            const themeToggle = document.querySelector('.theme-toggle');
+            if (!themeToggle) return;
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+            const currentTheme = localStorage.getItem('theme');
+            if (currentTheme === 'light' || (!currentTheme && !prefersDark.matches)) {
+                document.body.classList.add('light-mode');
+            }
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('light-mode');
+                localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+            });
         }
-
-        themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('light-mode');
-            localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
-        });
+        document.addEventListener('DOMContentLoaded', setupTheme);
     </script>
 </body>
 </html>
