@@ -1,0 +1,489 @@
+/* =================================================================
+   VARIÁVEIS GLOBAIS E TEMA
+   ================================================================= */
+:root {
+    --cor-destaque: #e83a9f;
+    --cor-destaque-escuro: #9d2bff;
+    --cor-fundo: #0f0a1a;
+    --cor-texto: #fff;
+    --cor-texto-secundario: #ddd;
+    --gradiente-premium: linear-gradient(45deg, var(--cor-destaque), var(--cor-destaque-escuro));
+}
+
+/* Estilos para o tema claro (light-mode) */
+body.light-mode {
+    --cor-fundo: #f5f0ff;
+    --cor-texto: #222;
+    --cor-texto-secundario: #555;
+}
+
+body.light-mode .header {
+    background: linear-gradient(135deg, #e0d6ff 0%, #c9b8ff 100%);
+}
+
+body.light-mode .faq-divider,
+body.light-mode .divider {
+    background: linear-gradient(to right, transparent, var(--cor-destaque-escuro), transparent);
+}
+
+body.light-mode .social-icon {
+    filter: invert(1);
+}
+
+/* --- FIX MODO CLARO: Título do vídeo não tem fundo no modo claro --- */
+body.light-mode .video-card h3 {
+    background-color: transparent;
+}
+
+
+/* =================================================================
+   ESTILOS GERAIS
+   ================================================================= */
+body { 
+    background-color: var(--cor-fundo); 
+    color: var(--cor-texto); 
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =================================================================
+   CABEÇALHO E NAVEGAÇÃO
+   ================================================================= */
+.header {
+    text-align: center;
+    padding: 30px 0 25px 0;
+    background: linear-gradient(135deg, #1a1030 0%, #2a1a50 100%);
+    border-bottom: 3px solid var(--cor-destaque);
+}
+
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    background: var(--gradiente-premium);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin: 0;
+    text-decoration: none;
+    display: inline-block;
+    letter-spacing: 2px;
+    font-weight: 700;
+    text-shadow: 0 0 10px rgba(232, 58, 159, 0.5);
+}
+
+nav {
+    margin: 20px 0 15px 0;
+}
+
+nav a {
+    margin: 0 20px;
+    color: var(--cor-destaque);
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+    text-transform: uppercase;
+}
+
+nav a:hover,
+nav a.current {
+    color: var(--cor-texto);
+    text-shadow: 0 0 10px var(--cor-destaque);
+}
+
+.theme-toggle {
+    background: none;
+    border: none;
+    color: var(--cor-destaque);
+    font-size: 1.3rem;
+    cursor: pointer;
+    margin-left: 5px;
+    transition: transform 0.4s;
+}
+
+.theme-toggle:hover {
+    transform: rotate(45deg);
+    color: var(--cor-texto);
+}
+
+
+/* =================================================================
+   CONTEÚDO PRINCIPAL (INDEX.HTML)
+   ================================================================= */
+.main-content {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+}
+
+.profile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.avatar-container {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid var(--cor-destaque);
+    box-shadow: 0 0 30px rgba(232, 58, 159, 0.5);
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+}
+
+.avatar-container img {
+    width: 170px;
+    height: 170px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.bio-text {
+    max-width: 700px;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    color: var(--cor-texto-secundario);
+}
+
+.highlight {
+    color: var(--cor-destaque);
+    font-weight: 600;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    position: relative;
+    align-items: center;
+}
+
+.social-icon {
+    width: 30px;
+    height: 30px;
+    transition: all 0.3s;
+}
+
+.social-icon:hover {
+    transform: scale(1.15) translateY(-3px);
+    filter: drop-shadow(0 0 10px var(--cor-destaque));
+}
+
+.social-icon-container {
+    position: relative;
+    display: inline-block;
+}
+
+.social-icon-container::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(0px);
+    background-color: var(--cor-destaque);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-family: 'Playfair Display', serif;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    box-shadow: 0 0 10px rgba(232, 58, 159, 0.5);
+}
+
+.social-icon-container:hover::after {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(5px);
+}
+
+.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    background: var(--gradiente-premium);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin: 10px 0 0 0;
+    text-shadow: 0 0 10px rgba(232, 58, 159, 0.3);
+    font-weight: 700;
+}
+
+.videos-container {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 20px auto;
+    max-width: 1000px;
+}
+
+/* --- ESTILO "PREMIUM" DOS VÍDEOS (BUGFIX) --- */
+.video-card {
+    width: 300px;
+    text-decoration: none;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 16px; /* Borda arredondada principal */
+    background: var(--gradiente-premium); /* Fundo do degradê para a "borda" */
+    padding: 3px; /* Espessura da borda */
+}
+
+.video-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 30px rgba(232, 58, 159, 0.6);
+}
+
+.video-card-inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden; /* Garante que o conteúdo interno respeite o arredondamento */
+    border-radius: 13px; /* Arredondamento interno, um pouco menor que o externo */
+    background-color: #000;
+}
+
+.video-thumbnail {
+    width: 100%;
+    height: 169px;
+    position: relative;
+    cursor: pointer;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.video-thumbnail::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: background-color 0.3s ease;
+}
+
+.video-card:hover .video-thumbnail::before {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.play-icon {
+    width: 60px;
+    height: 60px;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.3s ease;
+}
+
+.video-card:hover .play-icon {
+    transform: scale(1.1);
+}
+
+.video-card h3 {
+    padding: 15px;
+    margin: 0;
+    font-family: 'Exo 2', sans-serif; /* FONTE ATUALIZADA */
+    font-weight: 700;
+    font-size: 1.1rem;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 5px;
+    line-height: 1.3;
+    
+    /* Título com degradê */
+    background: var(--gradiente-premium);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* Fundo do título apenas no modo escuro */
+body:not(.light-mode) .video-card-inner {
+    background-color: #1a1030;
+}
+
+body.light-mode .video-card-inner {
+    background-color: var(--cor-fundo);
+}
+
+
+/* =================================================================
+   CONTEÚDO (FAQ.HTML)
+   ================================================================= */
+.faq-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+    flex: 1;
+}
+
+.faq-item {
+    margin-bottom: 40px;
+    border-left: 3px solid var(--cor-destaque);
+    padding-left: 20px;
+}
+
+.faq-question {
+    color: var(--cor-destaque);
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    letter-spacing: 0.5px;
+}
+
+.faq-answer {
+    color: var(--cor-texto-secundario);
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    line-height: 1.7;
+}
+
+.contact-email {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--cor-texto-secundario);
+    font-size: 1.1rem;
+    margin: 60px 0 30px 0;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+.contact-email a {
+    color: var(--cor-destaque);
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.contact-email a:hover {
+    text-shadow: 0 0 5px var(--cor-destaque);
+}
+
+a.external-link {
+    color: var(--cor-destaque);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+a.external-link:hover {
+    text-decoration: underline;
+    text-shadow: 0 0 5px var(--cor-destaque);
+}
+
+
+/* =================================================================
+   ELEMENTOS COMUNS
+   ================================================================= */
+.divider,
+.faq-divider {
+    border: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--cor-destaque), transparent);
+    margin: 30px 0;
+}
+
+.divider {
+    width: 80%;
+}
+
+.vertical-divider {
+    width: 2px;
+    height: 30px;
+    background: linear-gradient(to bottom, transparent, var(--cor-destaque), transparent);
+}
+
+
+/* =================================================================
+   RODAPÉ
+   ================================================================= */
+footer {
+    text-align: center;
+    padding: 20px;
+    color: var(--cor-texto-secundario);
+    font-size: 0.8rem;
+    margin-top: auto;
+}
+
+
+/* =================================================================
+   DESIGN RESPONSIVO
+   ================================================================= */
+@media (max-width: 768px) {
+    .logo {
+        font-size: 3rem;
+    }
+    
+    nav a {
+        font-size: 1rem;
+        margin: 0 10px;
+    }
+    
+    .bio-text {
+        font-size: 1rem;
+        padding: 0 15px;
+    }
+    
+    .videos-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .video-card {
+        width: 100%;
+        max-width: 400px;
+    }
+}
+
+@media (max-width: 480px) {
+    nav {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    nav a {
+        margin: 0 8px;
+        font-size: 0.9rem;
+    }
+    
+    .social-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .vertical-divider {
+        display: none;
+    }
+}

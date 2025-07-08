@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Fyori - Sou criador de conteúdo e contador de histórias. Meu trabalho é transportar as pessoas para mundos com o poder do storytelling.">
+    <title>Fyori</title>
+    <!-- Fontes do Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Playfair+Display:wght@700&family=Poppins:wght@400;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- Link para o arquivo de estilo externo -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <a href="/" class="logo">FYORI</a>
+        <nav>
+            <a href="https://apoia.se/fyori" target="_blank">APOIE O CANAL</a>
+            <a href="/faq.html">FAQ</a>
+            <button class="theme-toggle" aria-label="Alternar tema">🌓</button>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <section class="profile-section">
+            <div class="avatar-container">
+                <img src="avatar-fyori.png" alt="Fyori Avatar" onerror="this.style.display='none'">
+            </div>
+            
+            <p class="bio-text">
+                Opa, eu sou o <span class="highlight">Fyori</span>.<br><br>
+                Sou criador de conteúdo e contador de histórias. Meu trabalho é transportar as pessoas para mundos com o poder do storytelling.<br><br>
+                No YouTube, compartilho vídeos sobre terror, mistério e muito mais, com vídeos que já foram vistos por milhões de pessoas.
+            </p>
+            
+            <div class="social-links">
+                <div class="social-icon-container" data-tooltip="YouTube">
+                    <a href="https://www.youtube.com/channel/UCpZ886pfK3UWIK4ywgHEV6g" target="_blank" aria-label="YouTube">
+                        <img src="Imagens/youtube-icon.png" alt="YouTube" class="social-icon">
+                    </a>
+                </div>
+                <div class="social-icon-container" data-tooltip="Instagram Pessoal">
+                    <a href="https://instagram.com/fyoritss" target="_blank" aria-label="Instagram Pessoal">
+                        <img src="Imagens/instagram-icon.png" alt="Instagram Pessoal" class="social-icon">
+                    </a>
+                </div>
+                <div class="social-icon-container" data-tooltip="Instagram do Canal">
+                    <a href="https://instagram.com/fyoriytb" target="_blank" aria-label="Instagram do Canal">
+                        <img src="Imagens/instagram2-icon.png" alt="Instagram do Canal" class="social-icon">
+                    </a>
+                </div>
+                <div class="social-icon-container" data-tooltip="Discord">
+                    <a href="https://discord.com/invite/TTEVwfVpnB" target="_blank" aria-label="Discord">
+                        <img src="Imagens/discord-icon.png" alt="Discord" class="social-icon">
+                    </a>
+                </div>
+                <div class="social-icon-container" data-tooltip="Twitter/X">
+                    <a href="https://x.com/fyoriytb" target="_blank" aria-label="Twitter/X">
+                        <img src="Imagens/x-icon.png" alt="X/Twitter" class="social-icon">
+                    </a>
+                </div>
+                <div class="vertical-divider"></div>
+                <div class="social-icon-container" data-tooltip="EM BREVE">
+                    <span aria-label="Podcast">
+                        <img src="Imagens/podcast-icon.png" alt="Podcast" class="social-icon">
+                    </span>
+                </div>
+                <div class="social-icon-container" data-tooltip="EM BREVE">
+                    <span aria-label="Loja">
+                        <img src="Imagens/loja-icon.png" alt="Loja" class="social-icon">
+                    </span>
+                </div>
+                <div class="social-icon-container" data-tooltip="EM BREVE">
+                    <span aria-label="Curso">
+                        <img src="Imagens/curso-icon.png" alt="Curso" class="social-icon">
+                    </span>
+                </div>
+            </div>
+            
+            <hr class="divider">
+            
+            <span class="section-title">ÚLTIMOS VÍDEOS</span>
+        </section>
+        
+        <section class="videos-container" id="last-videos">
+            <!-- Os vídeos do YouTube serão inseridos aqui pelo script -->
+        </section>
+    </main>
+
+    <footer>
+        Copyright © 2025 Fyori
+    </footer>
+
+    <script>
+        // --- SCRIPT PARA ALTERNAR TEMA (CLARO/ESCURO) ---
+        function setupTheme() {
+            const themeToggle = document.querySelector('.theme-toggle');
+            if (!themeToggle) return;
+
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+            const currentTheme = localStorage.getItem('theme');
+
+            if (currentTheme === 'light' || (!currentTheme && !prefersDark.matches)) {
+                document.body.classList.add('light-mode');
+            }
+
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('light-mode');
+                localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+            });
+        }
+
+        // --- SCRIPT PARA CARREGAR VÍDEOS DO YOUTUBE ---
+        async function fetchYouTubeVideos() {
+            // Cole sua chave da API do YouTube aqui.
+            const API_KEY = 'AIzaSyDaRPzw4KNZElP4dFKwulF75Oun9pLmkh8';
+            const CHANNEL_ID = 'UCpZ886pfK3UWIK4ywgHEV6g';
+            const container = document.getElementById('last-videos');
+
+            if (!container) return;
+
+            if (API_KEY === 'SUA_CHAVE_DE_API_AQUI' || !API_KEY) {
+                container.innerHTML = '<p style="color:var(--cor-destaque);text-align:center;">Por favor, configure a chave da API do YouTube para carregar os vídeos.</p>';
+                return;
+            }
+
+            container.innerHTML = '<p>Carregando vídeos...</p>';
+
+            try {
+                const channelResponse = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${CHANNEL_ID}&key=${API_KEY}`);
+                if (!channelResponse.ok) throw new Error('Falha ao buscar o canal.');
+                
+                const channelData = await channelResponse.json();
+                const uploadsPlaylistId = channelData.items[0]?.contentDetails?.relatedPlaylists?.uploads;
+                if (!uploadsPlaylistId) throw new Error('Não foi possível encontrar a playlist de uploads.');
+
+                const videosResponse = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=3&playlistId=${uploadsPlaylistId}&key=${API_KEY}`);
+                if (!videosResponse.ok) throw new Error('Falha ao buscar os vídeos.');
+
+                const videosData = await videosResponse.json();
+                if (!videosData.items || videosData.items.length === 0) {
+                    container.innerHTML = '<p>Nenhum vídeo encontrado.</p>';
+                    return;
+                }
+                
+                container.innerHTML = ''; 
+                videosData.items.forEach(item => {
+                    const videoId = item.snippet.resourceId.videoId;
+                    const title = item.snippet.title;
+                    const thumbnailUrl = item.snippet.thumbnails.high.url;
+                    
+                    const videoLink = document.createElement('a');
+                    videoLink.className = 'video-card';
+                    videoLink.href = `https://www.youtube.com/watch?v=${videoId}`;
+                    videoLink.target = '_blank';
+                    videoLink.rel = 'noopener noreferrer';
+                    
+                    videoLink.innerHTML = `
+                        <div class="video-card-inner">
+                            <div class="video-thumbnail" style="background-image: url('${thumbnailUrl}');">
+                                <svg class="play-icon" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M100 25C58.5786 25 25 58.5786 25 100C25 141.421 58.5786 175 100 175C141.421 175 175 141.421 175 100C175 58.5786 141.421 25 100 25Z" fill="white" fill-opacity="0.2"/><path d="M136.136 91.1306C142.164 94.6133 142.164 105.387 136.136 108.869L87.561 137.983C81.5332 141.466 74 136.079 74 129.114V70.8858C74 63.9212 81.5332 58.534 87.561 62.0168L136.136 91.1306Z" fill="#E83A9F"/></svg>
+                            </div>
+                            <h3>${title}</h3>
+                        </div>
+                    `;
+                    container.appendChild(videoLink);
+                });
+
+            } catch (error) {
+                console.error('Erro ao carregar vídeos do YouTube:', error);
+                container.innerHTML = `<p style="color:var(--cor-destaque);text-align:center;">${error.message}</p>`;
+            }
+        }
+
+        // --- INICIALIZAÇÃO DOS SCRIPTS QUANDO A PÁGINA CARREGAR ---
+        document.addEventListener('DOMContentLoaded', () => {
+            setupTheme();
+            fetchYouTubeVideos();
+        });
+    </script>
+</body>
+</html>
