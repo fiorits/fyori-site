@@ -78,7 +78,7 @@ body {
 
 /* --- AJUSTE: Logo maior e animação mais sutil --- */
 .logo-img {
-    max-height: 65px; /* Aumentado */
+    max-height: 100px;
     width: auto;
     transition: transform 0.3s ease;
     animation: neon-glow 3s ease-in-out infinite;
@@ -263,7 +263,7 @@ nav a.current:hover {
     display: block;
     margin: 20px auto;
     max-width: 100%;
-    max-height: 45px; /* Ajuste o tamanho conforme necessário */
+    max-height: 100px; /* Ajuste o tamanho conforme necessário */
 }
 
 .videos-container {
