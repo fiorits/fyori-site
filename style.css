@@ -13,13 +13,12 @@
    VARIÁVEIS GLOBAIS E TEMA
    ================================================================= */
 :root {
-    --cor-destaque: #e83a9f;
-    --cor-destaque-escuro: #9d2bff;
     --cor-fundo: #0f0a1a;
     --cor-texto: #fff;
     --cor-texto-secundario: #ddd;
-    --gradiente-premium: linear-gradient(45deg, var(--cor-destaque), var(--cor-destaque-escuro));
     --cor-neon-vermelho: #ff073a;
+    /* Novo gradiente vermelho para os cards */
+    --gradiente-vermelho: linear-gradient(45deg, #ff073a, #e60023);
 }
 
 /* Estilos para o tema claro (light-mode) */
@@ -35,7 +34,7 @@ body.light-mode .header {
 
 body.light-mode .faq-divider,
 body.light-mode .divider {
-    background: linear-gradient(to right, transparent, var(--cor-destaque-escuro), transparent);
+    background: linear-gradient(to right, transparent, var(--cor-neon-vermelho), transparent);
 }
 
 body.light-mode .social-icon {
@@ -73,25 +72,24 @@ body {
     border-bottom: 3px solid var(--cor-neon-vermelho);
 }
 
-/* --- NOVO LOGO COM ANIMAÇÃO --- */
 .logo-link {
     display: inline-block;
 }
 
+/* --- AJUSTE: Logo maior e animação mais sutil --- */
 .logo-img {
-    max-height: 50px; /* Ajuste a altura conforme necessário */
+    max-height: 65px; /* Aumentado */
     width: auto;
     transition: transform 0.3s ease;
-    /* Animação de brilho neon */
     animation: neon-glow 3s ease-in-out infinite;
 }
 
 @keyframes neon-glow {
     0%, 100% {
-        filter: drop-shadow(0 0 4px var(--cor-neon-vermelho)) drop-shadow(0 0 8px var(--cor-neon-vermelho));
+        filter: drop-shadow(0 0 3px var(--cor-neon-vermelho)) drop-shadow(0 0 6px var(--cor-neon-vermelho)); /* Reduzido */
     }
     50% {
-        filter: drop-shadow(0 0 8px var(--cor-neon-vermelho)) drop-shadow(0 0 15px var(--cor-neon-vermelho));
+        filter: drop-shadow(0 0 6px var(--cor-neon-vermelho)) drop-shadow(0 0 12px var(--cor-neon-vermelho)); /* Reduzido */
     }
 }
 
@@ -99,26 +97,40 @@ nav {
     margin: 20px 0 15px 0;
 }
 
-/* --- NOVOS ESTILOS PARA NAVEGAÇÃO --- */
+/* --- AJUSTE: Efeito glitch estático e mais sutil --- */
 nav a {
     margin: 0 20px;
-    color: var(--cor-texto); /* Cor padrão (Branco/Preto) */
+    color: var(--cor-texto);
     text-decoration: none;
-    font-family: 'Geometos', sans-serif; /* Nova fonte */
+    font-family: 'Geometos', sans-serif;
     font-size: 1.3rem;
     letter-spacing: 1px;
-    transition: all 0.2s ease-in-out;
     text-transform: uppercase;
+    transition: all 0.2s ease-in-out;
+    /* Efeito estático */
+    text-shadow: 
+        0.5px 0.5px 0px rgba(255, 0, 58, 0.5), 
+        -0.5px -0.5px 0px rgba(0, 255, 255, 0.5);
+    filter: blur(0.4px);
 }
 
-/* Efeito Glitch/Fantasma no Hover */
-nav a:hover,
+/* Ao passar o mouse, remove o glitch para legibilidade */
+nav a:hover {
+    text-shadow: none;
+    filter: none;
+    color: var(--cor-neon-vermelho);
+}
+
+/* O link da página atual mantém o efeito, mas sem hover */
 nav a.current {
+    cursor: default;
+}
+nav a.current:hover {
+    color: var(--cor-texto); /* Mantém a cor original */
     text-shadow: 
-        1.5px 1.5px 0px rgba(255, 0, 58, 0.7), 
-        -1.5px -1.5px 0px rgba(0, 255, 255, 0.7);
-    filter: blur(0.8px);
-    color: var(--cor-texto); /* Garante que a cor não mude */
+        0.5px 0.5px 0px rgba(255, 0, 58, 0.5), 
+        -0.5px -0.5px 0px rgba(0, 255, 255, 0.5);
+    filter: blur(0.4px);
 }
 
 
@@ -246,17 +258,12 @@ nav a.current {
     transform: translateX(-50%) translateY(5px);
 }
 
-/* --- TÍTULO DA SEÇÃO COM NOVA FONTE --- */
-.section-title {
-    font-family: 'Geometos', sans-serif; /* Nova fonte */
-    font-size: 2.2rem;
-    background: var(--gradiente-premium);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    margin: 10px 0 0 0;
-    text-shadow: 0 0 10px rgba(232, 58, 159, 0.3);
-    font-weight: normal;
+/* --- AJUSTE: Título da seção como imagem --- */
+.section-title-img {
+    display: block;
+    margin: 20px auto;
+    max-width: 100%;
+    max-height: 45px; /* Ajuste o tamanho conforme necessário */
 }
 
 .videos-container {
@@ -268,19 +275,20 @@ nav a.current {
     max-width: 1000px;
 }
 
+/* --- AJUSTE: Contorno dos vídeos com degradê vermelho --- */
 .video-card {
     width: 300px;
     text-decoration: none;
     position: relative;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border-radius: 16px;
-    background: var(--gradiente-premium);
+    background: var(--gradiente-vermelho); /* Novo degradê */
     padding: 3px;
 }
 
 .video-card:hover {
     transform: scale(1.03);
-    box-shadow: 0 0 30px rgba(232, 58, 159, 0.6);
+    box-shadow: 0 0 30px rgba(255, 7, 58, 0.5);
 }
 
 .video-card-inner {
@@ -453,7 +461,7 @@ footer {
    ================================================================= */
 @media (max-width: 768px) {
     .logo-img {
-        max-height: 40px;
+        max-height: 55px;
     }
     
     nav a {

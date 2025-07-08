@@ -85,7 +85,8 @@
             
             <hr class="divider">
             
-            <span class="section-title">ÚLTIMOS VÍDEOS</span>
+            <!-- Título da seção atualizado para usar a imagem -->
+            <img src="Imagens/ultimos-videos-title.png" alt="Últimos Vídeos" class="section-title-img">
         </section>
         
         <section class="videos-container" id="last-videos">
@@ -119,7 +120,7 @@
         // --- SCRIPT PARA CARREGAR VÍDEOS DO YOUTUBE ---
         async function fetchYouTubeVideos() {
             // Cole sua chave da API do YouTube aqui.
-            const API_KEY = 'AIzaSyDaRPzw4KNZElP4dFKwulF75Oun9pLmkh8';
+            const API_KEY = 'SUA_CHAVE_DE_API_AQUI';
             const CHANNEL_ID = 'UCpZ886pfK3UWIK4ywgHEV6g';
             const container = document.getElementById('last-videos');
 
@@ -164,7 +165,7 @@
                     videoLink.innerHTML = `
                         <div class="video-card-inner">
                             <div class="video-thumbnail" style="background-image: url('${thumbnailUrl}');">
-                                <svg class="play-icon" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M100 25C58.5786 25 25 58.5786 25 100C25 141.421 58.5786 175 100 175C141.421 175 175 141.421 175 100C175 58.5786 141.421 25 100 25Z" fill="white" fill-opacity="0.2"/><path d="M136.136 91.1306C142.164 94.6133 142.164 105.387 136.136 108.869L87.561 137.983C81.5332 141.466 74 136.079 74 129.114V70.8858C74 63.9212 81.5332 58.534 87.561 62.0168L136.136 91.1306Z" fill="#E83A9F"/></svg>
+                                <svg class="play-icon" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M100 25C58.5786 25 25 58.5786 25 100C25 141.421 58.5786 175 100 175C141.421 175 175 141.421 175 100C175 58.5786 141.421 25 100 25Z" fill="white" fill-opacity="0.2"/><path d="M136.136 91.1306C142.164 94.6133 142.164 105.387 136.136 108.869L87.561 137.983C81.5332 141.466 74 136.079 74 129.114V70.8858C74 63.9212 81.5332 58.534 87.561 62.0168L136.136 91.1306Z" fill="#ff073a"/></svg>
                             </div>
                             <h3>${title}</h3>
                         </div>
