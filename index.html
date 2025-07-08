@@ -6,17 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Fyori - Sou criador de conteúdo e contador de histórias. Meu trabalho é transportar as pessoas para mundos com o poder do storytelling.">
     <title>Fyori</title>
-    <!-- Fontes do Google -->
+    <!-- Fontes do Google (Apenas as necessárias) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Playfair+Display:wght@700&family=Poppins:wght@400;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     
     <!-- Link para o arquivo de estilo externo -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header class="header">
-        <a href="/" class="logo">FYORI</a>
+        <!-- Logo atualizado para usar a imagem -->
+        <a href="/" class="logo-link">
+            <img src="Imagens/fyori-title.png" alt="Fyori Logo" class="logo-img">
+        </a>
         <nav>
             <a href="https://apoia.se/fyori" target="_blank">APOIE O CANAL</a>
             <a href="/faq.html">FAQ</a>
@@ -123,7 +126,7 @@
             if (!container) return;
 
             if (API_KEY === 'SUA_CHAVE_DE_API_AQUI' || !API_KEY) {
-                container.innerHTML = '<p style="color:var(--cor-destaque);text-align:center;">Por favor, configure a chave da API do YouTube para carregar os vídeos.</p>';
+                container.innerHTML = '<p style="color:var(--cor-neon-vermelho);text-align:center;">Por favor, configure a chave da API do YouTube para carregar os vídeos.</p>';
                 return;
             }
 
@@ -171,7 +174,7 @@
 
             } catch (error) {
                 console.error('Erro ao carregar vídeos do YouTube:', error);
-                container.innerHTML = `<p style="color:var(--cor-destaque);text-align:center;">${error.message}</p>`;
+                container.innerHTML = `<p style="color:var(--cor-neon-vermelho);text-align:center;">${error.message}</p>`;
             }
         }
 

@@ -1,4 +1,15 @@
 /* =================================================================
+   IMPORTAÇÃO DE FONTES
+   ================================================================= */
+@font-face {
+    font-family: 'Geometos';
+    /* Certifique-se que o nome do arquivo da fonte está correto */
+    src: url('Fontes/Geometos.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* =================================================================
    VARIÁVEIS GLOBAIS E TEMA
    ================================================================= */
 :root {
@@ -8,6 +19,7 @@
     --cor-texto: #fff;
     --cor-texto-secundario: #ddd;
     --gradiente-premium: linear-gradient(45deg, var(--cor-destaque), var(--cor-destaque-escuro));
+    --cor-neon-vermelho: #ff073a;
 }
 
 /* Estilos para o tema claro (light-mode) */
@@ -30,9 +42,8 @@ body.light-mode .social-icon {
     filter: invert(1);
 }
 
-/* --- FIX MODO CLARO: Título do vídeo não tem fundo no modo claro --- */
-body.light-mode .video-card h3 {
-    background-color: transparent;
+body.light-mode .video-card-inner {
+    background-color: var(--cor-fundo);
 }
 
 
@@ -59,59 +70,71 @@ body {
     text-align: center;
     padding: 30px 0 25px 0;
     background: linear-gradient(135deg, #1a1030 0%, #2a1a50 100%);
-    border-bottom: 3px solid var(--cor-destaque);
+    border-bottom: 3px solid var(--cor-neon-vermelho);
 }
 
-.logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 4rem;
-    background: var(--gradiente-premium);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    margin: 0;
-    text-decoration: none;
+/* --- NOVO LOGO COM ANIMAÇÃO --- */
+.logo-link {
     display: inline-block;
-    letter-spacing: 2px;
-    font-weight: 700;
-    text-shadow: 0 0 10px rgba(232, 58, 159, 0.5);
+}
+
+.logo-img {
+    max-height: 50px; /* Ajuste a altura conforme necessário */
+    width: auto;
+    transition: transform 0.3s ease;
+    /* Animação de brilho neon */
+    animation: neon-glow 3s ease-in-out infinite;
+}
+
+@keyframes neon-glow {
+    0%, 100% {
+        filter: drop-shadow(0 0 4px var(--cor-neon-vermelho)) drop-shadow(0 0 8px var(--cor-neon-vermelho));
+    }
+    50% {
+        filter: drop-shadow(0 0 8px var(--cor-neon-vermelho)) drop-shadow(0 0 15px var(--cor-neon-vermelho));
+    }
 }
 
 nav {
     margin: 20px 0 15px 0;
 }
 
+/* --- NOVOS ESTILOS PARA NAVEGAÇÃO --- */
 nav a {
     margin: 0 20px;
-    color: var(--cor-destaque);
+    color: var(--cor-texto); /* Cor padrão (Branco/Preto) */
     text-decoration: none;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.2rem;
-    font-weight: 600;
+    font-family: 'Geometos', sans-serif; /* Nova fonte */
+    font-size: 1.3rem;
     letter-spacing: 1px;
-    transition: all 0.3s;
+    transition: all 0.2s ease-in-out;
     text-transform: uppercase;
 }
 
+/* Efeito Glitch/Fantasma no Hover */
 nav a:hover,
 nav a.current {
-    color: var(--cor-texto);
-    text-shadow: 0 0 10px var(--cor-destaque);
+    text-shadow: 
+        1.5px 1.5px 0px rgba(255, 0, 58, 0.7), 
+        -1.5px -1.5px 0px rgba(0, 255, 255, 0.7);
+    filter: blur(0.8px);
+    color: var(--cor-texto); /* Garante que a cor não mude */
 }
+
 
 .theme-toggle {
     background: none;
     border: none;
-    color: var(--cor-destaque);
+    color: var(--cor-texto);
     font-size: 1.3rem;
     cursor: pointer;
     margin-left: 5px;
-    transition: transform 0.4s;
+    transition: transform 0.4s, color 0.3s;
 }
 
 .theme-toggle:hover {
     transform: rotate(45deg);
-    color: var(--cor-texto);
+    color: var(--cor-neon-vermelho);
 }
 
 
@@ -141,8 +164,8 @@ nav a.current {
     height: 200px;
     border-radius: 50%;
     overflow: hidden;
-    border: 3px solid var(--cor-destaque);
-    box-shadow: 0 0 30px rgba(232, 58, 159, 0.5);
+    border: 3px solid var(--cor-neon-vermelho);
+    box-shadow: 0 0 30px rgba(255, 7, 58, 0.5);
     margin-bottom: 20px;
     display: flex;
     justify-content: center;
@@ -166,7 +189,7 @@ nav a.current {
 }
 
 .highlight {
-    color: var(--cor-destaque);
+    color: var(--cor-neon-vermelho);
     font-weight: 600;
 }
 
@@ -186,7 +209,7 @@ nav a.current {
 
 .social-icon:hover {
     transform: scale(1.15) translateY(-3px);
-    filter: drop-shadow(0 0 10px var(--cor-destaque));
+    filter: drop-shadow(0 0 10px var(--cor-neon-vermelho));
 }
 
 .social-icon-container {
@@ -200,12 +223,12 @@ nav a.current {
     top: 100%;
     left: 50%;
     transform: translateX(-50%) translateY(0px);
-    background-color: var(--cor-destaque);
+    background-color: var(--cor-neon-vermelho);
     color: white;
     padding: 5px 15px;
     border-radius: 20px;
     font-size: 0.9rem;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Poppins', sans-serif;
     white-space: nowrap;
     opacity: 0;
     visibility: hidden;
@@ -214,7 +237,7 @@ nav a.current {
     text-transform: uppercase;
     letter-spacing: 1px;
     font-weight: 700;
-    box-shadow: 0 0 10px rgba(232, 58, 159, 0.5);
+    box-shadow: 0 0 10px rgba(255, 7, 58, 0.5);
 }
 
 .social-icon-container:hover::after {
@@ -223,16 +246,17 @@ nav a.current {
     transform: translateX(-50%) translateY(5px);
 }
 
+/* --- TÍTULO DA SEÇÃO COM NOVA FONTE --- */
 .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem;
+    font-family: 'Geometos', sans-serif; /* Nova fonte */
+    font-size: 2.2rem;
     background: var(--gradiente-premium);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     margin: 10px 0 0 0;
     text-shadow: 0 0 10px rgba(232, 58, 159, 0.3);
-    font-weight: 700;
+    font-weight: normal;
 }
 
 .videos-container {
@@ -244,15 +268,14 @@ nav a.current {
     max-width: 1000px;
 }
 
-/* --- ESTILO "PREMIUM" DOS VÍDEOS (BUGFIX) --- */
 .video-card {
     width: 300px;
     text-decoration: none;
     position: relative;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-radius: 16px; /* Borda arredondada principal */
-    background: var(--gradiente-premium); /* Fundo do degradê para a "borda" */
-    padding: 3px; /* Espessura da borda */
+    border-radius: 16px;
+    background: var(--gradiente-premium);
+    padding: 3px;
 }
 
 .video-card:hover {
@@ -264,9 +287,12 @@ nav a.current {
     display: flex;
     flex-direction: column;
     height: 100%;
-    overflow: hidden; /* Garante que o conteúdo interno respeite o arredondamento */
-    border-radius: 13px; /* Arredondamento interno, um pouco menor que o externo */
-    background-color: #000;
+    overflow: hidden;
+    border-radius: 13px;
+}
+
+body:not(.light-mode) .video-card-inner {
+    background-color: #1a1030;
 }
 
 .video-thumbnail {
@@ -311,7 +337,7 @@ nav a.current {
 .video-card h3 {
     padding: 15px;
     margin: 0;
-    font-family: 'Exo 2', sans-serif; /* FONTE ATUALIZADA */
+    font-family: 'Poppins', sans-serif;
     font-weight: 700;
     font-size: 1.1rem;
     flex-grow: 1;
@@ -321,21 +347,7 @@ nav a.current {
     text-align: center;
     min-height: 5px;
     line-height: 1.3;
-    
-    /* Título com degradê */
-    background: var(--gradiente-premium);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-}
-
-/* Fundo do título apenas no modo escuro */
-body:not(.light-mode) .video-card-inner {
-    background-color: #1a1030;
-}
-
-body.light-mode .video-card-inner {
-    background-color: var(--cor-fundo);
+    color: var(--cor-texto-secundario);
 }
 
 
@@ -351,15 +363,14 @@ body.light-mode .video-card-inner {
 
 .faq-item {
     margin-bottom: 40px;
-    border-left: 3px solid var(--cor-destaque);
+    border-left: 3px solid var(--cor-neon-vermelho);
     padding-left: 20px;
 }
 
 .faq-question {
-    color: var(--cor-destaque);
-    font-family: 'Playfair Display', serif;
+    color: var(--cor-neon-vermelho);
+    font-family: 'Geometos', sans-serif;
     font-size: 1.8rem;
-    font-weight: 700;
     margin-bottom: 15px;
     letter-spacing: 0.5px;
 }
@@ -381,17 +392,17 @@ body.light-mode .video-card-inner {
 }
 
 .contact-email a {
-    color: var(--cor-destaque);
+    color: var(--cor-neon-vermelho);
     text-decoration: none;
     transition: all 0.3s;
 }
 
 .contact-email a:hover {
-    text-shadow: 0 0 5px var(--cor-destaque);
+    text-shadow: 0 0 5px var(--cor-neon-vermelho);
 }
 
 a.external-link {
-    color: var(--cor-destaque);
+    color: var(--cor-neon-vermelho);
     text-decoration: none;
     font-weight: 600;
     transition: all 0.3s;
@@ -399,7 +410,7 @@ a.external-link {
 
 a.external-link:hover {
     text-decoration: underline;
-    text-shadow: 0 0 5px var(--cor-destaque);
+    text-shadow: 0 0 5px var(--cor-neon-vermelho);
 }
 
 
@@ -410,7 +421,7 @@ a.external-link:hover {
 .faq-divider {
     border: 0;
     height: 1px;
-    background: linear-gradient(to right, transparent, var(--cor-destaque), transparent);
+    background: linear-gradient(to right, transparent, var(--cor-neon-vermelho), transparent);
     margin: 30px 0;
 }
 
@@ -421,7 +432,7 @@ a.external-link:hover {
 .vertical-divider {
     width: 2px;
     height: 30px;
-    background: linear-gradient(to bottom, transparent, var(--cor-destaque), transparent);
+    background: linear-gradient(to bottom, transparent, var(--cor-neon-vermelho), transparent);
 }
 
 
@@ -441,8 +452,8 @@ footer {
    DESIGN RESPONSIVO
    ================================================================= */
 @media (max-width: 768px) {
-    .logo {
-        font-size: 3rem;
+    .logo-img {
+        max-height: 40px;
     }
     
     nav a {
