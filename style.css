@@ -86,18 +86,18 @@ body {
     transition: filter 0.4s ease;
 }
 
-/* Animação de brilho sutil */
+/* Animação de brilho MUITO sutil */
 @keyframes subtle-glow {
     0%, 100% {
         filter: drop-shadow(0 0 1px var(--cor-neon-vermelho)) drop-shadow(0 0 2px var(--cor-neon-vermelho));
     }
     50% {
-        filter: drop-shadow(0 0 2px var(--cor-neon-vermelho)) drop-shadow(0 0 5px var(--cor-neon-vermelho));
+        filter: drop-shadow(0 0 2px var(--cor-neon-vermelho)) drop-shadow(0 0 4px var(--cor-neon-vermelho));
     }
 }
 
-/* Brilho estático para a página não ativa */
-.logo-link.faded-glow .logo-img {
+/* Brilho estático e ainda mais fraco para a página não ativa */
+.faded-glow .logo-img {
     filter: drop-shadow(0 0 1px var(--cor-neon-vermelho));
     opacity: 0.8;
 }
@@ -137,6 +137,22 @@ nav a.current.glowing {
     color: var(--cor-neon-vermelho);
 }
 
+/* --- FIX: Botão de tema --- */
+.theme-toggle {
+    background: none;
+    border: none;
+    color: var(--cor-texto);
+    font-size: 1.3rem;
+    cursor: pointer;
+    margin-left: 5px;
+    transition: transform 0.4s, color 0.3s;
+}
+
+.theme-toggle:hover {
+    transform: rotate(45deg);
+    color: var(--cor-neon-vermelho);
+}
+
 
 /* =================================================================
    LAYOUT DA PÁGINA PRINCIPAL
@@ -157,6 +173,7 @@ nav a.current.glowing {
     align-items: center;
     gap: 40px;
     width: 100%;
+    margin-bottom: 30px;
 }
 
 .profile-left {
@@ -210,11 +227,11 @@ nav a.current.glowing {
 .social-links {
     display: flex;
     gap: 15px;
-    margin-bottom: 25px;
     align-items: center;
+    flex-wrap: wrap; /* Permite que os ícones quebrem a linha se necessário */
 }
 
-/* --- BUGFIX: Ícones com tamanho corrigido --- */
+/* --- FIX: Ícones com tamanho corrigido --- */
 .social-icon {
     width: 30px;
     height: 30px;
@@ -225,6 +242,35 @@ nav a.current.glowing {
     transform: scale(1.15) translateY(-3px);
     filter: drop-shadow(0 0 10px var(--cor-neon-vermelho));
 }
+
+.social-icon-container::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(5px);
+    background-color: var(--cor-neon-vermelho);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-family: 'Poppins', sans-serif;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    box-shadow: 0 0 10px rgba(255, 7, 58, 0.5);
+}
+
+.social-icon-container:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
 
 /* --- SEÇÃO DE VÍDEOS --- */
 .videos-section {
@@ -237,7 +283,7 @@ nav a.current.glowing {
     margin: 0 auto 15px auto;
     max-width: 100%;
     max-height: 50px;
-    filter: none; /* Removido o efeito fantasma daqui */
+    filter: none;
 }
 
 .videos-container {
@@ -325,10 +371,10 @@ nav a.current.glowing {
     font-family: 'Geometos', sans-serif;
     font-size: 1.6rem;
     margin-bottom: 15px;
-    letter-spacing: 2px; /* Aumentado */
-    color: var(--cor-neon-vermelho); /* Cor vermelha */
-    filter: none; /* Removido o efeito fantasma */
-    text-shadow: 0 0 8px rgba(255, 7, 58, 0.7); /* Efeito de brilho */
+    letter-spacing: 2px;
+    color: var(--cor-neon-vermelho);
+    filter: none;
+    text-shadow: 0 0 8px rgba(255, 7, 58, 0.7);
 }
 
 .faq-answer {
@@ -338,12 +384,42 @@ nav a.current.glowing {
     line-height: 1.7;
 }
 
-/* Estilo para links dentro das respostas */
 .faq-answer a {
     color: var(--cor-neon-vermelho);
     font-weight: bold;
     text-decoration: underline;
 }
+
+/* =================================================================
+   ELEMENTOS COMUNS
+   ================================================================= */
+.divider,
+.faq-divider {
+    border: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--cor-neon-vermelho), transparent);
+    margin: 30px 0;
+    width: 100%;
+}
+
+.vertical-divider {
+    width: 2px;
+    height: 30px;
+    background: linear-gradient(to bottom, transparent, var(--cor-neon-vermelho), transparent);
+}
+
+
+/* =================================================================
+   RODAPÉ
+   ================================================================= */
+footer {
+    text-align: center;
+    padding: 20px;
+    color: var(--cor-texto-secundario);
+    font-size: 0.8rem;
+    margin-top: auto;
+}
+
 
 /* =================================================================
    DESIGN RESPONSIVO
