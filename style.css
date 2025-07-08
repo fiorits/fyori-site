@@ -12,9 +12,9 @@
    VARIÁVEIS GLOBAIS E TEMA
    ================================================================= */
 :root {
-    --cor-fundo: #12141D; /* Cinza-Chumbo Quase Preto */
-    --cor-fundo-secundario: #1a1030; /* Roxo escuro para elementos */
-    --cor-texto: #EAE6E1; /* Branco "Sujo" */
+    --cor-fundo: #12141D;
+    --cor-fundo-secundario: #1a1030;
+    --cor-texto: #EAE6E1;
     --cor-texto-secundario: #a0a0a0;
     --cor-neon-vermelho: #ff073a;
 }
@@ -28,7 +28,7 @@ body.light-mode {
 }
 
 body.light-mode .header {
-    background: linear-gradient(135deg, #e0d6ff 0%, #c9b8ff 100%);
+    background: var(--cor-fundo-secundario);
 }
 
 body.light-mode .faq-divider,
@@ -40,8 +40,13 @@ body.light-mode .social-icon {
     filter: invert(1);
 }
 
-body.light-mode .video-card-inner {
-    background-color: var(--cor-fundo);
+body.light-mode .video-card {
+    background-color: #e0d6ff;
+    border-color: rgba(0,0,0,0.1);
+}
+
+body.light-mode .video-card h3 {
+    border-top-color: rgba(0,0,0,0.1);
 }
 
 
@@ -76,24 +81,29 @@ body {
 }
 
 .logo-img {
-    max-height: 65px; /* Aumentado */
+    max-height: 65px;
     width: auto;
-    transition: filter 0.3s ease;
+    transition: filter 0.4s ease;
 }
 
 /* Animação de brilho sutil */
 @keyframes subtle-glow {
     0%, 100% {
-        filter: drop-shadow(0 0 2px var(--cor-neon-vermelho)) drop-shadow(0 0 4px var(--cor-neon-vermelho));
+        filter: drop-shadow(0 0 1px var(--cor-neon-vermelho)) drop-shadow(0 0 2px var(--cor-neon-vermelho));
     }
     50% {
-        filter: drop-shadow(0 0 4px var(--cor-neon-vermelho)) drop-shadow(0 0 8px var(--cor-neon-vermelho));
+        filter: drop-shadow(0 0 2px var(--cor-neon-vermelho)) drop-shadow(0 0 5px var(--cor-neon-vermelho));
     }
 }
 
-/* Classe que ativa a animação */
-.glowing .logo-img,
-nav a.glowing {
+/* Brilho estático para a página não ativa */
+.logo-link.faded-glow .logo-img {
+    filter: drop-shadow(0 0 1px var(--cor-neon-vermelho));
+    opacity: 0.8;
+}
+
+/* Classe que ativa a animação principal */
+.glowing {
     animation: subtle-glow 3s ease-in-out infinite;
 }
 
@@ -110,42 +120,29 @@ nav a {
     letter-spacing: 1px;
     text-transform: uppercase;
     transition: all 0.2s ease-in-out;
-    /* Efeito estático */
     text-shadow: 
         0.5px 0.5px 0px rgba(255, 0, 58, 0.5), 
         -0.5px -0.5px 0px rgba(0, 255, 255, 0.5);
     filter: blur(0.4px);
 }
 
-/* Ao passar o mouse, remove o glitch e adiciona glow */
 nav a:hover {
     text-shadow: none;
     filter: none;
-    color: var(--cor-texto);
+    color: var(--cor-neon-vermelho);
     animation: subtle-glow 3s ease-in-out infinite;
 }
 
-.theme-toggle {
-    background: none;
-    border: none;
-    color: var(--cor-texto);
-    font-size: 1.3rem;
-    cursor: pointer;
-    margin-left: 5px;
-    transition: transform 0.4s, color 0.3s;
-}
-
-.theme-toggle:hover {
-    transform: rotate(45deg);
+nav a.current.glowing {
     color: var(--cor-neon-vermelho);
 }
 
 
 /* =================================================================
-   MEGA-REWORK: SEÇÃO DE PERFIL
+   LAYOUT DA PÁGINA PRINCIPAL
    ================================================================= */
 .main-content {
-    max-width: 1100px; /* Ajustado para o novo layout */
+    max-width: 1100px;
     margin: 40px auto;
     padding: 0 20px;
     display: flex;
@@ -157,18 +154,18 @@ nav a:hover {
 
 .profile-section {
     display: flex;
-    align-items: center; /* Alinha verticalmente avatar e texto */
-    gap: 40px; /* Espaço entre avatar e texto */
+    align-items: center;
+    gap: 40px;
     width: 100%;
 }
 
 .profile-left {
-    flex-shrink: 0; /* Impede que o avatar encolha */
+    flex-shrink: 0;
     text-align: center;
 }
 
 .avatar-container {
-    width: 220px; /* Um pouco maior */
+    width: 220px;
     height: 220px;
     border-radius: 50%;
     overflow: hidden;
@@ -195,7 +192,7 @@ nav a:hover {
 
 .profile-right {
     flex-grow: 1;
-    text-align: left; /* Alinha o texto à esquerda */
+    text-align: left;
 }
 
 .bio-text {
@@ -217,6 +214,18 @@ nav a:hover {
     align-items: center;
 }
 
+/* --- BUGFIX: Ícones com tamanho corrigido --- */
+.social-icon {
+    width: 30px;
+    height: 30px;
+    transition: all 0.3s;
+}
+
+.social-icon:hover {
+    transform: scale(1.15) translateY(-3px);
+    filter: drop-shadow(0 0 10px var(--cor-neon-vermelho));
+}
+
 /* --- SEÇÃO DE VÍDEOS --- */
 .videos-section {
     width: 100%;
@@ -225,13 +234,10 @@ nav a:hover {
 
 .section-title-img {
     display: block;
-    margin: 0 auto 15px auto; /* Espaço reduzido */
+    margin: 0 auto 15px auto;
     max-width: 100%;
     max-height: 50px;
-    /* Efeito fantasma */
-    filter: drop-shadow(0.5px 0.5px 0px rgba(255, 0, 58, 0.5)) 
-            drop-shadow(-0.5px -0.5px 0px rgba(0, 255, 255, 0.5)) 
-            blur(0.4px);
+    filter: none; /* Removido o efeito fantasma daqui */
 }
 
 .videos-container {
@@ -243,21 +249,19 @@ nav a:hover {
     max-width: 100%;
 }
 
-/* --- REDESIGN PREMIUM DOS VÍDEOS --- */
 .video-card {
     width: 300px;
     text-decoration: none;
     position: relative;
     border-radius: 12px;
     overflow: hidden;
-    background-color: #1C1E29; /* Fundo escuro */
+    background-color: #1C1E29;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .video-card:hover {
     transform: scale(1.03);
-    /* Brilho interno vermelho no hover */
     box-shadow: 0 0 25px rgba(255, 7, 58, 0.4), inset 0 0 15px rgba(255, 7, 58, 0.3);
 }
 
@@ -319,15 +323,12 @@ nav a:hover {
 
 .faq-question {
     font-family: 'Geometos', sans-serif;
-    font-size: 1.6rem; /* Reduzido */
+    font-size: 1.6rem;
     margin-bottom: 15px;
-    letter-spacing: 1.5px; /* Aumentado */
-    color: var(--cor-texto);
-    /* Efeito fantasma */
-    text-shadow: 
-        0.5px 0.5px 0px rgba(255, 0, 58, 0.5), 
-        -0.5px -0.5px 0px rgba(0, 255, 255, 0.5);
-    filter: blur(0.4px);
+    letter-spacing: 2px; /* Aumentado */
+    color: var(--cor-neon-vermelho); /* Cor vermelha */
+    filter: none; /* Removido o efeito fantasma */
+    text-shadow: 0 0 8px rgba(255, 7, 58, 0.7); /* Efeito de brilho */
 }
 
 .faq-answer {
@@ -337,17 +338,23 @@ nav a:hover {
     line-height: 1.7;
 }
 
+/* Estilo para links dentro das respostas */
+.faq-answer a {
+    color: var(--cor-neon-vermelho);
+    font-weight: bold;
+    text-decoration: underline;
+}
+
 /* =================================================================
    DESIGN RESPONSIVO
    ================================================================= */
 @media (max-width: 768px) {
-    /* Desfaz o layout de duas colunas no mobile */
     .profile-section {
         flex-direction: column;
         gap: 20px;
     }
     .profile-right {
-        text-align: center; /* Centraliza o texto e redes sociais */
+        text-align: center;
     }
     .social-links {
         justify-content: center;
