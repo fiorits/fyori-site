@@ -88,13 +88,13 @@
 
         // --- SCRIPT PARA CARREGAR VÍDEOS DO YOUTUBE ---
         async function fetchYouTubeVideos() {
-            const API_KEY = 'SUA_CHAVE_DE_API_AQUI'; // Cole sua chave da API do YouTube aqui.
+            const API_KEY = 'AIzaSyDaRPzw4KNZElP4dFKwulF75Oun9pLmkh8'; // Cole sua chave da API do YouTube aqui.
             const CHANNEL_ID = 'UCpZ886pfK3UWIK4ywgHEV6g';
             const container = document.getElementById('last-videos');
 
             if (!container) return;
 
-            if (API_KEY === 'SUA_CHAVE_DE_API_AQUI' || !API_KEY) {
+            if (API_KEY === 'AIzaSyDaRPzw4KNZElP4dFKwulF75Oun9pLmkh8' || !API_KEY) {
                 container.innerHTML = `<p style="color:var(--cor-neon-vermelho);text-align:center;">Por favor, configure a chave da API do YouTube para carregar os vídeos.</p>`;
                 return;
             }
