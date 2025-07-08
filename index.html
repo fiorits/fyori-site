@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <!-- Caminho do Favicon corrigido -->
-    <link rel="icon" href="Imagens/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Fyori - Sou criador de conteúdo e contador de histórias. Meu trabalho é transportar as pessoas para mundos com o poder do storytelling.">
     <title>Fyori</title>
-    <!-- Fontes do Google -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap">
-    <!-- Link para o arquivo de estilo externo -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -31,14 +28,11 @@
             </div>
             
             <div class="profile-right">
-                <!-- Saudação atualizada -->
                 <p class="bio-greeting">Meu nome é <span class="highlight">Fyori</span>.</p>
-                <!-- Texto da bio atualizado -->
                 <p class="bio-text">
                     Sou contador de histórias e caçador do misterioso. Meu trabalho é transportar as pessoas para mundos com o poder do storytelling.<br><br>
                     No YouTube, compartilho vídeos sobre terror, mistério e muito mais, com vídeos que já foram vistos por milhões de pessoas.
                 </p>
-                <!-- Ícones sociais movidos para cá -->
                 <div class="social-links">
                     <div class="social-icon-container" data-tooltip="YouTube"><a href="https://www.youtube.com/channel/UCpZ886pfK3UWIK4ywgHEV6g" target="_blank" aria-label="YouTube"><img src="Imagens/youtube-icon.png" alt="YouTube" class="social-icon"></a></div>
                     <div class="social-icon-container" data-tooltip="Instagram Pessoal"><a href="https://instagram.com/fyoritss" target="_blank" aria-label="Instagram Pessoal"><img src="Imagens/instagram-icon.png" alt="Instagram Pessoal" class="social-icon"></a></div>
@@ -94,17 +88,22 @@
                 return;
             }
 
+            // --- CORREÇÃO: Constrói o ID da playlist de uploads diretamente ---
+            // A playlist de uploads de um canal é o ID do canal com "UC" trocado por "UU".
+            const uploadsPlaylistId = CHANNEL_ID.replace(/^UC/, 'UU');
+
             container.innerHTML = '<p>Carregando vídeos...</p>';
 
             try {
-                const channelResponse = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${CHANNEL_ID}&key=${API_KEY}`);
-                if (!channelResponse.ok) throw new Error('Falha ao buscar o canal.');
-                const channelData = await channelResponse.json();
-                const uploadsPlaylistId = channelData.items[0]?.contentDetails?.relatedPlaylists?.uploads;
-                if (!uploadsPlaylistId) throw new Error('Não foi possível encontrar a playlist de uploads.');
-
+                // --- Vai direto para a busca dos vídeos da playlist de uploads ---
                 const videosResponse = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=3&playlistId=${uploadsPlaylistId}&key=${API_KEY}`);
-                if (!videosResponse.ok) throw new Error('Falha ao buscar os vídeos.');
+                
+                if (!videosResponse.ok) {
+                    const errorData = await videosResponse.json();
+                    console.error('Erro da API do YouTube:', errorData);
+                    throw new Error(errorData.error.message || 'Falha ao buscar os vídeos.');
+                }
+
                 const videosData = await videosResponse.json();
                 if (!videosData.items || videosData.items.length === 0) {
                     container.innerHTML = '<p>Nenhum vídeo encontrado.</p>';
