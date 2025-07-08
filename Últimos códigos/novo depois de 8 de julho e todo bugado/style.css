@@ -1,0 +1,406 @@
+/* =================================================================
+   IMPORTAÇÃO DE FONTES
+   ================================================================= */
+@font-face {
+    font-family: 'Geometos';
+    src: url('Fontes/Geometos.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* =================================================================
+   VARIÁVEIS GLOBAIS E TEMA
+   ================================================================= */
+:root {
+    --cor-fundo: #12141D;
+    --cor-fundo-secundario: #1a1030;
+    --cor-texto: #EAE6E1;
+    --cor-texto-secundario: #EAE6E1; /* Alterado de cinza para branco */
+    --cor-neon-vermelho: #ff073a;
+}
+
+/* Estilos para o tema claro (light-mode) */
+body.light-mode {
+    --cor-fundo: #f0eefc;
+    --cor-fundo-secundario: #e0d6ff;
+    --cor-texto: #222;
+    --cor-texto-secundario: #555;
+}
+
+body.light-mode .header {
+    background: var(--cor-fundo-secundario);
+}
+
+body.light-mode .faq-divider,
+body.light-mode .divider {
+    background: linear-gradient(to right, transparent, var(--cor-neon-vermelho), transparent);
+}
+
+body.light-mode .social-icon {
+    filter: invert(1);
+}
+
+body.light-mode .video-card {
+    background-color: #e0d6ff;
+    border-color: rgba(0,0,0,0.1);
+}
+
+/* =================================================================
+   ESTILOS GERAIS
+   ================================================================= */
+body { 
+    background-color: var(--cor-fundo); 
+    color: var(--cor-texto); 
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =================================================================
+   CABEÇALHO E NAVEGAÇÃO
+   ================================================================= */
+.header {
+    text-align: center;
+    padding: 20px 0;
+    background: var(--cor-fundo-secundario);
+    border-bottom: 3px solid var(--cor-neon-vermelho);
+}
+
+.logo-link {
+    display: inline-block;
+    position: relative; /* Necessário para o pseudo-elemento de brilho */
+}
+
+.logo-img {
+    max-height: 65px;
+    width: auto;
+    position: relative;
+    z-index: 2;
+}
+
+/* Novo efeito de brilho por trás */
+.logo-link::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('Imagens/fyori-title.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: blur(10px) opacity(0.7);
+    z-index: 1;
+    transition: filter 0.4s ease;
+}
+
+.glowing.logo-link::after {
+    animation: subtle-glow-behind 3s ease-in-out infinite;
+}
+
+@keyframes subtle-glow-behind {
+    0%, 100% { filter: blur(10px) opacity(0.6); }
+    50% { filter: blur(15px) opacity(0.8); }
+}
+
+.faded-glow.logo-link::after {
+    filter: blur(8px) opacity(0.5);
+}
+
+nav {
+    margin: 20px 0 15px 0;
+}
+
+nav a {
+    margin: 0 20px;
+    color: var(--cor-texto);
+    text-decoration: none;
+    font-family: 'Geometos', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.2s ease-in-out;
+    text-shadow: 
+        0.5px 0.5px 0px rgba(255, 0, 58, 0.5), 
+        -0.5px -0.5px 0px rgba(0, 255, 255, 0.5);
+    filter: blur(0.4px);
+}
+
+nav a:hover {
+    text-shadow: 0 0 8px var(--cor-neon-vermelho);
+    filter: none;
+    color: var(--cor-neon-vermelho);
+}
+
+nav a.current.glowing {
+    color: var(--cor-neon-vermelho);
+    text-shadow: 0 0 8px var(--cor-neon-vermelho);
+    filter: none;
+}
+
+
+/* =================================================================
+   LAYOUT DA PÁGINA PRINCIPAL
+   ================================================================= */
+.main-content {
+    max-width: 1100px;
+    margin: 60px auto 40px auto; /* Mais espaço no topo */
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+}
+
+.profile-section {
+    display: flex;
+    align-items: center;
+    gap: 60px; /* Mais espaço entre colunas */
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.profile-left {
+    flex-shrink: 0;
+    text-align: center;
+}
+
+.avatar-container {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid var(--cor-neon-vermelho);
+    box-shadow: 0 0 30px rgba(255, 7, 58, 0.5);
+    margin: 0 auto 15px auto;
+}
+
+.profile-greeting {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.3rem; /* Reduzido */
+    font-weight: 600;
+}
+
+.profile-right {
+    flex-grow: 1;
+    text-align: center; /* Centraliza todo o conteúdo da direita */
+}
+
+.bio-text {
+    font-size: 1.15rem; /* Um pouco maior */
+    line-height: 1.8;
+    margin: 0 auto 25px auto;
+    max-width: 500px; /* Limita a largura para melhor leitura */
+    color: var(--cor-texto-secundario);
+}
+
+.highlight {
+    color: var(--cor-neon-vermelho);
+    font-weight: 600;
+}
+
+.social-links {
+    display: inline-flex; /* Para centralizar como um bloco */
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.social-icon-container {
+    position: relative;
+}
+
+.social-icon {
+    width: 30px;
+    height: 30px;
+    transition: all 0.3s;
+}
+
+/* Tooltip restaurado */
+.social-icon-container::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--cor-neon-vermelho);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-family: 'Poppins', sans-serif;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.social-icon-container:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* --- SEÇÃO DE VÍDEOS --- */
+.videos-section {
+    width: 100%;
+    margin-top: 30px;
+}
+
+.section-title-img {
+    display: block;
+    margin: 0 auto 30px auto; /* Mais espaço abaixo */
+    max-width: 100%;
+    max-height: 50px;
+    filter: none;
+}
+
+.videos-container {
+    display: flex;
+    gap: 40px; /* Espaço entre os itens de vídeo */
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 20px auto;
+    max-width: 100%;
+}
+
+/* Wrapper para o card e o título */
+.video-item-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.video-card {
+    width: 300px;
+    height: 169px;
+    text-decoration: none;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #1C1E29;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.video-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(255, 7, 58, 0.4), inset 0 0 15px rgba(255, 7, 58, 0.3);
+}
+
+.video-thumbnail {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    cursor: pointer;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Título do vídeo separado */
+.video-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--cor-texto);
+    text-shadow: 
+        0.5px 0.5px 0px rgba(255, 0, 58, 0.5), 
+        -0.5px -0.5px 0px rgba(0, 255, 255, 0.5);
+    filter: blur(0.4px);
+    max-width: 300px;
+}
+
+
+/* =================================================================
+   CONTEÚDO (FAQ.HTML)
+   ================================================================= */
+.faq-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+    flex: 1;
+}
+
+.faq-item {
+    margin-bottom: 40px;
+    border-left: 3px solid var(--cor-neon-vermelho);
+    padding-left: 20px;
+}
+
+.faq-question {
+    font-family: 'Geometos', sans-serif;
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+    letter-spacing: 2px;
+    color: var(--cor-neon-vermelho);
+    text-shadow: 0 0 8px rgba(255, 7, 58, 0.7);
+}
+
+.faq-answer {
+    color: var(--cor-texto-secundario);
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    line-height: 1.7;
+}
+
+.faq-answer a {
+    color: var(--cor-neon-vermelho);
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* =================================================================
+   ELEMENTOS COMUNS
+   ================================================================= */
+.divider,
+.faq-divider {
+    border: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--cor-neon-vermelho), transparent);
+    margin: 30px 0;
+    width: 100%;
+}
+
+.vertical-divider {
+    width: 2px;
+    height: 30px;
+    background: linear-gradient(to bottom, transparent, var(--cor-neon-vermelho), transparent);
+}
+
+
+/* =================================================================
+   RODAPÉ
+   ================================================================= */
+footer {
+    text-align: center;
+    padding: 20px;
+    color: var(--cor-texto-secundario);
+    font-size: 0.8rem;
+    margin-top: auto;
+}
+
+
+/* =================================================================
+   DESIGN RESPONSIVO
+   ================================================================= */
+@media (max-width: 768px) {
+    .profile-section {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .profile-right {
+        text-align: center;
+    }
+    .social-links {
+        justify-content: center;
+    }
+}
