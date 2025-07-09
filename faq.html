@@ -6,13 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="FAQ do Canal Fyori - Perguntas frequentes sobre o canal, equipamentos e contato">
     <title>FAQ - Fyori</title>
-    <!-- Fontes do Google -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap">
-    <!-- Link para o arquivo de estilo externo -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header class="header animated">
+    <!-- Áudio para o Easter Egg -->
+    <audio id="rain-sound" src="Fontes/Chuva.mp3" loop preload="auto"></audio>
+
+    <header class="header animatable">
         <a href="index.html" class="logo">FYORI</a>
         <nav>
             <a href="https://apoia.se/fyori" target="_blank">APOIE O CANAL</a>
@@ -22,7 +23,7 @@
     </header>
 
     <main class="faq-container">
-        <div class="faq-item animated delay-1">
+        <div class="faq-item animatable">
             <div class="faq-question">SOBRE O CANAL</div>
             <div class="faq-answer">
                 O canal foi criado em 2012, e só foi virar trabalho dez anos depois, em 2022. Sempre foi e ainda é, na maior parte, uma produção solo. Por mais de três anos, cuidei da pesquisa, roteiro, gravação e edição de todos os vídeos.<br><br>
@@ -32,18 +33,18 @@
             </div>
         </div>
         
-        <hr class="faq-divider animated delay-2">
+        <hr class="faq-divider animatable">
         
-        <div class="faq-item animated delay-2">
+        <div class="faq-item animatable">
             <div class="faq-question">SUGESTÕES DE VÍDEO</div>
             <div class="faq-answer">
                 Caso queira dar uma ideia de conteúdo, você pode escrever nos comentários dos vídeos — eu leio todos. Se quiser mais proximidade e respostas mais rápidas, garanta seu acesso ao servidor do Discord para membros, no Apoia.se.
             </div>
         </div>
         
-        <hr class="faq-divider animated delay-3">
+        <hr class="faq-divider animatable">
         
-        <div class="faq-item animated delay-3">
+        <div class="faq-item animatable">
             <div class="faq-question">SOFTWARE</div>
             <div class="faq-answer">
                 Roteiro: <a href="https://www.notion.com/" class="external-link" target="_blank">Notion</a><br>
@@ -55,9 +56,9 @@
             </div>
         </div>
         
-        <hr class="faq-divider animated delay-4">
+        <hr class="faq-divider animatable">
         
-        <div class="faq-item animated delay-4">
+        <div class="faq-item animatable">
             <div class="faq-question">HARDWARE</div>
             <div class="faq-answer">
                 Microfone: <a href="https://rode.com/en/microphones/studio-condenser/nt1" class="external-link" target="_blank">Rode NT1</a><br>
@@ -70,37 +71,128 @@
             </div>
         </div>
 
-        <div class="contact-email animated delay-4">
+        <div class="contact-email animatable">
             E-mail: <a href="mailto:contato@fyori.com.br">contato@fyori.com.br</a>
+        </div>
+
+        <div class="rain-trigger-container animatable">
+            <button id="rain-trigger-faq" aria-label="Ativar som de chuva" title="Clique para uma surpresa">🌧️</button>
         </div>
     </main>
 
-    <footer class="animated delay-4">
+    <footer class="animatable">
         Copyright © 2025 Fyori
     </footer>
 
     <script>
+        let isRaining = false;
+        let animationFrameId;
+        const FADE_TIME = 800; // ATUALIZADO: 0.8 segundos
+        const MAX_VOLUME = 0.36; // ATUALIZADO: Volume reduzido novamente
+
+        // Função de easing para um fade suave
+        const easeInOutQuad = t => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+
+        // Função para fade de áudio (in e out)
+        function fadeAudio(audio, targetVolume) {
+            cancelAnimationFrame(animationFrameId);
+            const startVolume = audio.volume;
+            const volumeChange = targetVolume - startVolume;
+            let startTime = null;
+
+            if (targetVolume > 0 && audio.paused) {
+                audio.play().catch(e => console.error("Erro ao tocar áudio:", e));
+            }
+
+            function animate(currentTime) {
+                if (startTime === null) startTime = currentTime;
+                const elapsedTime = currentTime - startTime;
+                const progress = Math.min(elapsedTime / FADE_TIME, 1);
+                const easedProgress = easeInOutQuad(progress);
+
+                audio.volume = startVolume + volumeChange * easedProgress;
+
+                if (progress < 1) {
+                    animationFrameId = requestAnimationFrame(animate);
+                } else {
+                    if (targetVolume === 0) {
+                        audio.pause();
+                        audio.currentTime = 0;
+                    }
+                }
+            }
+            animationFrameId = requestAnimationFrame(animate);
+        }
+
+        function toggleRain(forceStop = false) {
+            const rainSound = document.getElementById('rain-sound');
+            const rainTrigger = document.getElementById('rain-trigger-faq');
+            if (!rainSound || !rainTrigger) return;
+            
+            isRaining = forceStop ? false : !isRaining;
+
+            if (isRaining) {
+                rainTrigger.classList.add('active');
+                fadeAudio(rainSound, MAX_VOLUME);
+            } else {
+                rainTrigger.classList.remove('active');
+                fadeAudio(rainSound, 0);
+            }
+        }
+
+        function setupEasterEgg() {
+            const rainTrigger = document.getElementById('rain-trigger-faq');
+            if (!rainTrigger) return;
+
+            rainTrigger.addEventListener('click', () => {
+                if (!document.body.classList.contains('light-mode')) {
+                    toggleRain();
+                }
+            });
+        }
+
         function setupTheme() {
             const themeToggle = document.querySelector('.theme-toggle');
             if (!themeToggle) return;
+            
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
             const currentTheme = localStorage.getItem('theme');
             if (currentTheme === 'light' || (!currentTheme && !prefersDark.matches)) {
                 document.body.classList.add('light-mode');
             }
+
             themeToggle.addEventListener('click', () => {
                 document.body.classList.toggle('light-mode');
-                localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+                if (document.body.classList.contains('light-mode')) {
+                    localStorage.setItem('theme', 'light');
+                    if (isRaining) {
+                        toggleRain(true);
+                    }
+                } else {
+                    localStorage.setItem('theme', 'dark');
+                }
             });
         }
 
-        // Script para animação de primeira visita
-        document.addEventListener('DOMContentLoaded', () => {
+        function handleFirstVisitAnimation() {
             if (!sessionStorage.getItem('fyoriSiteVisited')) {
-                document.body.classList.add('first-visit');
-                sessionStorage.setItem('fyoriSiteVisited', 'true');
+                const elementsToAnimate = document.querySelectorAll('.animatable');
+                elementsToAnimate.forEach((el, index) => {
+                    el.classList.add('animated', `delay-${index + 1}`);
+                });
+                if (!sessionStorage.getItem('fyoriSiteVisited')) {
+                   sessionStorage.setItem('fyoriSiteVisited', 'true');
+                }
+            } else {
+                const elements = document.querySelectorAll('.animatable');
+                elements.forEach(el => { el.style.opacity = 1; });
             }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
             setupTheme();
+            handleFirstVisitAnimation();
+            setupEasterEgg();
         });
     </script>
 </body>
