@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <link rel="icon" href="Imagens/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Fyori - Sou criador de conteúdo e contador de histórias. Meu trabalho é transportar as pessoas para mundos com o poder do storytelling.">
@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- O cabeçalho agora é um 'animatable' para controlar a animação de entrada -->
     <header class="header animatable">
         <a href="/" class="logo">FYORI</a>
         <nav>
@@ -20,6 +21,7 @@
     </header>
 
     <main class="main-content">
+        <!-- A seção de perfil também é 'animatable' -->
         <section class="profile-section animatable">
             <div class="profile-left">
                 <div class="profile-art-container">
@@ -52,7 +54,7 @@
         <section class="videos-section animatable">
             <span class="section-title">ÚLTIMOS VÍDEOS</span>
             <div class="videos-container" id="last-videos">
-                <!-- Vídeos serão carregados aqui -->
+                <!-- Vídeos com o novo design serão carregados aqui pelo JavaScript -->
             </div>
         </section>
     </main>
@@ -62,6 +64,7 @@
     </footer>
 
     <script>
+        // Função para controlar o tema (claro/escuro)
         function setupTheme() {
             const themeToggle = document.querySelector('.theme-toggle');
             if (!themeToggle) return;
@@ -76,61 +79,83 @@
             });
         }
 
+        // Função para controlar a animação de entrada
         function handleFirstVisitAnimation() {
+            // Animação de entrada SOMENTE na primeira visita da sessão
             if (!sessionStorage.getItem('fyoriSiteVisited')) {
                 const elementsToAnimate = document.querySelectorAll('.animatable');
                 elementsToAnimate.forEach((el, index) => {
+                    // Adiciona a classe 'animated' e um delay crescente
                     el.classList.add('animated', `delay-${index + 1}`);
                 });
                 sessionStorage.setItem('fyoriSiteVisited', 'true');
             } else {
+                // Se não for a primeira visita, define a opacidade como 1 para que os elementos fiquem visíveis imediatamente
                 const elements = document.querySelectorAll('.animatable');
-                elements.forEach(el => { el.style.opacity = 1; });
+                elements.forEach(el => {
+                    el.style.opacity = 1;
+                });
             }
         }
 
+        // Função para buscar vídeos do YouTube e criar os novos cards
         async function fetchYouTubeVideos() {
-            const API_KEY = 'AIzaSyDaRPzw4KNZElP4dFKwulF75Oun9pLmkh8';
+            const API_KEY = 'AIzaSyDaRPzw4KNZElP4dFKwulF75Oun9pLmkh8'; // Sua chave de API permanece aqui
             const CHANNEL_ID = 'UCpZ886pfK3UWIK4ywgHEV6g';
             const container = document.getElementById('last-videos');
+
             if (!container) return;
+
             if (API_KEY === 'SUA_CHAVE_DE_API_AQUI' || !API_KEY) {
-                container.innerHTML = '<p style="color:var(--cor-destaque);text-align:center;">Configure a chave da API do YouTube.</p>';
+                container.innerHTML = '<p style="color:var(--cor-destaque);text-align:center;">Por favor, configure a chave da API do YouTube para carregar os vídeos.</p>';
                 return;
             }
+
             const uploadsPlaylistId = CHANNEL_ID.replace(/^UC/, 'UU');
             container.innerHTML = '<p style="color:var(--cor-texto-secundario);">Carregando vídeos...</p>';
+
             try {
                 const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=3&playlistId=${uploadsPlaylistId}&key=${API_KEY}`);
-                if (!response.ok) throw new Error('Falha ao buscar os vídeos.');
+                
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error('Erro da API do YouTube:', errorData);
+                    throw new Error('Falha ao buscar os vídeos. Verifique a chave da API.');
+                }
+
                 const data = await response.json();
                 if (!data.items || data.items.length === 0) {
                     container.innerHTML = '<p>Nenhum vídeo encontrado.</p>';
                     return;
                 }
+                
                 container.innerHTML = ''; 
                 data.items.forEach(item => {
                     const { title, resourceId, thumbnails } = item.snippet;
                     const videoId = resourceId.videoId;
+                    // Usa a thumbnail de alta qualidade, ou a padrão como fallback
                     const thumbnailUrl = thumbnails.high?.url || thumbnails.default.url; 
+
                     container.innerHTML += `
                         <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" rel="noopener noreferrer" class="video-card">
                             <div class="thumbnail-container">
                                 <img src="${thumbnailUrl}" alt="${title}">
                                 <div class="play-overlay">
-                                    <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                    <svg class="play-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z"/></svg>
                                 </div>
                             </div>
                             <h3>${title}</h3>
                         </a>
                     `;
                 });
+
             } catch (error) {
-                console.error('Erro ao carregar vídeos:', error);
+                console.error('Erro ao carregar vídeos do YouTube:', error);
                 container.innerHTML = `<p style="color:var(--cor-destaque);text-align:center;">${error.message}</p>`;
             }
         }
 
+        // Executa as funções quando o DOM estiver carregado
         document.addEventListener('DOMContentLoaded', () => {
             setupTheme();
             handleFirstVisitAnimation();
