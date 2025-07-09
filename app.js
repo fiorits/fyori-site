@@ -1,18 +1,14 @@
 /**
  * Fyori Website - Global Application Script
- * * This script handles:
- * 1. Theme (Dark/Light mode) synchronization.
- * 2. Rain sound easter egg state management across pages.
- * 3. First-visit animations.
- * 4. Dynamic loading of YouTube videos (on index page).
+ * Controla o tema, o easter egg da chuva persistente, animações e vídeos.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize all functionalities once the page is loaded
+    // Inicializa todas as funcionalidades quando a página carrega
     setupTheme();
     handleFirstVisitAnimation();
     
-    // Page-specific initializations
+    // Funções específicas para cada página
     if (document.getElementById('last-videos')) {
         fetchYouTubeVideos();
     }
@@ -20,36 +16,36 @@ document.addEventListener('DOMContentLoaded', () => {
         setupEasterEggButton();
     }
 
-    // Check and apply the rain state on every page load
+    // Sincroniza o estado da chuva em todas as páginas
     syncRainState();
 });
 
-// --- THEME MANAGEMENT ---
+// --- GERENCIAMENTO DE TEMA ---
 function setupTheme() {
     const themeToggle = document.querySelector('.theme-toggle');
     if (!themeToggle) return;
 
-    // Apply theme on initial load
+    // Aplica o tema no carregamento inicial
     const currentTheme = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     if (currentTheme === 'light' || (!currentTheme && !prefersDark)) {
         document.body.classList.add('light-mode');
     }
 
-    // Handle theme toggle click
+    // Lida com o clique no botão de tema
     themeToggle.addEventListener('click', () => {
         document.body.classList.toggle('light-mode');
         const newTheme = document.body.classList.contains('light-mode') ? 'light' : 'dark';
         localStorage.setItem('theme', newTheme);
 
-        // If switching to light mode, stop the rain
+        // Se mudar para o modo claro, para a chuva
         if (newTheme === 'light' && localStorage.getItem('rainState') === 'playing') {
-            toggleRain(true); // Force stop
+            toggleRain(true); // Força a parada
         }
     });
 }
 
-// --- RAIN EASTER EGG ---
+// --- EASTER EGG DA CHUVA ---
 let animationFrameId;
 const FADE_TIME = 800;
 const MAX_VOLUME = 0.36;
@@ -63,7 +59,7 @@ function fadeAudio(audio, targetVolume) {
     let startTime = null;
 
     if (targetVolume > 0 && audio.paused) {
-        audio.play().catch(e => console.error("Error playing audio:", e));
+        audio.play().catch(e => console.error("Erro ao tocar áudio:", e));
     }
 
     function animate(currentTime) {
@@ -133,7 +129,7 @@ function setupEasterEggButton() {
 }
 
 
-// --- FIRST VISIT ANIMATION ---
+// --- ANIMAÇÃO DE PRIMEIRA VISITA ---
 function handleFirstVisitAnimation() {
     if (!sessionStorage.getItem('fyoriSiteVisited')) {
         const elementsToAnimate = document.querySelectorAll('.animatable');
@@ -147,7 +143,7 @@ function handleFirstVisitAnimation() {
     }
 }
 
-// --- YOUTUBE VIDEOS (for Index Page) ---
+// --- VÍDEOS DO YOUTUBE (para a página Index) ---
 async function fetchYouTubeVideos() {
     const API_KEY = 'AIzaSyDaRPzw4KNZElP4dFKwulF75Oun9pLmkh8';
     const CHANNEL_ID = 'UCpZ886pfK3UWIK4ywgHEV6g';

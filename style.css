@@ -22,7 +22,6 @@
     --cor-destaque: #e83a9f;
     --cor-destaque-escuro: #c92bbffb;
     --cor-roxo-premium: #a855f7;
-    /* ATUALIZADO: Tom de vermelho mais escuro e forte */
     --cor-vermelho-hover: #E63946; 
     --cor-fundo: #0f0a1a;
     --cor-texto: #fff;
@@ -260,7 +259,6 @@ a.external-link {
     font-weight: 600; 
     transition: all 0.3s; 
 }
-/* ATUALIZADO: Hover vermelho e sem sublinhado */
 a.external-link:hover { 
     color: var(--cor-vermelho-hover);
     text-decoration: none; 
