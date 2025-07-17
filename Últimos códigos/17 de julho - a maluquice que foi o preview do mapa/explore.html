@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="icon" href="Imagens/favicon.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore o mundo de Fyori - Um mapa interativo com a lore do canal.">
+    <title>Explore - Fyori</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <audio id="rain-sound" src="Fontes/Chuva.mp3" loop preload="auto"></audio>
+
+    <header class="header animatable">
+        <a href="index.html" class="logo">FYORI</a>
+        <nav>
+            <a href="https://apoia.se/fyori" target="_blank">APOIE O CANAL</a>
+            <a href="explore.html" class="current">EXPLORE</a>
+            <a href="faq.html">FAQ</a>
+            <button class="theme-toggle" aria-label="Alternar tema">🌓</button>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <section class="map-section-container animatable">
+            <div class="map-wrapper">
+                <img src="Imagens/Mapa/mapa-fyori.png" alt="Mapa do mundo de Fyori" id="interactive-map">
+
+                <div class="clickable-areas">
+                    <a href="#" class="map-area" data-location="leviata" style="left: 155px; top: 49px; width: 780px; height: 144px;"></a>
+                    
+                    </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="lore-modal" class="lore-modal">
+        <div class="lore-modal-content">
+            <button class="close-modal-button" aria-label="Fechar">×</button>
+            <h2 id="modal-title">Título do Local</h2>
+            <p id="modal-description">Descrição da lore do local...</p>
+            <div id="modal--container">
+                </div>
+        </div>
+    </div>
+
+    <footer class="animatable">
+        Copyright © 2025 Fyori
+    </footer>
+
+    <script src="app.js" defer></script>
+</body>
+</html>
