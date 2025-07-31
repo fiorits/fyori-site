@@ -238,8 +238,9 @@ nav a.current {
     display: inline-block;
     font-weight: 700;
     letter-spacing: 2px;
-    /* Alteração: Efeito de brilho/blur sutil */
     text-shadow: 0 0 8px rgba(232, 58, 159, 0.4);
+    /* Alteração: Adicionado espaçamento vertical interno */
+    line-height: 2;
 }
 .videos-container { display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; margin: 0 auto 20px auto; max-width: 1100px; }
 .video-card { background-color: transparent; width: 320px; text-decoration: none; color: var(--cor-texto); display: flex; flex-direction: column; gap: 15px; transition: transform 0.3s ease; }
@@ -272,8 +273,9 @@ nav a.current {
     color: transparent;
     display: inline-block;
     white-space: nowrap;
-    /* Alteração: Efeito de brilho/blur sutil */
     text-shadow: 0 0 8px rgba(232, 58, 159, 0.4);
+    /* Alteração: Adicionado espaçamento vertical interno */
+    line-height: 1.4;
 }
 .faq-answer { color: var(--cor-texto-secundario); font-size: 1.1rem; margin-bottom: 15px; line-height: 1.7; }
 
