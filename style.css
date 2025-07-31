@@ -227,7 +227,20 @@ nav a.current {
    SEÇÃO DE VÍDEOS
    ================================================================= */
 .videos-section { width: 100%; text-align: center; }
-.section-title { font-family: 'Playfair Display', serif; font-size: 2rem; background: var(--gradiente-premium); -webkit-background-clip: text; background-clip: text; color: transparent; margin: 10px 0 40px 0; display: inline-block; text-shadow: 0 0 10px rgba(232, 58, 159, 0.3); font-weight: 700; }
+.section-title {
+    font-family: 'Geometos', serif;
+    font-size: 2rem;
+    background: var(--gradiente-premium);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin: 10px 0 40px 0;
+    display: inline-block;
+    font-weight: 700;
+    letter-spacing: 2px;
+    /* Alteração: Efeito de brilho/blur sutil */
+    text-shadow: 0 0 8px rgba(232, 58, 159, 0.4);
+}
 .videos-container { display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; margin: 0 auto 20px auto; max-width: 1100px; }
 .video-card { background-color: transparent; width: 320px; text-decoration: none; color: var(--cor-texto); display: flex; flex-direction: column; gap: 15px; transition: transform 0.3s ease; }
 .video-card:hover { transform: translateY(-8px); }
@@ -247,8 +260,23 @@ nav a.current {
    ================================================================= */
 .faq-container { max-width: 800px; margin: 40px auto; padding: 0 20px; flex: 1; }
 .faq-item { margin-bottom: 40px; border-left: 3px solid var(--cor-destaque); padding-left: 20px; }
-.faq-question { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; margin-bottom: 15px; letter-spacing: 0.5px; background: linear-gradient(45deg, var(--cor-destaque-escuro), var(--cor-destaque)); -webkit-background-clip: text; background-clip: text; color: transparent; display: inline-block; }
+.faq-question {
+    font-family: 'Geometos', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    letter-spacing: 1.5px;
+    background: linear-gradient(45deg, var(--cor-destaque-escuro), var(--cor-destaque));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+    white-space: nowrap;
+    /* Alteração: Efeito de brilho/blur sutil */
+    text-shadow: 0 0 8px rgba(232, 58, 159, 0.4);
+}
 .faq-answer { color: var(--cor-texto-secundario); font-size: 1.1rem; margin-bottom: 15px; line-height: 1.7; }
+
 .contact-email { font-family: 'Montserrat', sans-serif; color: var(--cor-texto-secundario); font-size: 1.1rem; margin: 60px 0 30px 0; text-align: center; letter-spacing: 0.5px; }
 .contact-email a { color: var(--cor-destaque); text-decoration: none; transition: all 0.3s; }
 .contact-email a:hover { text-shadow: 0 0 5px var(--cor-destaque); }
