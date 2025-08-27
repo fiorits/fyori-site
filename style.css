@@ -272,7 +272,6 @@ nav a.current {
     background-clip: text;
     color: transparent;
     display: inline-block;
-    white-space: nowrap;
     text-shadow: 0 0 8px rgba(232, 58, 159, 0.4);
     /* Alteração: Adicionado espaçamento vertical interno */
     line-height: 1.4;
