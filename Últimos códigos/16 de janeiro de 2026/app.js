@@ -143,38 +143,36 @@ function handleFirstVisitAnimation() {
     }
 }
 
-// --- VÍDEOS DO YOUTUBE (Backend Seguro) ---
+// --- VÍDEOS DO YOUTUBE (para a página Index) ---
 async function fetchYouTubeVideos() {
+    const API_KEY = 'AIzaSyDaRPzw4KNZElP4dFKwulF75Oun9pLmkh8';
+    const CHANNEL_ID = 'UCpZ886pfK3UWIK4ywgHEV6g';
     const container = document.getElementById('last-videos');
     if (!container) return;
 
+    if (API_KEY === 'SUA_CHAVE_DE_API_AQUI' || !API_KEY) {
+        container.innerHTML = '<p style="color:var(--cor-destaque);text-align:center;">Configure a chave da API do YouTube.</p>';
+        return;
+    }
+    const uploadsPlaylistId = CHANNEL_ID.replace(/^UC/, 'UU');
     container.innerHTML = '<p style="color:var(--cor-texto-secundario);">Carregando vídeos...</p>';
-
     try {
-        // Agora chamamos a nossa API interna (/api/videos)
-        // Isso protege sua chave, que fica escondida no servidor da Vercel
-        const response = await fetch('/api/videos');
-        
+        const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=3&playlistId=${uploadsPlaylistId}&key=${API_KEY}`);
         if (!response.ok) throw new Error('Falha ao buscar os vídeos.');
-        
         const data = await response.json();
-
         if (!data.items || data.items.length === 0) {
             container.innerHTML = '<p>Nenhum vídeo encontrado.</p>';
             return;
         }
-
         container.innerHTML = '';
         data.items.forEach(item => {
             const { title, resourceId, thumbnails } = item.snippet;
             const videoId = resourceId.videoId;
-            // Tenta pegar a imagem de melhor qualidade (maxres), se não tiver, pega as menores
-            const thumbnailUrl = thumbnails.maxres?.url || thumbnails.high?.url || thumbnails.medium?.url || thumbnails.default.url;
-            
+            const thumbnailUrl = thumbnails.high?.url || thumbnails.default.url;
             container.innerHTML += `
                 <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" rel="noopener noreferrer" class="video-card">
                     <div class="thumbnail-container">
-                        <img src="${thumbnailUrl}" alt="${title}" loading="lazy">
+                        <img src="${thumbnailUrl}" alt="${title}">
                         <div class="play-overlay">
                             <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                         </div>
@@ -185,6 +183,6 @@ async function fetchYouTubeVideos() {
         });
     } catch (error) {
         console.error('Erro ao carregar vídeos:', error);
-        container.innerHTML = `<p style="color:var(--cor-destaque);text-align:center;">Indisponível no momento.</p>`;
+        container.innerHTML = `<p style="color:var(--cor-destaque);text-align:center;">${error.message}</p>`;
     }
 }
