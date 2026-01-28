@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="icon" href="Imagens/favicon.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Fyori - Sou criador de conteúdo e contador de histórias. Meu trabalho é transportar as pessoas para mundos com o poder do storytelling.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.fyori.cc/">
+    <meta property="og:title" content="Fyori - Storytelling e Mistério">
+    <meta property="og:description" content="Sou contador de histórias e caçador do misterioso. Venha conhecer meu trabalho no YouTube.">
+    <meta property="og:image" content="https://www.fyori.cc/Imagens/arte-fyori.png">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.fyori.cc/">
+    <meta property="twitter:title" content="Fyori - Storytelling e Mistério">
+    <meta property="twitter:description" content="Sou contador de histórias e caçador do misterioso. Venha conhecer meu trabalho no YouTube.">
+    <meta property="twitter:image" content="https://www.fyori.cc/Imagens/arte-fyori.png">
+
+    <title>Fyori</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <audio id="rain-sound" src="Fontes/Chuva.mp3" loop preload="auto"></audio>
+
+    <header class="header animatable">
+        <a href="/" class="logo">FYORI</a>
+        <nav>
+            <a href="https://apoia.se/fyori" target="_blank" rel="noopener noreferrer">APOIE O CANAL</a>
+            <a href="/faq.html">FAQ</a>
+            <button class="theme-toggle" aria-label="Alternar tema">🌓</button>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <section class="profile-section animatable">
+            <div class="profile-left">
+                <div class="profile-art-container">
+                    <img src="Imagens/arte-fyori.png" alt="Arte de Fyori" class="profile-art">
+                </div>
+            </div>
+            
+            <div class="profile-right">
+                <p class="bio-greeting">Meu nome é <span class="highlight">Fyori</span>.</p>
+                <p class="bio-text">
+                    Sou contador de histórias e caçador do misterioso. Meu trabalho é transportar as pessoas para mundos com o poder do storytelling.<br><br>
+                    No YouTube, compartilho vídeos sobre terror, mistério e muito mais, com vídeos que já foram vistos por milhões de pessoas.
+                </p>
+                <div class="social-links">
+                    <div class="social-icon-container" data-tooltip="YouTube"><a href="https://www.youtube.com/channel/UCpZ886pfK3UWIK4ywgHEV6g" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><img src="Imagens/youtube-icon.png" alt="YouTube" class="social-icon"></a></div>
+                    <div class="social-icon-container" data-tooltip="Instagram Pessoal"><a href="https://instagram.com/fyoritss" target="_blank" rel="noopener noreferrer" aria-label="Instagram Pessoal"><img src="Imagens/instagram-icon.png" alt="Instagram Pessoal" class="social-icon"></a></div>
+                    <div class="social-icon-container" data-tooltip="Instagram do Canal"><a href="https://instagram.com/fyoriytb" target="_blank" rel="noopener noreferrer" aria-label="Instagram do Canal"><img src="Imagens/instagram2-icon.png" alt="Instagram do Canal" class="social-icon"></a></div>
+                    <div class="social-icon-container" data-tooltip="Discord"><a href="https://discord.com/invite/TTEVwfVpnB" target="_blank" rel="noopener noreferrer" aria-label="Discord"><img src="Imagens/discord-icon.png" alt="Discord" class="social-icon"></a></div>
+                    <div class="social-icon-container" data-tooltip="Twitter/X"><a href="https://x.com/fyoriytb" target="_blank" rel="noopener noreferrer" aria-label="Twitter/X"><img src="Imagens/x-icon.png" alt="X/Twitter" class="social-icon"></a></div>
+                    <div class="vertical-divider"></div>
+                    <div class="social-icon-container" data-tooltip="EM BREVE"><span aria-label="Podcast"><img src="Imagens/podcast-icon.png" alt="Podcast" class="social-icon"></span></div>
+                    <div class="social-icon-container" data-tooltip="EM BREVE"><span aria-label="Loja"><img src="Imagens/loja-icon.png" alt="Loja" class="social-icon"></span></div>
+                </div>
+            </div>
+        </section>
+        
+        <hr class="divider animatable">
+        
+        <section class="videos-section animatable">
+            <span class="section-title">ÚLTIMOS VÍDEOS</span>
+            <div class="videos-container" id="last-videos">
+                </div>
+        </section>
+    </main>
+
+    <footer class="animatable">
+        Copyright © 2025 Fyori
+    </footer>
+
+    <script src="app.js" defer></script>
+</body>
+</html>
