@@ -30,32 +30,8 @@
     --gradiente-logo: linear-gradient(45deg, var(--cor-destaque), var(--cor-roxo-premium));
 }
 
-body.light-mode {
-    --cor-fundo: #f5f0ff;
-    --cor-texto: #222;
-    --cor-texto-secundario: #222; 
-}
-
-body.light-mode .header {
-    background: linear-gradient(135deg, #e0d6ff 0%, #c9b8ff 100%);
-}
-
-body.light-mode .faq-divider,
-body.light-mode .divider {
-    background: linear-gradient(to right, transparent, var(--cor-destaque-escuro), transparent);
-}
-
-body.light-mode .social-icon {
-    filter: invert(1);
-}
-
-body.light-mode .social-icon-container::after {
-    color: var(--cor-texto);
-}
-
-
 /* =================================================================
-   ESTILOS GERAIS E ANIMAÇÕES
+   ESTILOS GERAIS E ANIMAÇÕES EXCLUSIVAS VIA CSS
    ================================================================= */
 body { 
     background-color: var(--cor-fundo); 
@@ -69,85 +45,27 @@ body {
     flex-direction: column;
 }
 
-.animatable { opacity: 0; }
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-.animated { animation: fadeInUp 0.8s ease-out forwards; }
-.delay-1 { animation-delay: 0.2s; }
-.delay-2 { animation-delay: 0.4s; }
-.delay-3 { animation-delay: 0.6s; }
-.delay-4 { animation-delay: 0.8s; }
-.delay-5 { animation-delay: 1.0s; }
-
-
-/* =================================================================
-   CABEÇALHO E NAVEGAÇÃO
-   ================================================================= */
-.header {
-    text-align: center;
-    padding: 30px 0 25px 0;
-    background: linear-gradient(135deg, #1a1030 0%, #2a1a50 100%);
-    border-bottom: 3px solid var(--cor-destaque);
+/* Base de opacidade zero resolvida nativamente em cascata temporal */
+.animatable { 
+    opacity: 0; 
+    animation: fadeInUpSmooth 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
-.logo {
-    font-family: 'Creo-ExtraBold', sans-serif;
-    font-size: 5.2rem;
-    background: var(--gradiente-logo);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    text-decoration: none;
-    display: inline-block;
-    letter-spacing: 0.275em;
-    text-shadow: 0 0 10px rgba(232, 58, 159, 0.5);
-    padding: 0 0.1375em;
+@keyframes fadeInUpSmooth {
+    from { 
+        opacity: 0; 
+        transform: translateY(30px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
 }
 
-nav { margin: 20px 0 15px 0; }
-nav a {
-    margin: 0 20px;
-    color: var(--cor-texto);
-    text-decoration: none;
-    font-family: 'Geometos', sans-serif;
-    font-size: 1.2rem;
-    letter-spacing: 2px;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    text-shadow: 
-        0.5px 0.5px 0px rgba(255, 100, 150, 0.5), 
-        -0.5px -0.5px 0px rgba(100, 255, 255, 0.5);
-    filter: blur(0.3px);
-}
-
-nav a:hover {
-    color: var(--cor-vermelho-hover);
-    text-shadow: 0 0 8px var(--cor-vermelho-hover);
-    filter: none;
-    background: none;
-}
-
-nav a.current {
-    text-shadow: 0 0 5px var(--cor-destaque);
-    filter: none;
-    background: var(--gradiente-premium);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-}
-
-.theme-toggle {
-    background: none;
-    border: none;
-    color: var(--cor-destaque);
-    font-size: 1.3rem;
-    cursor: pointer;
-    margin-left: 5px;
-    transition: transform 0.4s;
-}
-.theme-toggle:hover { transform: rotate(45deg); color: var(--cor-texto); }
+/* Controle milimétrico do tempo de resposta visual de cada bloco */
+.delay-1 { animation-delay: 0.15s; }
+.delay-2 { animation-delay: 0.5s; }
+.delay-3 { animation-delay: 0.85s; }
 
 
 /* =================================================================
@@ -155,7 +73,7 @@ nav a.current {
    ================================================================= */
 .main-content {
     max-width: 1100px;
-    margin: 10px auto;
+    margin: 60px auto 10px auto;
     padding: 0 20px;
     display: flex;
     flex-direction: column;
@@ -239,7 +157,6 @@ nav a.current {
     font-weight: 700;
     letter-spacing: 2px;
     text-shadow: 0 0 8px rgba(232, 58, 159, 0.4);
-    /* Alteração: Adicionado espaçamento vertical interno */
     line-height: 2;
 }
 .videos-container { display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; margin: 0 auto 20px auto; max-width: 1100px; }
@@ -257,13 +174,15 @@ nav a.current {
 
 
 /* =================================================================
-   CONTEÚDO (FAQ.HTML)
+   CONTEÚDO (FAQ)
    ================================================================= */
-.faq-container { max-width: 800px; margin: 40px auto; padding: 0 20px; flex: 1; }
-.faq-item { margin-bottom: 40px; border-left: 3px solid var(--cor-destaque); padding-left: 20px; }
+.faq-section { width: 100%; margin-top: 20px; }
+.faq-container { max-width: 800px; margin: 40px auto; padding: 0 20px; }
+.faq-item { margin-bottom: 40px; border-left: 3px solid var(--cor-destaque); padding-left: 20px; text-align: left; }
+
 .faq-question {
     font-family: 'Geometos', serif;
-    font-size: 1.6rem;
+    font-size: 1.25rem;
     font-weight: 700;
     margin-bottom: 15px;
     letter-spacing: 1.5px;
@@ -273,7 +192,6 @@ nav a.current {
     color: transparent;
     display: inline-block;
     text-shadow: 0 0 8px rgba(232, 58, 159, 0.4);
-    /* Alteração: Adicionado espaçamento vertical interno */
     line-height: 1.4;
 }
 .faq-answer { color: var(--cor-texto-secundario); font-size: 1.1rem; margin-bottom: 15px; line-height: 1.7; }
@@ -312,47 +230,6 @@ a.external-link:hover {
 
 
 /* =================================================================
-   EASTER EGG (FAQ)
-   ================================================================= */
-.rain-trigger-container {
-    text-align: center;
-    margin-top: 40px;
-}
-
-#rain-trigger-faq {
-    background: none;
-    border: none;
-    font-size: 1.2rem; 
-    cursor: pointer;
-    padding: 10px;
-    line-height: 1;
-    filter: grayscale(1);
-    opacity: 0.4;
-    transition: all 0.3s ease-out;
-}
-
-#rain-trigger-faq:hover {
-    opacity: 1;
-    filter: grayscale(0);
-    transform: scale(1.1);
-}
-
-#rain-trigger-faq:active {
-    transform: scale(0.95) rotate(10deg);
-    transition: transform 0.1s ease-in;
-}
-
-#rain-trigger-faq.active {
-    filter: grayscale(0);
-    opacity: 1;
-}
-
-body.light-mode .rain-trigger-container {
-    display: none;
-}
-
-
-/* =================================================================
    RODAPÉ
    ================================================================= */
 footer { text-align: center; padding: 20px; color: var(--cor-texto-secundario); font-size: 0.8rem; margin-top: auto; }
@@ -362,21 +239,18 @@ footer { text-align: center; padding: 20px; color: var(--cor-texto-secundario); 
    DESIGN RESPONSIVO
    ================================================================= */
 @media (max-width: 768px) {
+    .main-content { margin-top: 30px; }
     .profile-section { flex-direction: column; gap: 30px; }
     .profile-left { max-width: 450px; flex-basis: auto; width: 90%; }
     .profile-right { text-align: center; }
     .bio-greeting, .bio-text { text-align: center; }
     .social-links { justify-content: center; }
-    .logo { font-size: 3rem; }
-    nav a { font-size: 1rem; margin: 0 10px; }
     .bio-text { font-size: 1rem; padding: 0 15px; }
     .videos-container { flex-direction: column; align-items: center; }
     .video-card { width: 100%; max-width: 350px; }
 }
 
 @media (max-width: 480px) {
-    nav { display: flex; justify-content: center; align-items: center; }
-    nav a { margin: 0 8px; font-size: 0.9rem; }
     .social-links { gap: 12px; }
     .vertical-divider { display: none; }
 }
