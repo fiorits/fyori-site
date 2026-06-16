@@ -27,11 +27,13 @@
     --gradiente-premium: linear-gradient(135deg, var(--cor-destaque), #9a1a22);
 }
 
-/* Remoção total do scrollbar customizado antigo - Agora usa o nativo limpo */
-
 /* =================================================================
-   ESTILOS GERAIS E ANIMAÇÕES
+   ESTILOS GERAIS E REMOÇÃO TOTAL DA BARRA DE ROLAGEM (SCROLL)
    ================================================================= */
+html {
+    scrollbar-width: none; /* Firefox */
+}
+
 body { 
     background-color: var(--cor-fundo); 
     color: var(--cor-texto); 
@@ -45,6 +47,15 @@ body {
     position: relative;
     background-image: radial-gradient(circle 220px at var(--mouse-x, 50%) var(--mouse-y, 30%), rgba(62, 33, 90, 0.11) 0%, transparent 100%);
     background-attachment: fixed;
+    overflow-y: scroll; /* Mantém rolagem funcional */
+}
+
+/* Esconde scroll visual nos navegadores Webkit (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+    display: none !important;
+    width: 0px !important;
+    height: 0px !important;
+    background: transparent !important;
 }
 
 /* Vignette CRT Forte nas Bordas */
@@ -122,34 +133,19 @@ body {
 .profile-right { flex-grow: 1; text-align: justify; }
 .bio-greeting { font-size: 1.3rem; margin: 0 0 25px 0; text-align: left; color: var(--cor-texto-secundario); letter-spacing: 1px; }
 .bio-greeting .highlight { font-family: 'Creo-ExtraBold', sans-serif; font-size: 1.8rem; background: var(--gradiente-premium); -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: 2px; }
+.bio-text { max-width: 600px; font-size: 1.1rem; line-height: 1.7; margin: 0 0 30px 0; color: var(--cor-texto-secundario); font-family: 'Poppins', sans-serif; font-weight: 400; }
 
-/* FONTE SOLICITADA PARA A BIO: Poppins com peso regular (400) */
-.bio-text { 
-    max-width: 600px; 
-    font-size: 1.1rem; 
-    line-height: 1.7; 
-    margin: 0 0 30px 0; 
-    color: var(--cor-texto-secundario); 
-    font-family: 'Poppins', sans-serif !important; 
-    font-weight: 400; 
+/* CORREÇÃO CRÍTICA DO ESPAÇAMENTO: Flexbox limpo e absoluto sem margens ocultas */
+.social-links { 
+    display: flex;
+    flex-direction: row;
+    gap: 18px !important; 
+    justify-content: flex-start; 
+    align-items: center; 
+    flex-wrap: nowrap;
 }
-
-/* Ícones sociais ativos e valvulados */
-.social-links { display: flex; justify-content: flex-start; gap: 18px; align-items: center; }
-.social-icon { width: 28px; height: 28px; transition: all 0.3s ease; filter: drop-shadow(0 0 2px rgba(214, 40, 40, 0.2)); }
-.social-icon-container { position: relative; display: inline-block; }
-
-/* Projetos futuros ocultados sob encriptação clássica */
-.encrypted-project .social-icon {
-    opacity: 0.35;
-    filter: grayscale(1) blur(0.4px);
-    cursor: not-allowed;
-}
-.encrypted-project:hover .social-icon {
-    animation: none !important;
-    transform: none !important;
-    opacity: 0.5;
-}
+.social-icon { width: 28px; height: 28px; transition: all 0.3s ease; filter: drop-shadow(0 0 2px rgba(214, 40, 40, 0.2)); display: block; }
+.social-icon-container { position: relative; display: inline-block; margin: 0 !important; padding: 0 !important; }
 
 .social-icon-container::after {
     content: attr(data-tooltip);
@@ -215,14 +211,14 @@ body {
     filter: blur(0.3px); 
     transition: filter 0.3s ease, text-shadow 0.3s ease; 
 }
-.video-card:hover h3 { filter: blur(0); text-shadow: 0px 0px 5px #fff; animation: vhsGlitch 0.4s linear infinite; }
+.video-card:hover h3 { filter: blur(0); text-shadow: 0px 0px 5px #fff; }
 
 
 /* =================================================================
    CONTEÚDO (FAQ)
    ================================================================= */
-.faq-section { width: 100%; margin-top: 30px; }
-.faq-container { max-width: 800px; margin: 40px auto; padding: 0 20px; }
+.faq-section { width: 100%; margin-top: 20px; }
+.faq-container { max-width: 800px; margin: 10px auto 40px auto; padding: 0 20px; }
 .faq-item { margin-bottom: 40px; border-left: 2px solid var(--cor-destaque); padding-left: 20px; text-align: left; }
 
 .faq-question {
@@ -240,15 +236,7 @@ body {
     line-height: 1.4;
 }
 
-/* FONTE SOLICITADA PARA O FAQ: Montserrat com peso regular (400) */
-.faq-answer { 
-    color: var(--cor-texto-secundario); 
-    font-size: 1.1rem; 
-    margin-bottom: 15px; 
-    line-height: 1.7; 
-    font-family: 'Montserrat', sans-serif !important; 
-    font-weight: 400; 
-}
+.faq-answer { color: var(--cor-texto-secundario); font-size: 1.1rem; margin-bottom: 15px; line-height: 1.7; font-family: 'Montserrat', sans-serif; font-weight: 400; }
 .faq-answer a.external-link { font-weight: 400 !important; }
 
 .contact-email { font-family: 'Montserrat', sans-serif; color: var(--cor-texto-secundario); font-size: 1.05rem; margin: 60px 0 30px 0; text-align: center; letter-spacing: 0.5px; }
@@ -271,7 +259,6 @@ a.external-link:hover {
    ================================================================= */
 .divider { border: 0; height: 1px; background: linear-gradient(to right, transparent, rgba(214, 40, 40, 0.4), transparent); width: 85%; margin: 40px auto; }
 .faq-divider { border: 0; height: 1px; background: linear-gradient(to right, transparent, rgba(214, 40, 40, 0.22), transparent); margin: 30px 0; }
-/* O mini-divider vertical (.vertical-divider) foi totalmente removido daqui */
 
 .profile-art, .social-icon, .thumbnail-container img {
     pointer-events: none;
@@ -297,13 +284,11 @@ footer { text-align: center; padding: 30px 20px; color: var(--cor-texto-secundar
     .profile-left { max-width: 420px; flex-basis: auto; width: 90%; }
     .profile-right { text-align: center; }
     .bio-greeting, .bio-text { text-align: center; }
-    .social-links { justify-content: center; }
-    .videos-container { flex-direction: column; align-items: center; }
-    .video-card { width: 100%; max-width: 350px; }
+    .social-links { justify-content: center; flex-wrap: wrap; gap: 15px !important; }
     body { background-image: none !important; background-color: #06040a; } 
     .crt-vignette { display: none; } 
 }
 
 @media (max-width: 480px) {
-    .social-links { gap: 12px; }
+    .social-links { gap: 12px !important; }
 }
