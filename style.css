@@ -28,7 +28,7 @@
 }
 
 /* =================================================================
-   ESTILOS GERAIS E REMOÇÃO TOTAL DA BARRA DE ROLAGEM (SCROLL)
+   ESTILOS GERAIS E OCULTAÇÃO TOTAL DA BARRA DE ROLAGEM (SCROLL)
    ================================================================= */
 html {
     scrollbar-width: none; /* Firefox */
@@ -47,7 +47,7 @@ body {
     position: relative;
     background-image: radial-gradient(circle 220px at var(--mouse-x, 50%) var(--mouse-y, 30%), rgba(62, 33, 90, 0.11) 0%, transparent 100%);
     background-attachment: fixed;
-    overflow-y: scroll; /* Mantém rolagem funcional */
+    overflow-y: scroll; 
 }
 
 /* Esconde scroll visual nos navegadores Webkit (Chrome, Edge, Safari) */
@@ -135,7 +135,7 @@ body {
 .bio-greeting .highlight { font-family: 'Creo-ExtraBold', sans-serif; font-size: 1.8rem; background: var(--gradiente-premium); -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: 2px; }
 .bio-text { max-width: 600px; font-size: 1.1rem; line-height: 1.7; margin: 0 0 30px 0; color: var(--cor-texto-secundario); font-family: 'Poppins', sans-serif; font-weight: 400; }
 
-/* CORREÇÃO CRÍTICA DO ESPAÇAMENTO: Flexbox limpo e absoluto sem margens ocultas */
+/* Flexbox alinhado simetricamente */
 .social-links { 
     display: flex;
     flex-direction: row;
@@ -211,7 +211,10 @@ body {
     filter: blur(0.3px); 
     transition: filter 0.3s ease, text-shadow 0.3s ease; 
 }
-.video-card:hover h3 { filter: blur(0); text-shadow: 0px 0px 5px #fff; }
+/* CORREÇÃO: Removido completamente o text-shadow branco que causava o efeito salpicado brilhoso no hover */
+.video-card:hover h3 { 
+    filter: blur(0); 
+}
 
 
 /* =================================================================
