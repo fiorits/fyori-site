@@ -22,16 +22,13 @@
     <meta property="twitter:image" content="https://www.fyori.cc/Imagens/arte-fyori.png">
 
     <title>Fyori</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Playfair+Display:ital,wght@0,700;1,400&family=Poppins:wght@400;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Camada CRT Intensificada nas Bordas -->
-    <div class="crt-vignette"></div>
-
     <main class="main-content">
-        <!-- SEÇÃO 1: PERFIL -->
+        <!-- Elementos utilizam classes delay-X para entrada em efeito cascata suave -->
         <section class="profile-section animatable delay-1">
             <div class="profile-left">
                 <div class="profile-art-container">
@@ -41,27 +38,24 @@
             
             <div class="profile-right">
                 <p class="bio-greeting">Meu nome é <span class="highlight">Fyori</span>.</p>
-                <!-- Retornado ao texto original com a fonte Poppins premium -->
                 <p class="bio-text">
                     Sou contador de histórias e caçador do misterioso. Meu trabalho é transportar as pessoas para mundos com o poder do storytelling.<br><br>
                     No YouTube, compartilho vídeos sobre terror, mistério e muito mais, com vídeos que já foram vistos por milhões de pessoas.
                 </p>
                 <div class="social-links">
-                    <div class="social-icon-container" data-tooltip="Canal Principal"><a href="https://www.youtube.com/channel/UCpZ886pfK3UWIK4ywgHEV6g" target="_blank" rel="noopener noreferrer" aria-label="YouTube Principal"><img src="Imagens/youtube-icon.png" alt="YouTube" class="social-icon"></a></div>
-                    <div class="social-icon-container" data-tooltip="Canal Fyrs (B-Sides)"><a href="https://www.youtube.com/@Fyrss" target="_blank" rel="noopener noreferrer" aria-label="YouTube Fyrss"><img src="Imagens/youtube-icon.png" alt="YouTube Fyrss" class="social-icon"></a></div>
-                    <div class="social-icon-container" data-tooltip="Instagram Canal"><a href="https://instagram.com/fyoriytb" target="_blank" rel="noopener noreferrer" aria-label="Instagram do Canal"><img src="Imagens/instagram2-icon.png" alt="Instagram do Canal" class="social-icon"></a></div>
+                    <div class="social-icon-container" data-tooltip="YouTube"><a href="https://www.youtube.com/channel/UCpZ886pfK3UWIK4ywgHEV6g" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><img src="Imagens/youtube-icon.png" alt="YouTube" class="social-icon"></a></div>
+                    <div class="social-icon-container" data-tooltip="Instagram do Canal"><a href="https://instagram.com/fyoriytb" target="_blank" rel="noopener noreferrer" aria-label="Instagram do Canal"><img src="Imagens/instagram2-icon.png" alt="Instagram do Canal" class="social-icon"></a></div>
                     <div class="social-icon-container" data-tooltip="Instagram Pessoal"><a href="https://instagram.com/fyoritss" target="_blank" rel="noopener noreferrer" aria-label="Instagram Pessoal"><img src="Imagens/instagram-icon.png" alt="Instagram Pessoal" class="social-icon"></a></div>
-                    <div class="social-icon-container" data-tooltip="Twitter / X"><a href="https://x.com/fyoriytb" target="_blank" rel="noopener noreferrer" aria-label="Twitter/X"><img src="Imagens/x-icon.png" alt="X/Twitter" class="social-icon"></a></div>
-                    <!-- Projetos futuros sem a separação do mini-divider -->
-                    <div class="social-icon-container encrypted-project" data-tooltip="PROJETO ABALONE (BREVE)"><span aria-label="Livro"><img src="Imagens/abalones-icon.png" alt="Livro Secreto" class="social-icon"></span></div>
-                    <div class="social-icon-container encrypted-project" data-tooltip="TRANSMISSÃO (BREVE)"><span aria-label="Podcast"><img src="Imagens/podcast-icon.png" alt="Podcast" class="social-icon"></span></div>
+                    <div class="social-icon-container" data-tooltip="Twitter/X"><a href="https://x.com/fyoriytb" target="_blank" rel="noopener noreferrer" aria-label="Twitter/X"><img src="Imagens/x-icon.png" alt="X/Twitter" class="social-icon"></a></div>
+                    <div class="vertical-divider"></div>
+                    <div class="social-icon-container" data-tooltip="EM BREVE"><span aria-label="Podcast"><img src="Imagens/abalones-icon.png" alt="Podcast" class="social-icon"></span></div>
+                    <div class="social-icon-container" data-tooltip="EM BREVE"><span aria-label="Loja"><img src="Imagens/loja-icon.png" alt="Loja" class="social-icon"></span></div>
                 </div>
             </div>
         </section>
         
         <hr class="divider animatable delay-2">
         
-        <!-- SEÇÃO 2: ÚLTIMOS VÍDEOS -->
         <section class="videos-section animatable delay-2">
             <span class="section-title">ÚLTIMOS VÍDEOS</span>
             <div class="videos-container" id="last-videos">
@@ -70,15 +64,14 @@
 
         <hr class="divider animatable delay-3">
 
-        <!-- SEÇÃO 3: FAQ -->
         <section class="faq-section faq-container animatable delay-3">
             <div style="text-align: center; width: 100%;">
                 <span class="section-title">FAQ</span>
             </div>
             
+            <!-- Divisão 1: Programas -->
             <div class="faq-item">
                 <div class="faq-question">QUAIS PROGRAMAS EU USO?</div>
-                <!-- Retornado ao texto e links detalhados originais com fonte Montserrat -->
                 <div class="faq-answer">
                     Roteiro: <a href="https://www.notion.com/" class="external-link" target="_blank" rel="noopener noreferrer">Notion</a><br>
                     Gravação: <a href="https://obsproject.com/pt-br" class="external-link" target="_blank" rel="noopener noreferrer">OBS Studio</a><br>
@@ -89,9 +82,9 @@
             
             <hr class="faq-divider">
 
+            <!-- Divisão 2: Equipamentos -->
             <div class="faq-item">
                 <div class="faq-question">QUAIS EQUIPAMENTOS EU USO?</div>
-                <!-- Retornado ao texto e links detalhados originais com fonte Montserrat -->
                 <div class="faq-answer">
                     Microfone: <a href="https://rode.com/en/microphones/studio-condenser/nt1" class="external-link" target="_blank" rel="noopener noreferrer">Rode NT1</a><br>
                     Fone: <a href="https://www.audio-technica.com/pt-br/ath-m50x" class="external-link" target="_blank" rel="noopener noreferrer">Audio Technica ATH-M50x</a><br>
@@ -108,9 +101,8 @@
             
             <div class="faq-item">
                 <div class="faq-question">ONDE EU PEGO IMAGENS E MÚSICA PROS VÍDEOS?</div>
-                <!-- Retornado ao texto e links detalhados originais com fonte Montserrat -->
                 <div class="faq-answer">                                                              
-                    Para músicas, eu uso a <a href="https://www.epidemicsound.com/music/featured/" class="external-link" target="_blank" rel="noopener noreferrer">Epidemic Sound</a>, algumas trilhas sonoras de jogos, e músicas sem royalty, como dos canais <a href="https://www.youtube.com/@co.agmusic" class="external-link" target="_blank" rel="noopener noreferrer">CO.AG</a> e <a href="https://www.youtube.com/@WhiteBatAudio" class="external-link" target="_blank" rel="noopener noreferrer">White Bat Audio</a>. Para footages e imagens adicionais, eu uso a <a href="https://artlist.io/referral/e5af6656-b550-4408-b10f-4145a7a22b57" class="external-link" target="_blank" rel="noopener noreferrer">Artlist</a> e <a href="https://elements.envato.com/stock-video" class="external-link" target="_blank" rel="noopener noreferrer">Envato</a>.<br>
+                    Para músicas, eu uso a <a href="https://www.epidemicsound.com/music/featured/" class="external-link" target="_blank" rel="noopener noreferrer">Epidemic Sound</a>, algumas trilhas sonoras de jogos, e músicas sem royality, como dos canais <a href="https://www.youtube.com/@co.agmusic" class="external-link" target="_blank" rel="noopener noreferrer">CO.AG</a> e <a href="https://www.youtube.com/@WhiteBatAudio" class="external-link" target="_blank" rel="noopener noreferrer">White Bat Audio</a>. Para footages e imagens adicionais, eu uso a <a href="https://artlist.io/referral/e5af6656-b550-4408-b10f-4145a7a22b57" class="external-link" target="_blank" rel="noopener noreferrer">Artlist</a> e <a href="https://elements.envato.com/stock-video" class="external-link" target="_blank" rel="noopener noreferrer">Envato</a>.<br>
                 </div>
             </div>
             
@@ -118,7 +110,6 @@
             
             <div class="faq-item">
                 <div class="faq-question">SUGESTÕES DE VÍDEO</div>
-                <!-- Retornado ao texto original com fonte Montserrat -->
                 <div class="faq-answer">
                     Você pode comentar nos vídeos, ou enviar um e-mail para <a href="mailto:contato@fyori.com.br" class="external-link" target="_blank" rel="noopener noreferrer">contato@fyori.com.br</a>.
                 </div>

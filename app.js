@@ -1,30 +1,49 @@
 /**
  * Fyori Website - Global Application Script
- * Controla apenas a busca assíncrona de vídeos da API do YouTube.
+ * Controla a busca dinâmica de vídeos e o efeito interativo da lanterna (Spotlight).
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Inicializa a escuta dos vídeos do canal
     if (document.getElementById('last-videos')) {
         fetchYouTubeVideos();
     }
+
+    // Inicializa o Efeito Lanterna Interativa no Fundo do Site
+    setupSpotlightLantern();
 });
 
-// --- VÍDEOS DO YOUTUBE (Backend Seguro) ---
+// --- EFEITO SPOTLIGHT LANTERNA ---
+function setupSpotlightLantern() {
+    // Só ativa se o dispositivo possuir ponteiro de mouse estável (evita gargalos em mobile)
+    if (window.matchMedia('(hover: hover)').matches) {
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth) * 100;
+            const y = (e.clientY / window.innerHeight) * 100;
+
+            // Seta as coordenadas calculadas dinamicamente nas variáveis do CSS
+            document.body.style.setProperty('--mouse-x', `${x}%`);
+            document.body.style.setProperty('--mouse-y', `${y}%`);
+        });
+    }
+}
+
+// --- VÍDEOS DO YOUTUBE (Backend Seguro na Vercel) ---
 async function fetchYouTubeVideos() {
     const container = document.getElementById('last-videos');
     if (!container) return;
 
-    container.innerHTML = '<p style="color:var(--cor-texto-secundario);">Carregando vídeos...</p>';
+    container.innerHTML = '<p style="color:var(--cor-texto-secundario); font-family:Montserrat,sans-serif;">Acessando arquivos do canal...</p>';
 
     try {
         const response = await fetch('/api/videos');
         
-        if (!response.ok) throw new Error('Falha ao buscar os vídeos.');
+        if (!response.ok) throw new Error('Falha ao sincronizar banco de dados do YouTube.');
         
         const data = await response.json();
 
         if (!data.items || data.items.length === 0) {
-            container.innerHTML = '<p>Nenhum vídeo encontrado.</p>';
+            container.innerHTML = '<p style="color:var(--cor-texto-secundario);">Nenhum arquivo recente encontrado.</p>';
             return;
         }
 
@@ -47,7 +66,7 @@ async function fetchYouTubeVideos() {
             `;
         });
     } catch (error) {
-        console.error('Erro ao carregar vídeos:', error);
-        container.innerHTML = `<p style="color:var(--cor-destaque);text-align:center;">Indisponível no momento.</p>`;
+        console.error('Erro ao carregar feeds de vídeo:', error);
+        container.innerHTML = `<p style="color:var(--cor-destaque); text-align:center; font-family:Montserrat,sans-serif; font-size:0.9rem;">Feed temporariamente indisponível.</p>`;
     }
 }
