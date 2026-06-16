@@ -1,0 +1,9 @@
+{
+  "rewrites": [
+    {
+      "source": "/faq",
+      "destination": "/faq.html"
+    }
+  ],
+  "cleanUrls": true
+}
