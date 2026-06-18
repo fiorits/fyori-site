@@ -175,7 +175,7 @@ body {
    ================================================================= */
 .videos-section { width: 100%; text-align: center; }
 .section-title {
-    font-family: 'Geometos', serif;
+    font-family: 'Creo-ExtraBold', sans-serif;
     font-size: 1.8rem;
     background: var(--gradiente-premium);
     -webkit-background-clip: text;
@@ -225,7 +225,7 @@ body {
 .faq-item { margin-bottom: 40px; border-left: 2px solid var(--cor-destaque); padding-left: 20px; text-align: left; }
 
 .faq-question {
-    font-family: 'Geometos', serif;
+    font-family: 'Creo-ExtraBold', sans-serif;
     font-size: 1.15rem;
     font-weight: 700;
     margin-bottom: 12px;
