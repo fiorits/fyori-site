@@ -171,6 +171,155 @@ body {
 
 
 /* =================================================================
+   NOVA SEÇÃO: BANNER PARCERIA INSIDER
+   ================================================================= */
+.insider-banner-section {
+    width: 100%;
+    max-width: 1020px;
+    margin: 10px auto;
+}
+
+.insider-banner-container {
+    background: linear-gradient(135deg, rgba(16, 10, 24, 0.85), rgba(8, 5, 14, 0.95));
+    border: 1px solid rgba(214, 40, 40, 0.25);
+    border-radius: 8px;
+    padding: 30px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(214, 40, 40, 0.03);
+    position: relative;
+    overflow: hidden;
+}
+
+.insider-banner-container::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 3px; height: 100%;
+    background: var(--gradiente-premium);
+}
+
+.insider-banner-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.insider-logo-wrap {
+    margin-bottom: 15px;
+}
+
+.insider-logo-img {
+    height: 28px;
+    width: auto;
+    display: block;
+    filter: brightness(0) invert(1); /* Deixa o logo branco combinando com o minimalismo */
+    opacity: 0.9;
+}
+
+.insider-title {
+    font-family: 'Creo-ExtraBold', sans-serif;
+    font-size: 1.25rem;
+    letter-spacing: 2px;
+    color: var(--cor-texto);
+    margin: 0 0 10px 0;
+    text-shadow: 0 0 8px rgba(214, 40, 40, 0.3);
+}
+
+.insider-desc {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    color: var(--cor-texto-secundario);
+    line-height: 1.5;
+    margin: 0 0 20px 0;
+    max-width: 540px;
+}
+
+.insider-action-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.insider-coupon-box {
+    background: rgba(214, 40, 40, 0.08);
+    border: 1px dashed rgba(214, 40, 40, 0.4);
+    padding: 8px 16px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.coupon-label {
+    font-family: 'Geometos', sans-serif;
+    font-size: 0.75rem;
+    color: var(--cor-texto-secundario);
+    letter-spacing: 1px;
+}
+
+.coupon-code {
+    font-family: 'Creo-ExtraBold', sans-serif;
+    font-size: 0.95rem;
+    color: #ff4d5a;
+    letter-spacing: 2px;
+}
+
+.insider-btn {
+    background: var(--gradiente-premium);
+    color: #ffffff;
+    font-family: 'Geometos', sans-serif;
+    font-size: 0.8rem;
+    padding: 11px 22px;
+    border-radius: 4px;
+    text-decoration: none;
+    letter-spacing: 1.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(214, 40, 40, 0.3);
+}
+
+.insider-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(214, 40, 40, 0.5);
+    background: linear-gradient(135deg, #ff3342, var(--cor-destaque));
+}
+
+.insider-banner-qrcode {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.qrcode-frame {
+    background: #0c0816;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+.qrcode-img {
+    width: 95px;
+    height: 95px;
+    display: block;
+    border-radius: 3px;
+}
+
+.qrcode-caption {
+    font-family: 'Geometos', sans-serif;
+    font-size: 0.6rem;
+    color: var(--cor-texto-secundario);
+    letter-spacing: 1px;
+    opacity: 0.7;
+}
+
+
+/* =================================================================
    SEÇÃO DE VÍDEOS
    ================================================================= */
 .videos-section { width: 100%; text-align: center; }
@@ -211,7 +360,6 @@ body {
     filter: blur(0.3px); 
     transition: filter 0.3s ease, text-shadow 0.3s ease; 
 }
-/* CORREÇÃO: Removido completamente o text-shadow branco que causava o efeito salpicado brilhoso no hover */
 .video-card:hover h3 { 
     filter: blur(0); 
 }
@@ -288,6 +436,21 @@ footer { text-align: center; padding: 30px 20px; color: var(--cor-texto-secundar
     .profile-right { text-align: center; }
     .bio-greeting, .bio-text { text-align: center; }
     .social-links { justify-content: center; flex-wrap: wrap; gap: 15px !important; }
+    
+    .insider-banner-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 25px 20px;
+        gap: 25px;
+    }
+    .insider-banner-content {
+        align-items: center;
+    }
+    .insider-action-group {
+        justify-content: center;
+    }
+    
     body { background-image: none !important; background-color: #06040a; } 
     .crt-vignette { display: none; } 
 }
