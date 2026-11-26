@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="icon" href="Imagens/favicon.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#060908">
+    <title>Fyori</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap">
+    <style>
+        @property --r { syntax: '<percentage>'; inherits: false; initial-value: 0%; }
+
+        :root {
+            --fundo: #060908;
+            --texto: #c3d1c9;
+            --suave: #7d9488;
+            --luz: #9bd3b8;
+        }
+        * { box-sizing: border-box; }
+        html, body { margin: 0; padding: 0; background: var(--fundo); }
+        body {
+            min-height: 100vh;
+            min-height: 100dvh;
+            color: var(--texto);
+            font-family: 'Special Elite', 'Courier New', monospace;
+            overflow: hidden;
+        }
+
+        /* Névoa lenta e vinheta fixa */
+        .nevoa {
+            position: fixed;
+            inset: -20%;
+            pointer-events: none;
+            background:
+                radial-gradient(40% 30% at 20% 30%, rgba(120, 160, 140, 0.10), transparent 70%),
+                radial-gradient(35% 28% at 80% 70%, rgba(110, 150, 135, 0.08), transparent 70%);
+            animation: deriva 40s ease-in-out infinite alternate;
+        }
+        .vinheta {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.75) 100%);
+        }
+        @keyframes deriva { from { transform: translate3d(-3%, -2%, 0); } to { transform: translate3d(3%, 2%, 0); } }
+
+        .palco {
+            position: relative;
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 24px;
+            transition: opacity 1.4s ease;
+        }
+        .conteudo { width: 100%; max-width: 580px; }
+
+        /* Texto: o espaço de cada verso é reservado desde o início para nada se mover enquanto digita */
+        .verso {
+            position: relative;
+            margin: 0 0 1.35rem 0;
+            font-size: clamp(0.98rem, 2.6vw, 1.15rem);
+            line-height: 1.75;
+            letter-spacing: 0.4px;
+        }
+        .fantasma { opacity: 0; }
+        .digitado { position: absolute; inset: 0; }
+        .verso.cursor .digitado::after {
+            content: "";
+            display: inline-block;
+            width: 0.55ch;
+            height: 1em;
+            margin-left: 2px;
+            vertical-align: -0.12em;
+            background: var(--luz);
+            animation: pisca 1s steps(1) infinite;
+        }
+        @keyframes pisca { 50% { opacity: 0; } }
+
+        /* Acesso */
+        .acesso {
+            margin-top: 2.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.6rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1.6s ease;
+        }
+        .acesso.on { opacity: 1; pointer-events: auto; }
+        .campo { display: flex; flex-direction: column; gap: 6px; }
+        .campo label { font-size: 0.8rem; letter-spacing: 3px; color: var(--suave); text-transform: lowercase; }
+        .campo input {
+            background: transparent;
+            border: 0;
+            border-bottom: 1px solid rgba(155, 211, 184, 0.3);
+            border-radius: 0;
+            color: var(--texto);
+            font-family: inherit;
+            font-size: 1.15rem;
+            letter-spacing: 3px;
+            padding: 6px 2px;
+            outline: none;
+            transition: border-color 0.4s ease;
+        }
+        .campo input:focus { border-bottom-color: var(--luz); }
+        .msg { min-height: 1.3em; margin: 0; font-size: 0.9rem; color: var(--suave); letter-spacing: 1px; }
+        .acesso.negado { animation: balanca 0.5s ease; }
+        @keyframes balanca { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
+        .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+        /* Travessia: o texto some e a floresta se abre do centro, como uma pupila */
+        body.atravessa .palco { opacity: 0; pointer-events: none; }
+        .cena {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            background: #000;
+            z-index: 5;
+            --r: 0%;
+            -webkit-mask-image: radial-gradient(ellipse at center, #000 calc(var(--r) - 22%), transparent var(--r));
+            mask-image: radial-gradient(ellipse at center, #000 calc(var(--r) - 22%), transparent var(--r));
+            transform: scale(1.12);
+            transition: --r 5s cubic-bezier(0.3, 0.1, 0.2, 1), transform 8s cubic-bezier(0.2, 0.6, 0.2, 1);
+            pointer-events: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        .cena.aberta { --r: 150%; transform: scale(1); }
+
+        @media (prefers-reduced-motion: reduce) {
+            .nevoa { animation: none; }
+            .cena { transition: none; }
+            .acesso, .palco { transition: none; }
+            .acesso.negado { animation: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="nevoa"></div>
+    <div class="vinheta"></div>
+
+    <main class="palco">
+        <div class="conteudo">
+            <p class="verso" id="v1"><span class="fantasma">Guiado apenas pelos próprios passos, você chegou até aqui.</span><span class="digitado" aria-hidden="true"></span></p>
+            <p class="verso" id="v2"><span class="fantasma">Um novo caminho se abre para quem se torna parte do Fyori.</span><span class="digitado" aria-hidden="true"></span></p>
+            <p class="verso" id="v3"><span class="fantasma">Inúmeros atalhos parecem existir, mas a lamparina só acende para quem contou o que cada um carrega.</span><span class="digitado" aria-hidden="true"></span></p>
+            <p class="verso" id="v4"><span class="fantasma">Agora, diga quem você é, e a floresta se lembrará.</span><span class="digitado" aria-hidden="true"></span></p>
+
+            <form class="acesso" id="form" autocomplete="off" inert>
+                <div class="campo">
+                    <label for="a">login</label>
+                    <input id="a" name="x1" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" required>
+                </div>
+                <div class="campo">
+                    <label for="b">senha</label>
+                    <input id="b" name="x2" type="password" inputmode="numeric" autocomplete="off" required>
+                </div>
+                <p class="msg" id="msg" role="status" aria-live="polite"></p>
+                <button type="submit" class="sr-only">Entrar</button>
+            </form>
+        </div>
+    </main>
+
+    <script>
+    (() => {
+        // Nenhum login, senha ou nome de arquivo fica legível aqui.
+        const COFRE = 'HRRRUjiUjNWKpntitK4dEWpSd9Jw2bU2aJdxllqOmPy4akzdfT73GOVkVtKV1nkSTVZK50dtrGO5gQ7Zn+Bv9Dz7jU8wWw==';
+
+        const form = document.getElementById('form');
+        const msg = document.getElementById('msg');
+        const campoLogin = document.getElementById('a');
+        const campoSenha = document.getElementById('b');
+        const versos = [...document.querySelectorAll('.verso')];
+        const reduz = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const esperar = (ms) => new Promise((r) => setTimeout(r, ms));
+        const norm = (s) => s.trim().toLowerCase();
+        const bytes = (b64) => Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
+
+        /* ---------- texto digitado ---------- */
+        let pular = false, liberado = false;
+        const pularAgora = () => { if (!liberado) pular = true; };
+        document.addEventListener('keydown', pularAgora);
+        document.addEventListener('pointerdown', pularAgora);
+
+        function liberar() {
+            liberado = true;
+            versos.forEach((v) => v.classList.remove('cursor'));
+            form.inert = false;
+            form.classList.add('on');
+            setTimeout(() => campoLogin.focus({ preventScroll: true }), 300);
+        }
+
+        async function digitar() {
+            await esperar(reduz ? 0 : 900);
+            for (const v of versos) {
+                const alvo = v.querySelector('.digitado');
+                const texto = v.querySelector('.fantasma').textContent;
+                versos.forEach((o) => o.classList.remove('cursor'));
+                v.classList.add('cursor');
+                if (reduz || pular) { alvo.textContent = texto; continue; }
+                for (let i = 1; i <= texto.length; i++) {
+                    if (pular) { alvo.textContent = texto; break; }
+                    alvo.textContent = texto.slice(0, i);
+                    await esperar(/[,.]/.test(texto[i - 1]) ? 240 : 24);
+                }
+                await esperar(pular ? 0 : 500);
+            }
+            liberar();
+        }
+
+        /* ---------- cofre ---------- */
+        async function destravar(login, senha) {
+            const raw = bytes(COFRE);
+            const salt = raw.slice(0, 16), iv = raw.slice(16, 28), dados = raw.slice(28);
+            const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(norm(login) + '\u0000' + norm(senha)), 'PBKDF2', false, ['deriveKey']);
+            const chave = await crypto.subtle.deriveKey(
+                { name: 'PBKDF2', salt, iterations: 200000, hash: 'SHA-256' },
+                base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']
+            );
+            // Com login/senha errados, o decrypt lança erro.
+            return new TextDecoder().decode(await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, chave, dados));
+        }
+
+        function negar(texto) {
+            msg.textContent = texto;
+            form.classList.remove('negado');
+            void form.offsetWidth;
+            form.classList.add('negado');
+            campoSenha.value = '';
+            campoSenha.focus();
+        }
+
+        function revelar(src) {
+            const video = /\.(mp4|webm)$/i.test(src);
+            const el = document.createElement(video ? 'video' : 'img');
+            el.className = 'cena';
+            el.setAttribute('aria-hidden', 'true');
+
+            const mostrar = () => {
+                document.body.appendChild(el);
+                document.body.classList.add('atravessa');
+                requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('aberta')));
+                if (video) el.play().catch(() => { el.muted = true; el.play(); });
+            };
+            const falhar = () => negar('o caminho se perdeu na névoa');
+
+            if (video) {
+                el.loop = true;
+                el.playsInline = true;
+                el.preload = 'auto';
+                el.addEventListener('loadeddata', mostrar, { once: true });
+                el.addEventListener('error', falhar, { once: true });
+                el.src = src;
+            } else {
+                el.alt = '';
+                el.draggable = false;
+                el.onload = mostrar;
+                el.onerror = falhar;
+                el.src = src;
+            }
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            msg.textContent = '';
+            if (!window.crypto || !crypto.subtle) { negar('abra pelo site (https)'); return; }
+            let caminho;
+            try {
+                caminho = await destravar(campoLogin.value, campoSenha.value);
+            } catch (_) {
+                negar('a névoa não te reconhece');
+                return;
+            }
+            revelar(caminho);
+        });
+
+        digitar();
+    })();
+    </script>
+</body>
+</html>

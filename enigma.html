@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="icon" href="Imagens/favicon.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>...</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Poppins:wght@400;600&display=swap">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .enigma-main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 20px; z-index: 2; transition: opacity 1.2s ease; }
+        .enigma-card { width: 100%; max-width: 360px; display: flex; flex-direction: column; gap: 26px; text-align: left; }
+        .enigma-titulo {
+            font-family: 'Creo-ExtraBold', sans-serif;
+            font-size: 1.6rem;
+            letter-spacing: 3px;
+            margin: 0 0 4px 0;
+            background: var(--gradiente-premium);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(214, 40, 40, 0.3);
+        }
+        .enigma-card form { display: flex; flex-direction: column; gap: 26px; }
+        .campo { display: flex; flex-direction: column; gap: 8px; }
+        .campo label {
+            font-family: 'Geometos', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            color: var(--cor-texto-secundario);
+            text-shadow: 1px 1px 0px rgba(214, 40, 40, 0.7), -1px -1px 0px rgba(168, 85, 247, 0.3);
+        }
+        .campo input {
+            background: transparent;
+            border: 0;
+            border-bottom: 1px solid rgba(214, 40, 40, 0.45);
+            color: var(--cor-texto);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.05rem;
+            padding: 8px 2px;
+            outline: none;
+            border-radius: 0;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .campo input:focus { border-bottom-color: var(--cor-destaque); box-shadow: 0 6px 12px -8px var(--cor-destaque); }
+        .enigma-msg {
+            min-height: 1.2em;
+            margin: 0;
+            font-family: 'Geometos', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            color: var(--cor-destaque);
+        }
+        .enigma-card.negado { animation: vhsGlitch 0.3s linear 3; }
+        .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+        /* Cena final (imagem ou vídeo em tela cheia) */
+        body.revelado .enigma-main { opacity: 0; pointer-events: none; }
+        .cena {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            background: #000;
+            z-index: 5;
+            opacity: 0;
+            transition: opacity 3s ease;
+            pointer-events: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        .cena.visivel { opacity: 1; }
+        body.revelado footer { display: none; }
+        @media (prefers-reduced-motion: reduce) { .cena { transition: none; } .enigma-card.negado { animation: none; } }
+    </style>
+</head>
+<body>
+    <div class="crt-vignette"></div>
+
+    <main class="enigma-main">
+        <div class="enigma-card" id="card">
+            <h1 class="enigma-titulo">IDENTIFIQUE-SE</h1>
+            <form id="form" autocomplete="off">
+                <div class="campo">
+                    <label for="login">LOGIN</label>
+                    <input id="login" name="x1" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" required autofocus>
+                </div>
+                <div class="campo">
+                    <label for="senha">SENHA</label>
+                    <input id="senha" name="x2" type="password" autocomplete="off" required>
+                </div>
+                <p class="enigma-msg" id="msg" role="status" aria-live="polite"></p>
+                <button type="submit" class="sr-only">Entrar</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        Copyright © 2026 Fyori
+    </footer>
+
+    <script src="app.js" defer></script>
+    <script>
+    (() => {
+        // Cofre: não contém login, senha nem o nome do arquivo em texto legível.
+        // Para trocar login, senha ou arquivo, rode: node gerar-enigma.js <login> <senha> <arquivo>
+        const COFRE = 'fvSQ89puQEkcJKDpRqp7XJDiA+fXDkC1dOahQGIjsw1v6Dlq2C6I16FcocefLV3MxqogIb2cVMYCHLSQbOBYuWZpZTnXwQ==';
+
+        const card = document.getElementById('card');
+        const form = document.getElementById('form');
+        const msg = document.getElementById('msg');
+        const norm = (s) => s.trim().toLowerCase();
+        const bytes = (b64) => Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
+
+        async function destravar(login, senha) {
+            const raw = bytes(COFRE);
+            const salt = raw.slice(0, 16), iv = raw.slice(16, 28), dados = raw.slice(28);
+            const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(norm(login) + '\u0000' + norm(senha)), 'PBKDF2', false, ['deriveKey']);
+            const chave = await crypto.subtle.deriveKey(
+                { name: 'PBKDF2', salt, iterations: 200000, hash: 'SHA-256' },
+                base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']
+            );
+            // Se login/senha estiverem errados, o decrypt lança erro.
+            return new TextDecoder().decode(await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, chave, dados));
+        }
+
+        function negar(texto) {
+            msg.textContent = texto;
+            card.classList.remove('negado');
+            void card.offsetWidth;
+            card.classList.add('negado');
+            document.getElementById('senha').value = '';
+        }
+
+        function revelar(src) {
+            const video = /\.(mp4|webm)$/i.test(src);
+            const el = document.createElement(video ? 'video' : 'img');
+            el.className = 'cena';
+            el.setAttribute('aria-hidden', 'true');
+
+            const mostrar = () => {
+                document.body.appendChild(el);
+                document.body.classList.add('revelado');
+                requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('visivel')));
+                if (video) el.play().catch(() => { el.muted = true; el.play(); });
+            };
+            const falhar = () => negar('SINAL PERDIDO');
+
+            if (video) {
+                el.loop = true;
+                el.playsInline = true;
+                el.preload = 'auto';
+                el.addEventListener('loadeddata', mostrar, { once: true });
+                el.addEventListener('error', falhar, { once: true });
+                el.src = src;
+            } else {
+                el.alt = '';
+                el.draggable = false;
+                el.onload = mostrar;
+                el.onerror = falhar;
+                el.src = src;
+            }
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            msg.textContent = '';
+            if (!window.crypto || !crypto.subtle) { negar('ABRA PELO SITE (HTTPS)'); return; }
+            try {
+                const caminho = await destravar(document.getElementById('login').value, document.getElementById('senha').value);
+                revelar(caminho);
+            } catch (_) {
+                negar('ACESSO NEGADO');
+            }
+        });
+    })();
+    </script>
+</body>
+</html>

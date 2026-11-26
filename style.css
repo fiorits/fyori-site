@@ -62,7 +62,7 @@ body {
 .crt-vignette {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.14) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.02), rgba(0, 0, 244, 0.05));
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.16) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.02), rgba(0, 0, 244, 0.05));
     background-size: 100% 3px, 6px 100%;
     mask-image: radial-gradient(circle at center, transparent 40%, black 105%);
     -webkit-mask-image: radial-gradient(circle at center, transparent 40%, black 105%);
@@ -144,7 +144,7 @@ body {
     align-items: center; 
     flex-wrap: nowrap;
 }
-.social-icon { width: 28px; height: 28px; transition: all 0.3s ease; filter: drop-shadow(0 0 2px rgba(214, 40, 40, 0.2)); display: block; }
+.social-icon { width: 34px; height: 34px; transition: all 0.3s ease; filter: drop-shadow(0 0 2px rgba(214, 40, 40, 0.2)); display: block; }
 .social-icon-container { position: relative; display: inline-block; margin: 0 !important; padding: 0 !important; }
 
 .social-icon-container::after {
@@ -289,21 +289,31 @@ a.external-link:hover {
     padding: 0 40px;
     text-decoration: none;
     color: var(--cor-texto);
-    overflow: hidden;
-    border: 1px solid rgba(214, 40, 40, 0.28);
-    border-left: 2px solid var(--cor-destaque);
-    background: linear-gradient(135deg, rgba(214, 40, 40, 0.10) 0%, rgba(12, 8, 22, 0.75) 60%);
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
-    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    background: transparent;
+    transition: transform 0.3s ease;
+}
+
+/* Brilho em feather: nasce no centro e se dissolve antes de chegar nas bordas */
+.insider-banner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(214, 40, 40, 0.16) 0%, rgba(214, 40, 40, 0.06) 40%, rgba(214, 40, 40, 0) 72%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
 }
 
 .insider-banner:hover,
-.insider-banner:focus-visible {
-    transform: translateY(-6px);
-    border-color: rgba(214, 40, 40, 0.7);
-    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.75), 0 0 28px rgba(214, 40, 40, 0.18);
-}
+.insider-banner:focus-visible { transform: translateY(-6px); }
+.insider-banner:hover::before,
+.insider-banner:focus-visible::before { opacity: 1; }
 .insider-banner:focus-visible { outline: 2px solid var(--cor-destaque); outline-offset: 4px; }
+
+/* Sem hover (celular): o brilho fica fraco e fixo, para indicar que é clicável */
+@media (hover: none) {
+    .insider-banner::before { opacity: 0.6; }
+}
 
 .insider-info {
     position: relative;
@@ -319,11 +329,14 @@ a.external-link:hover {
 }
 
 .insider-tag {
-    font-family: 'Geometos', sans-serif;
-    font-size: 0.7rem;
+    font-family: 'Creo-ExtraBold', sans-serif;
+    font-size: 0.85rem;
     letter-spacing: 2px;
-    color: var(--cor-texto-secundario);
-    text-shadow: 1px 1px 0px rgba(214, 40, 40, 0.7), -1px -1px 0px rgba(168, 85, 247, 0.3);
+    background: linear-gradient(135deg, #ff4d5a, var(--cor-destaque));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 10px rgba(214, 40, 40, 0.3);
 }
 
 /* Se o PNG do logo for escuro, troque por: filter: brightness(0) invert(1); */
@@ -344,15 +357,12 @@ a.external-link:hover {
 }
 
 .insider-coupon {
-    font-family: 'Creo-ExtraBold', sans-serif;
-    font-size: 1.05em;
-    letter-spacing: 1.5px;
+    font-family: 'Geometos', sans-serif;
+    font-size: 0.9em;
+    letter-spacing: 1px;
     white-space: nowrap;
-    background: linear-gradient(135deg, #ff4d5a, var(--cor-destaque));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    text-shadow: 0 0 10px rgba(214, 40, 40, 0.3);
+    color: var(--cor-texto);
+    text-shadow: 1px 1px 0px rgba(214, 40, 40, 0.7), -1px -1px 0px rgba(168, 85, 247, 0.3);
 }
 
 .insider-cta {
@@ -371,6 +381,20 @@ a.external-link:hover {
 
 /* Foto das peças: menor, com respiro nas bordas e perto do texto */
 .insider-photo-wrap { position: relative; z-index: 1; flex: 0 0 auto; display: flex; align-items: center; padding: 22px 0; }
+/* Sombra sutil só no lado direito da blusa. Para o lado esquerdo, troque "to right" por "to left" */
+.insider-photo-wrap::after {
+    content: "";
+    position: absolute;
+    top: 22px; bottom: 22px; left: 0; right: 0;
+    background: linear-gradient(to right, rgba(6, 4, 10, 0) 40%, rgba(6, 4, 10, 0.5) 100%);
+    -webkit-mask-image: url('Imagens/insider-roupa.png');
+    mask-image: url('Imagens/insider-roupa.png');
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    pointer-events: none;
+}
 .insider-photo {
     width: 180px;
     height: auto;
@@ -386,6 +410,32 @@ a.external-link:hover {
 @media (prefers-reduced-motion: reduce) {
     .insider-banner, .insider-banner:hover, .insider-banner:focus-visible { transform: none; }
 }
+
+
+/* =================================================================
+   DETALHE DA ARTE
+   ================================================================= */
+/* Fica DENTRO de .profile-art-container, então balança junto com a arte.
+   Posição em % da arte: se a imagem mudar, ajuste left/top/width/height. */
+.luz-spot {
+    position: absolute;
+    left: 53.2%;
+    top: 53.5%;
+    width: 11.4%;
+    height: 13%;
+    display: block;
+    cursor: pointer;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 120, 220, 0.38) 0%, rgba(120, 220, 255, 0.14) 45%, transparent 72%);
+    mix-blend-mode: screen;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+.luz-spot:hover { opacity: 1; }
+/* Área de toque maior no celular, sem aparecer */
+.luz-spot::after { content: ""; position: absolute; inset: -6px; }
+@media (pointer: coarse) { .luz-spot::after { inset: -14px; } }
 
 
 /* =================================================================
