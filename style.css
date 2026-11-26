@@ -62,8 +62,8 @@ body {
 .crt-vignette {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.35) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.02), rgba(0, 0, 244, 0.05));
-    background-size: 100% 4px, 6px 100%;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.14) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.02), rgba(0, 0, 244, 0.05));
+    background-size: 100% 3px, 6px 100%;
     mask-image: radial-gradient(circle at center, transparent 40%, black 105%);
     -webkit-mask-image: radial-gradient(circle at center, transparent 40%, black 105%);
     z-index: 9999;
@@ -273,6 +273,122 @@ a.external-link:hover {
 
 
 /* =================================================================
+   PARCERIA INSIDER
+   ================================================================= */
+.insider-section { width: 100%; display: flex; justify-content: center; }
+
+.insider-banner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 56px;
+    width: 100%;
+    max-width: 860px;
+    box-sizing: border-box;
+    padding: 0 40px;
+    text-decoration: none;
+    color: var(--cor-texto);
+    overflow: hidden;
+    border: 1px solid rgba(214, 40, 40, 0.28);
+    border-left: 2px solid var(--cor-destaque);
+    background: linear-gradient(135deg, rgba(214, 40, 40, 0.10) 0%, rgba(12, 8, 22, 0.75) 60%);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.insider-banner:hover,
+.insider-banner:focus-visible {
+    transform: translateY(-6px);
+    border-color: rgba(214, 40, 40, 0.7);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.75), 0 0 28px rgba(214, 40, 40, 0.18);
+}
+.insider-banner:focus-visible { outline: 2px solid var(--cor-destaque); outline-offset: 4px; }
+
+.insider-info {
+    position: relative;
+    z-index: 1;
+    flex: 0 1 460px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 14px;
+    padding: 28px 0;
+    text-align: left;
+}
+
+.insider-tag {
+    font-family: 'Geometos', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: var(--cor-texto-secundario);
+    text-shadow: 1px 1px 0px rgba(214, 40, 40, 0.7), -1px -1px 0px rgba(168, 85, 247, 0.3);
+}
+
+/* Se o PNG do logo for escuro, troque por: filter: brightness(0) invert(1); */
+.insider-logo {
+    width: 100%;
+    max-width: 260px;
+    height: auto;
+    display: block;
+}
+
+.insider-text {
+    margin: 0;
+    max-width: 440px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--cor-texto-secundario);
+    font-family: 'Poppins', sans-serif;
+}
+
+.insider-coupon {
+    font-family: 'Creo-ExtraBold', sans-serif;
+    font-size: 1.05em;
+    letter-spacing: 1.5px;
+    white-space: nowrap;
+    background: linear-gradient(135deg, #ff4d5a, var(--cor-destaque));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 10px rgba(214, 40, 40, 0.3);
+}
+
+.insider-cta {
+    margin-top: 4px;
+    font-family: 'Geometos', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    color: var(--cor-texto);
+    padding: 10px 24px;
+    border: 1px solid var(--cor-destaque);
+    background: transparent;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+.insider-banner:hover .insider-cta,
+.insider-banner:focus-visible .insider-cta { background: var(--gradiente-premium); box-shadow: 0 0 18px rgba(214, 40, 40, 0.45); }
+
+/* Foto das peças: menor, com respiro nas bordas e perto do texto */
+.insider-photo-wrap { position: relative; z-index: 1; flex: 0 0 auto; display: flex; align-items: center; padding: 22px 0; }
+.insider-photo {
+    width: 180px;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.6));
+    pointer-events: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.insider-logo { pointer-events: none; -webkit-user-select: none; user-select: none; }
+
+@media (prefers-reduced-motion: reduce) {
+    .insider-banner, .insider-banner:hover, .insider-banner:focus-visible { transform: none; }
+}
+
+
+/* =================================================================
    RODAPÉ
    ================================================================= */
 footer { text-align: center; padding: 30px 20px; color: var(--cor-texto-secundario); font-size: 0.85rem; margin-top: auto; letter-spacing: 1px; border-top: 1px solid rgba(255,255,255,0.01); font-family: 'Geometos', sans-serif; opacity: 0.5; }
@@ -290,6 +406,10 @@ footer { text-align: center; padding: 30px 20px; color: var(--cor-texto-secundar
     .social-links { justify-content: center; flex-wrap: wrap; gap: 15px !important; }
     body { background-image: none !important; background-color: #06040a; } 
     .crt-vignette { display: none; } 
+    .insider-banner { flex-direction: column; gap: 0; padding: 0 22px; }
+    .insider-info { flex: none; align-items: center; text-align: center; padding: 28px 0 8px 0; }
+    .insider-photo-wrap { padding: 8px 0 28px 0; }
+    .insider-photo { width: 150px; }
 }
 
 @media (max-width: 480px) {
