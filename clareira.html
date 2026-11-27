@@ -350,7 +350,7 @@
                 </div>
                 <div class="campo">
                     <label for="b">senha</label>
-                    <input id="b" name="x2" type="password" inputmode="numeric" autocomplete="off" required>
+                    <input id="b" name="x2" type="password" inputmode="numeric" pattern="[0-9]*" autocomplete="off" required>
                 </div>
                 <p class="msg" id="msg" role="status" aria-live="polite"></p>
                 <button type="submit" class="sr-only">Entrar</button>
@@ -600,6 +600,15 @@
             }
             return { iniciar };
         })();
+
+        /* ---------- senha: só números ---------- */
+        campoSenha.addEventListener('beforeinput', (e) => {
+            if (e.data && /\D/.test(e.data)) e.preventDefault();   // bloqueia a letra antes de aparecer
+        });
+        campoSenha.addEventListener('input', () => {
+            const so = campoSenha.value.replace(/\D/g, '');         // e limpa o que vier colado ou do autocompletar
+            if (so !== campoSenha.value) campoSenha.value = so;
+        });
 
         /* ---------- texto digitado ---------- */
         // Se o navegador bloqueou o som, o primeiro toque/tecla só acorda o som; os seguintes pulam o texto.
