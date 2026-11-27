@@ -172,7 +172,6 @@
             width: 100%;
             height: 100%;
             image-rendering: pixelated;
-            filter: blur(0.35px) saturate(1.06);
             pointer-events: none;
         }
         .tremor > img, .tremor > video {
@@ -217,7 +216,6 @@
             display: block;
             width: 100%;
             height: 100%;
-            rotate: var(--rot, 0deg);
             filter:
                 drop-shadow(2px 0 0 #12061c) drop-shadow(-2px 0 0 #12061c)
                 drop-shadow(0 2px 0 #12061c) drop-shadow(0 -2px 0 #12061c)
@@ -230,7 +228,8 @@
         .seta.dir svg { transform: scaleX(-1); }
         .seta.esq svg { --dx: -5px; --dy: 0px; }
         .seta.dir svg { --dx: 5px; --dy: 0px; }
-        .seta.no svg  { --rot: 45deg; --dx: -4px; --dy: -4px; }
+        /* noroeste "achatado": aponta para frente e para a esquerda, como se estivesse deitada no chão */
+        .seta.no svg  { transform: scaleY(0.58) rotate(45deg); --dx: -5px; --dy: -2px; }
         .seta:hover svg, .seta:focus-visible svg { scale: 1.16; animation-duration: 0.6s, 3.7s; }
         .seta:focus-visible { outline: none; }
         .seta:active svg { scale: 0.92; }
@@ -244,20 +243,57 @@
             63% { transform: none; }
         }
 
-        /* Névoa lilás baixa, presa ao desenho */
+        /* Névoa lilás em faixas, atravessando a clareira devagar (só transform: leve para a placa de vídeo) */
         .neblina { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-        .neblina i {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(28px);
-            mix-blend-mode: screen;
-            animation: neblina 34s ease-in-out infinite alternate;
+        .neblina .faixa { position: absolute; left: 0; right: 0; overflow: hidden; }
+        .neblina .faixa.baixa {
+            top: 50%; height: 50%;
+            -webkit-mask-image: linear-gradient(to bottom, transparent, #000 30%, #000 75%, transparent);
+            mask-image: linear-gradient(to bottom, transparent, #000 30%, #000 75%, transparent);
         }
-        .neblina i:nth-child(1) { left: -10%; top: 62%; width: 70%; height: 26%; background: radial-gradient(closest-side, rgba(150, 92, 210, 0.30), transparent); }
-        .neblina i:nth-child(2) { left: 40%; top: 66%; width: 75%; height: 24%; background: radial-gradient(closest-side, rgba(118, 80, 200, 0.26), transparent); animation-duration: 41s; animation-delay: -12s; }
-        .neblina i:nth-child(3) { left: 15%; top: 33%; width: 60%; height: 18%; background: radial-gradient(closest-side, rgba(110, 70, 170, 0.16), transparent); animation-duration: 47s; animation-delay: -20s; }
-        .neblina i:nth-child(4) { left: 62%; top: 28%; width: 45%; height: 20%; background: radial-gradient(closest-side, rgba(90, 80, 190, 0.14), transparent); animation-duration: 38s; animation-delay: -6s; }
-        @keyframes neblina { from { transform: translateX(-4%); opacity: 0.75; } to { transform: translateX(5%); opacity: 1; } }
+        .neblina .faixa.alta {
+            top: 18%; height: 42%;
+            -webkit-mask-image: linear-gradient(to bottom, transparent, #000 40%, #000 60%, transparent);
+            mask-image: linear-gradient(to bottom, transparent, #000 40%, #000 60%, transparent);
+        }
+        .neblina .nuvem {
+            position: absolute; top: 0; bottom: 0; left: 0;
+            width: 200%;
+            background-repeat: repeat-x;
+            background-size: 50% 100%;
+            will-change: transform;
+        }
+        .faixa.baixa .nuvem { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='500'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0035 0.011' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.68 0 0 0 0 0.55 0 0 0 0 0.88 0 0 0 1.9 -0.8'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E"); opacity: 0.3; animation: passa 150s linear infinite; }
+        .faixa.baixa .nuvem + .nuvem { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='500'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0035 0.011' numOctaves='3' seed='23' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.68 0 0 0 0 0.55 0 0 0 0 0.88 0 0 0 1.9 -0.8'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E"); opacity: 0.2; animation: passa 95s linear infinite reverse; }
+        .faixa.alta .nuvem { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='500'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0035 0.011' numOctaves='3' seed='41' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.68 0 0 0 0 0.55 0 0 0 0 0.88 0 0 0 1.9 -0.8'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E"); opacity: 0.12; animation: passa 210s linear infinite; }
+        @keyframes passa { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+        /* Fumaça fina saindo da fogueira recém-apagada */
+        .fumaca { position: absolute; left: 46%; top: 76%; width: 0; height: 0; pointer-events: none; }
+        .fumaca i {
+            position: absolute;
+            left: 0; top: 0;
+            width: 4.5vw; min-width: 34px;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background: radial-gradient(closest-side, rgba(236, 226, 250, 0.42), rgba(200, 180, 232, 0.16) 55%, transparent);
+            opacity: 0;
+            animation: sobe 9s cubic-bezier(0.3, 0.2, 0.6, 1) infinite;
+            will-change: transform, opacity;
+        }
+        .fumaca i:nth-child(1) { --sx: -30%;  animation-delay: 0s; }
+        .fumaca i:nth-child(2) { --sx: 45%;   animation-delay: -1.3s; }
+        .fumaca i:nth-child(3) { --sx: -10%;  animation-delay: -2.6s; left: 12px; }
+        .fumaca i:nth-child(4) { --sx: 70%;   animation-delay: -3.9s; left: -14px; }
+        .fumaca i:nth-child(5) { --sx: -55%;  animation-delay: -5.2s; }
+        .fumaca i:nth-child(6) { --sx: 25%;   animation-delay: -6.5s; left: 8px; }
+        .fumaca i:nth-child(7) { --sx: -20%;  animation-delay: -7.8s; left: -6px; }
+        @keyframes sobe {
+            0%   { transform: translate(-50%, -50%) scale(0.35); opacity: 0; }
+            12%  { opacity: 0.9; }
+            55%  { transform: translate(calc(-50% + var(--sx) * 0.5), -230%) scale(1.5); opacity: 0.55; }
+            100% { transform: translate(calc(-50% + var(--sx)), -470%) scale(2.6); opacity: 0; }
+        }
 
         /* Camadas de "tela antiga" por cima de tudo: bordas borradas, sujeira, linhas e vinheta */
         .tela {
@@ -266,25 +302,17 @@
             z-index: 6;
             pointer-events: none;
             opacity: 0;
-            transition: opacity 4s ease 1s;
+            transition: opacity 3s ease 4.5s;   /* entra só depois que a floresta terminou de abrir */
         }
         .tela.on { opacity: 1; }
-        .tela .borda {
-            position: absolute; inset: 0;
-            -webkit-backdrop-filter: blur(2.2px);
-            backdrop-filter: blur(2.2px);
-            -webkit-mask-image: radial-gradient(ellipse 80% 75% at center, transparent 70%, #000 105%);
-            mask-image: radial-gradient(ellipse 80% 75% at center, transparent 70%, #000 105%);
-        }
         .tela .linhas {
             position: absolute; inset: 0;
             background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0) 0 2px, rgba(8, 2, 16, 0.18) 2px 3px);
         }
         .tela .grao {
             position: absolute; inset: -50%;
-            opacity: 0.09;
-            mix-blend-mode: overlay;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            opacity: 0.07;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.9 0 0 0 0 0.85 0 0 0 0 1 2.2 0 0 0 -1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
             animation: grao 0.9s steps(4) infinite;
         }
         @keyframes grao { 0% { transform: translate(0, 0); } 25% { transform: translate(-7%, 4%); } 50% { transform: translate(5%, -6%); } 75% { transform: translate(-3%, -2%); } 100% { transform: translate(0, 0); } }
@@ -296,7 +324,8 @@
         @media (prefers-reduced-motion: reduce) {
             .nevoa, .halo { animation: none; }
             .cena, .quadro { transition: none; }
-            .tremor, .seta, .seta svg, .neblina i, .tela .grao { animation: none; }
+            .tremor, .seta, .seta svg, .neblina .nuvem, .tela .grao { animation: none; }
+            .fumaca { display: none; }
             .acesso, .palco { transition: none; }
             .acesso.negado { animation: none; }
         }
@@ -711,6 +740,24 @@
             g.imageSmoothingEnabled = true;
             g.imageSmoothingQuality = 'high';
             g.drawImage(img, 0, 0, w, h);
+            // Bordas borradas, desenhadas uma única vez aqui (antes era um filtro ao vivo, que fazia a tela piscar)
+            try {
+                const b = document.createElement('canvas');
+                b.width = w; b.height = h;
+                const bg = b.getContext('2d');
+                bg.filter = 'blur(2px)';
+                bg.drawImage(c, 0, 0);
+                bg.filter = 'none';
+                bg.globalCompositeOperation = 'destination-in';
+                const raio = Math.hypot(w, h) / 2;
+                const grad = bg.createRadialGradient(w / 2, h / 2, 0, w / 2, h / 2, raio);
+                grad.addColorStop(0, 'rgba(0,0,0,0)');
+                grad.addColorStop(0.6, 'rgba(0,0,0,0)');
+                grad.addColorStop(1, 'rgba(0,0,0,1)');
+                bg.fillStyle = grad;
+                bg.fillRect(0, 0, w, h);
+                g.drawImage(b, 0, 0);
+            } catch (_) {}
             try {
                 const dados = g.getImageData(0, 0, w, h), px = dados.data;
                 const bayer = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5];
@@ -729,7 +776,7 @@
         function montarTela() {
             const t = document.createElement('div');
             t.className = 'tela';
-            t.innerHTML = '<div class="borda"></div><div class="grao"></div><div class="linhas"></div><div class="vinheta2"></div>';
+            t.innerHTML = '<div class="grao"></div><div class="linhas"></div><div class="vinheta2"></div>';
             document.body.appendChild(t);
             requestAnimationFrame(() => requestAnimationFrame(() => t.classList.add('on')));
         }
@@ -758,8 +805,13 @@
                 }
                 const neblina = document.createElement('div');
                 neblina.className = 'neblina';
-                neblina.innerHTML = '<i></i><i></i><i></i><i></i>';
+                neblina.innerHTML = '<div class="faixa alta"><div class="nuvem"></div></div>'
+                    + '<div class="faixa baixa"><div class="nuvem"></div><div class="nuvem"></div></div>';
+                const fumaca = document.createElement('div');
+                fumaca.className = 'fumaca';
+                fumaca.innerHTML = '<i></i>'.repeat(7);
                 tremor.appendChild(neblina);
+                tremor.appendChild(fumaca);
                 montarSetas(tremor);
                 montarTela();
                 document.body.appendChild(cena);
