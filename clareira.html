@@ -195,8 +195,8 @@
         .seta {
             position: absolute;
             translate: -50% -50%;
-            width: clamp(18px, 1.6vw, 30px);
-            aspect-ratio: 7 / 13;
+            --px: clamp(2.6px, 0.23vw, 4.3px);   /* tamanho de cada "pixel" do desenho */
+            width: calc(var(--cols, 7) * var(--px));
             padding: 0;
             border: 0;
             background: none;
@@ -204,10 +204,7 @@
             opacity: 0;
             transition: opacity 2.4s ease;
             -webkit-tap-highlight-color: transparent;
-            animation: rasgo 6.3s steps(1) infinite;
         }
-        .seta:nth-of-type(2) { animation-delay: -2.1s; }
-        .seta:nth-of-type(3) { animation-delay: -4.4s; }
         .cena.setas .seta { opacity: 0.88; }
         .seta::before { content: ""; position: absolute; inset: -60%; } /* área de clique maior */
         .seta svg {
@@ -220,26 +217,17 @@
                 drop-shadow(-2px 0 0 rgba(255, 60, 170, 0.45)) drop-shadow(2px 0 0 rgba(90, 190, 255, 0.35))
                 drop-shadow(0 0 9px rgba(176, 88, 255, 0.55))
                 blur(0.55px);
-            animation: vai 1.2s steps(2, jump-none) infinite, tremula 3.7s steps(1) infinite;
+            animation: vai 1.2s steps(2, jump-none) infinite;
             transition: scale 0.15s steps(2);
         }
         .seta.dir svg { transform: scaleX(-1); }
         .seta.esq svg { --dx: -4px; --dy: 0px; }
         .seta.dir svg { --dx: 4px; --dy: 0px; }
-        /* noroeste "achatado": aponta para frente e para a esquerda, como se estivesse deitada no chão */
-        .seta.no svg  { transform: scaleY(0.82) rotate(32deg); --dx: -4px; --dy: -2px; }
-        .seta:hover svg, .seta:focus-visible svg { scale: 1.16; animation-duration: 0.6s, 3.7s; }
+        .seta.no svg  { --dx: -4px; --dy: -3px; }   /* desenhada já na diagonal, sem girar (pixel art girado fica serrilhado) */
+        .seta:hover svg, .seta:focus-visible svg { scale: 1.16; animation-duration: 0.6s; }
         .seta:focus-visible { outline: none; }
         .seta:active svg { scale: 0.92; }
         @keyframes vai { from { translate: 0 0; } to { translate: var(--dx) var(--dy); } }
-        @keyframes tremula { 0%, 100% { opacity: 1; } 31% { opacity: 0.7; } 33% { opacity: 1; } 72% { opacity: 0.85; } 74% { opacity: 1; } }
-        /* De vez em quando a "fita" falha e a seta escorrega um pouco */
-        @keyframes rasgo {
-            0%, 100% { transform: none; filter: none; }
-            61% { transform: translateX(3px) skewX(-8deg); filter: hue-rotate(-25deg) brightness(1.3); }
-            62% { transform: translateX(-2px); filter: none; }
-            63% { transform: none; }
-        }
 
         /* Névoa lilás em faixas, atravessando a clareira devagar (só transform: leve para a placa de vídeo) */
         .neblina { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
@@ -270,13 +258,20 @@
            recortada em forma de coluna que se abre e some no alto */
         .fumaca {
             position: absolute;
-            left: 41%; top: 46%;
+            left: 42.6%; top: 46%;
             width: 10%; height: 31%;
             pointer-events: none;
             transform-origin: 50% 100%;
             animation: sopro 8s ease-in-out infinite alternate;
-            -webkit-mask-image: radial-gradient(ellipse 38% 100% at 50% 100%, #000 0%, rgba(0, 0, 0, 0.75) 30%, rgba(0, 0, 0, 0.25) 60%, transparent 85%);
-            mask-image: radial-gradient(ellipse 38% 100% at 50% 100%, #000 0%, rgba(0, 0, 0, 0.75) 30%, rgba(0, 0, 0, 0.25) 60%, transparent 85%);
+            /* coluna que se abre para cima + esfumado embaixo (sem linha reta na base) */
+            -webkit-mask-image:
+                radial-gradient(ellipse 38% 100% at 50% 100%, #000 0%, rgba(0, 0, 0, 0.75) 30%, rgba(0, 0, 0, 0.25) 60%, transparent 85%),
+                linear-gradient(to top, transparent 0%, #000 22%);
+            -webkit-mask-composite: source-in;
+            mask-image:
+                radial-gradient(ellipse 38% 100% at 50% 100%, #000 0%, rgba(0, 0, 0, 0.75) 30%, rgba(0, 0, 0, 0.25) 60%, transparent 85%),
+                linear-gradient(to top, transparent 0%, #000 22%);
+            mask-composite: intersect;
         }
         .fumaca .rolo {
             position: absolute;
@@ -320,7 +315,7 @@
         @media (prefers-reduced-motion: reduce) {
             .nevoa, .halo { animation: none; }
             .cena { transition: none; }
-            .tremor, .seta, .seta svg, .neblina .nuvem, .tela .grao { animation: none; }
+            .tremor, .seta svg, .neblina .nuvem, .tela .grao { animation: none; }
             .fumaca, .fumaca .rolo { animation: none; }
             .acesso, .palco { transition: none; }
             .acesso.negado { animation: none; }
@@ -692,12 +687,12 @@
         // Setas da clareira: posição em % do desenho (3000x1688) e para onde apontam.
         // Por enquanto não levam a lugar nenhum; "destino" fica para as próximas etapas.
         const SETAS = [
-            { x: 5.8,  y: 43.1, lado: 'esq', destino: 1 },
-            { x: 43.0, y: 47.3, lado: 'no',  destino: 2 },
-            { x: 84.1, y: 44.8, lado: 'dir', destino: 3 }
+            { x: 5.8,  y: 43.1, lado: 'esq', forma: 'esquerda', destino: 1 },
+            { x: 43.0, y: 47.3, lado: 'no',  forma: 'noroeste', destino: 2 },
+            { x: 84.1, y: 44.8, lado: 'dir', forma: 'esquerda', destino: 3 }
         ];
-        // Triângulo de point-and-click em pixel art 7x13, apontando para a esquerda (1 = cor clara, 2 = sombra)
-        const PIXELS = [
+        // Triângulos de point-and-click em pixel art (1 = cor clara, 2 = sombra)
+        const ESQUERDA = [
             '......1',
             '.....11',
             '....111',
@@ -712,13 +707,27 @@
             '.....22',
             '......2'
         ];
-        const svgSeta = (() => {
+        // Frente/esquerda (~30°), desenhada direto na inclinação: borda de cima 2:1 e de baixo 1:1, sem serrilhado
+        const NOROESTE = [
+            '........11',
+            '......1111',
+            '....111111',
+            '..11111111',
+            '1111111111',
+            '.222222222',
+            '..2222222.',
+            '...22222..',
+            '....222...',
+            '.....2....'
+        ];
+        const FORMAS = { esquerda: ESQUERDA, noroeste: NOROESTE };
+        function svgDe(mapa) {
             let rects = '';
-            PIXELS.forEach((linha, y) => [...linha].forEach((c, x) => {
+            mapa.forEach((linha, y) => [...linha].forEach((c, x) => {
                 if (c !== '.') rects += `<rect x="${x}" y="${y}" width="1" height="1" fill="${c === '1' ? '#e9cbff' : '#a064d6'}"/>`;
             }));
-            return `<svg viewBox="0 0 7 13" shape-rendering="crispEdges" aria-hidden="true">${rects}</svg>`;
-        })();
+            return `<svg viewBox="0 0 ${mapa[0].length} ${mapa.length}" shape-rendering="crispEdges" aria-hidden="true">${rects}</svg>`;
+        }
 
         function montarSetas(tremor) {
             SETAS.forEach((s) => {
@@ -729,7 +738,10 @@
                 b.style.top = s.y + '%';
                 b.dataset.destino = s.destino;
                 b.setAttribute('aria-label', { esq: 'ir para a esquerda', no: 'ir para o alto, à esquerda', dir: 'ir para a direita' }[s.lado]);
-                b.innerHTML = svgSeta;
+                const mapa = FORMAS[s.forma];
+                b.style.setProperty('--cols', mapa[0].length);
+                b.style.aspectRatio = `${mapa[0].length} / ${mapa.length}`;
+                b.innerHTML = svgDe(mapa);
                 b.addEventListener('click', () => {
                     som.blip();
                     // (em breve) cada seta leva a uma nova cena
