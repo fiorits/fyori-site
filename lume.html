@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
-    <meta name="theme-color" content="#060908">
+    <meta name="theme-color" content="#06040a">
     <title>Fyori</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,7 +14,7 @@
         @property --r { syntax: '<percentage>'; inherits: false; initial-value: 0%; }
 
         :root {
-            --fundo: #060908;
+            --fundo: #06040a;
             --texto: #c3d1c9;
             --suave: #7d9488;
             --luz: #9bd3b8;
@@ -29,14 +29,26 @@
             overflow: hidden;
         }
 
-        /* Névoa lenta e vinheta fixa */
+        /* Halo arroxeado central (mesma família de cor do site), névoa lenta e vinheta fixa */
+        .halo {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 46%,
+                rgba(70, 38, 104, 0.30) 0%,
+                rgba(52, 28, 80, 0.18) 28%,
+                rgba(30, 16, 48, 0.07) 48%,
+                rgba(6, 4, 10, 0) 68%);
+            animation: respira 14s ease-in-out infinite alternate;
+        }
+        @keyframes respira { from { opacity: 0.8; } to { opacity: 1; } }
         .nevoa {
             position: fixed;
             inset: -20%;
             pointer-events: none;
             background:
-                radial-gradient(40% 30% at 20% 30%, rgba(120, 160, 140, 0.10), transparent 70%),
-                radial-gradient(35% 28% at 80% 70%, rgba(110, 150, 135, 0.08), transparent 70%);
+                radial-gradient(40% 30% at 20% 30%, rgba(98, 54, 140, 0.10), transparent 70%),
+                radial-gradient(35% 28% at 80% 70%, rgba(84, 44, 122, 0.08), transparent 70%);
             animation: deriva 40s ease-in-out infinite alternate;
         }
         .vinheta {
@@ -108,7 +120,8 @@
             transition: border-color 0.4s ease;
         }
         .campo input:focus { border-bottom-color: var(--luz); }
-        .msg { min-height: 1.3em; margin: 0; font-size: 0.9rem; color: var(--suave); letter-spacing: 1px; }
+        .msg { min-height: 1.3em; margin: 0; font-size: 0.9rem; color: var(--suave); letter-spacing: 1px; transition: opacity 0.6s ease; }
+        .msg.some { opacity: 0; }
         .acesso.negado { animation: balanca 0.5s ease; }
         @keyframes balanca { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
         .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -136,7 +149,7 @@
         .cena.aberta { --r: 150%; transform: scale(1); }
 
         @media (prefers-reduced-motion: reduce) {
-            .nevoa { animation: none; }
+            .nevoa, .halo { animation: none; }
             .cena { transition: none; }
             .acesso, .palco { transition: none; }
             .acesso.negado { animation: none; }
@@ -144,6 +157,7 @@
     </style>
 </head>
 <body>
+    <div class="halo"></div>
     <div class="nevoa"></div>
     <div class="vinheta"></div>
 
@@ -172,7 +186,10 @@
     <script>
     (() => {
         // Nenhum login, senha ou nome de arquivo fica legível aqui.
-        const COFRE = 'HRRRUjiUjNWKpntitK4dEWpSd9Jw2bU2aJdxllqOmPy4akzdfT73GOVkVtKV1nkSTVZK50dtrGO5gQ7Zn+Bv9Dz7jU8wWw==';
+        // Para trocar, rode: node gerar-cofre.js <login> <senha> <arquivo> e cole as três linhas.
+        const COFRE = 'TryPnmYx5Ac9swNL2jAA1n5ab67/RflN5a0ty/My1GBXJ265ocdZlefrO4NPNi6lhEdAJVyx/n+1GH7uA/Ukz+JHnR+ohg==';
+        const MARCA_LOGIN = '/aZjXhwCDdWGPRte3yQ1jGs6TbJ6neTVBqjql3aVVbM6XRw1Ja4KnjPYJCk3H0P+';
+        const MARCA_SENHA = 'e7FJvSj8paCaszDEi2vmO5AwT0ZqBlalRgZETdZdiGDEo0Ew59opdck90dt8Or2z';
 
         const form = document.getElementById('form');
         const msg = document.getElementById('msg');
@@ -184,9 +201,68 @@
         const norm = (s) => s.trim().toLowerCase();
         const bytes = (b64) => Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
 
+        /* ---------- som de máquina de escrever (sintetizado, sem arquivo) ---------- */
+        const som = (() => {
+            const AC = window.AudioContext || window.webkitAudioContext;
+            if (!AC) return { tecla() {}, retorno() {}, ativo: () => false, acordar: () => Promise.resolve() };
+            const ctx = new AC();
+            const mestre = ctx.createGain();
+            mestre.gain.value = 0.5;
+            mestre.connect(ctx.destination);
+
+            const ruido = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 0.5), ctx.sampleRate);
+            const d = ruido.getChannelData(0);
+            for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+
+            // Um "golpe": rajada curta de ruído filtrado com queda rápida.
+            function golpe(t, freq, q, vol, dur) {
+                const src = ctx.createBufferSource();
+                src.buffer = ruido;
+                src.playbackRate.value = 0.85 + Math.random() * 0.3;
+                const f = ctx.createBiquadFilter();
+                f.type = 'bandpass';
+                f.frequency.value = freq;
+                f.Q.value = q;
+                const g = ctx.createGain();
+                g.gain.setValueAtTime(0.0001, t);
+                g.gain.exponentialRampToValueAtTime(vol, t + 0.002);
+                g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+                src.connect(f).connect(g).connect(mestre);
+                src.start(t, Math.random() * 0.3, dur + 0.03);
+            }
+
+            const ativo = () => ctx.state === 'running';
+            return {
+                ativo,
+                acordar: () => ctx.resume().catch(() => {}),
+                tecla(ch) {
+                    if (!ativo()) return;
+                    const t = ctx.currentTime + 0.005;
+                    const v = 0.75 + Math.random() * 0.5;
+                    if (ch === ' ') {
+                        golpe(t, 700 + Math.random() * 150, 1.2, 0.18 * v, 0.05);   // barra de espaço, mais abafada
+                        return;
+                    }
+                    golpe(t, 2400 + Math.random() * 1400, 2.8, 0.42 * v, 0.022);   // estalo do tipo
+                    golpe(t + 0.006, 260 + Math.random() * 90, 4, 0.34 * v, 0.07);  // batida no rolo
+                },
+                retorno() {
+                    if (!ativo()) return;
+                    const t = ctx.currentTime + 0.01;
+                    for (let i = 0; i < 9; i++) golpe(t + i * 0.028, 3200 - i * 120, 6, 0.12 * (1 - i / 12), 0.018); // catraca do carro
+                    golpe(t + 0.27, 180, 3, 0.5, 0.12);                                                               // fim de curso
+                }
+            };
+        })();
+
         /* ---------- texto digitado ---------- */
+        // Se o navegador bloqueou o som, o primeiro toque/tecla só acorda o som; os seguintes pulam o texto.
         let pular = false, liberado = false;
-        const pularAgora = () => { if (!liberado) pular = true; };
+        const pularAgora = () => {
+            if (liberado) return;
+            if (!som.ativo()) { som.acordar(); return; }
+            pular = true;
+        };
         document.addEventListener('keydown', pularAgora);
         document.addEventListener('pointerdown', pularAgora);
 
@@ -199,6 +275,7 @@
         }
 
         async function digitar() {
+            som.acordar(); // funciona quando o navegador permite (ex.: vindo do clique no olho)
             await esperar(reduz ? 0 : 900);
             for (const v of versos) {
                 const alvo = v.querySelector('.digitado');
@@ -209,14 +286,29 @@
                 for (let i = 1; i <= texto.length; i++) {
                     if (pular) { alvo.textContent = texto; break; }
                     alvo.textContent = texto.slice(0, i);
-                    await esperar(/[,.]/.test(texto[i - 1]) ? 240 : 24);
+                    som.tecla(texto[i - 1]);
+                    await esperar(/[,.]/.test(texto[i - 1]) ? 240 : 30 + Math.random() * 22);
                 }
-                await esperar(pular ? 0 : 500);
+                if (!pular) som.retorno();
+                await esperar(pular ? 0 : 520);
             }
             liberar();
         }
 
         /* ---------- cofre ---------- */
+        // Marca = sal (16 bytes) + PBKDF2 do valor. Diz se login ou senha bateram sozinhos, sem guardá-los.
+        async function confere(marca, valor) {
+            const raw = bytes(marca);
+            const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(norm(valor)), 'PBKDF2', false, ['deriveBits']);
+            const bits = new Uint8Array(await crypto.subtle.deriveBits(
+                { name: 'PBKDF2', salt: raw.slice(0, 16), iterations: 200000, hash: 'SHA-256' }, base, 256
+            ));
+            const esperado = raw.slice(16);
+            let dif = bits.length ^ esperado.length;
+            for (let i = 0; i < bits.length; i++) dif |= bits[i] ^ esperado[i];
+            return dif === 0;
+        }
+
         async function destravar(login, senha) {
             const raw = bytes(COFRE);
             const salt = raw.slice(0, 16), iv = raw.slice(16, 28), dados = raw.slice(28);
@@ -229,14 +321,21 @@
             return new TextDecoder().decode(await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, chave, dados));
         }
 
-        function negar(texto) {
+        function negar(texto, campo = campoSenha) {
+            msg.classList.remove('some');
             msg.textContent = texto;
             form.classList.remove('negado');
             void form.offsetWidth;
             form.classList.add('negado');
-            campoSenha.value = '';
-            campoSenha.focus();
+            campo.value = '';
+            campo.focus();
         }
+
+        const RESPOSTAS = {
+            nenhum: () => negar('a floresta não te reconhece', campoSenha),
+            login: () => negar('a floresta lembra o seu nome, mas a lamparina segue apagada', campoSenha),
+            senha: () => negar('a lamparina tremeluz... mas não sabe para quem', campoLogin)
+        };
 
         function revelar(src) {
             const video = /\.(mp4|webm)$/i.test(src);
@@ -268,18 +367,25 @@
             }
         }
 
+        let ocupado = false;
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            msg.textContent = '';
+            if (ocupado) return;
             if (!window.crypto || !crypto.subtle) { negar('abra pelo site (https)'); return; }
-            let caminho;
+            ocupado = true;
+            msg.classList.add('some');
+            const login = campoLogin.value, senha = campoSenha.value;
             try {
-                caminho = await destravar(campoLogin.value, campoSenha.value);
-            } catch (_) {
-                negar('a névoa não te reconhece');
-                return;
+                const [caminho, loginOk, senhaOk] = await Promise.all([
+                    destravar(login, senha).catch(() => null),
+                    confere(MARCA_LOGIN, login).catch(() => false),
+                    confere(MARCA_SENHA, senha).catch(() => false)
+                ]);
+                if (caminho) { msg.textContent = ''; revelar(caminho); return; }
+                RESPOSTAS[loginOk ? 'login' : senhaOk ? 'senha' : 'nenhum']();
+            } finally {
+                ocupado = false;
             }
-            revelar(caminho);
         });
 
         digitar();
