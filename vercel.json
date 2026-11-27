@@ -5,5 +5,9 @@
       "destination": "/faq.html"
     }
   ],
+  "redirects": [
+    { "source": "/lume", "destination": "/clareira", "permanent": true },
+    { "source": "/lume.html", "destination": "/clareira", "permanent": true }
+  ],
   "cleanUrls": true
 }

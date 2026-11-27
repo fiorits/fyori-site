@@ -1,9 +1,9 @@
 /**
- * Gera o "cofre" da página secreta (lume.html). Este arquivo não vai para o site (ver .vercelignore).
+ * Gera o "cofre" da página secreta (clareira.html). Este arquivo não vai para o site (ver .vercelignore).
  * Uso:   node gerar-cofre.js <login> <senha> <caminho-do-arquivo>
  * Ex.:   node gerar-cofre.js meulogin 1234 Imagens/arquivo.png
  *
- * Ele imprime três linhas (COFRE, MARCA_LOGIN e MARCA_SENHA): cole as três no lume.html, no lugar das atuais.
+ * Ele imprime três linhas (COFRE, MARCA_LOGIN e MARCA_SENHA): cole as três no clareira.html, no lugar das atuais.
  * Login e senha não ficam escritos no site:
  *  - COFRE só abre com login + senha juntos e revela o caminho do arquivo;
  *  - MARCA_LOGIN e MARCA_SENHA só dizem se cada um, sozinho, está certo (para a página dar a pista certa).
